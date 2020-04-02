@@ -1,0 +1,25 @@
+{
+  "name": "csce_315_hci",
+  "version": "1.0.0",
+  "description": "Pack Advisor application for CSCE 315 HCI Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pablosay54/CSCE_315_HCI.git"
+  },
+  "keywords": [
+    "HCI"
+  ],
+  "author": "Anuj Parakh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pablosay54/CSCE_315_HCI/issues"
+  },
+  "homepage": "https://github.com/pablosay54/CSCE_315_HCI#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

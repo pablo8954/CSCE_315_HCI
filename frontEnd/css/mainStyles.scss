@@ -1,0 +1,88 @@
+@import "colors";
+
+.photo-row
+{
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    overflow: hidden;
+
+}
+
+/* Create four equal columns that sits next to each other */
+.photo-column 
+{
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
+    overflow: hidden;
+}
+
+.photo-column img
+{
+    vertical-align: middle;
+    width: 100%;
+    filter: brightness(30%);
+    transition: transform .5s ease;
+    overflow: hidden;
+}
+
+.photo-column img:hover
+{
+    vertical-align: middle;
+    width: 100%;
+    filter: brightness(40%);
+    // transform: scale(1.5);
+
+}
+
+/* Responsive layout - makes a three column-layout instead of four columns */
+@media screen and (max-width: 1000px)
+{
+    .photo-column {
+        -ms-flex: 33.3%;
+        flex: 33.3%;
+        max-width: 33.3%;
+    }
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px)
+{
+    .photo-column {
+        -ms-flex: 50%;
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px)
+{
+    .photo-column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+.photos-container
+{
+    position: relative;
+}
+
+.heading
+{
+    position: absolute;
+    text-align: center;
+    color: $heading-color;
+    font-size: 6.5vw;
+    font-family: "Ariel";
+    letter-spacing: 10px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+}

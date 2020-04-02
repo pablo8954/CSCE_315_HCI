@@ -1,0 +1,74 @@
+@import 'colors';
+@import 'fontStuff';
+
+.main-body
+{
+    background-color: $primary-color;
+    margin: 0;
+}
+
+.logo-container
+{
+    display:flex;
+    align-items:center;
+    flex-direction: row;
+    
+    align-items: center;
+    justify-content: center;
+
+}
+
+.nav-logo
+{
+    width: 72px;
+    height: 72px;
+    margin-top: 10px;
+}
+
+.nav-logo-label
+{
+    font-family: $heading-font-family;
+    font-size: $heading-logo-text-size;
+    color: $header-logo-text-color;
+    margin-left: 20px;
+}
+
+.main-nav {
+    /* background-image:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../imgs/img2.jpg); */
+    background-color: transparent;
+    text-align: center;
+    list-style: none;
+    clear: both;
+    padding-top: 10px;
+}
+
+.main-nav li 
+{
+    background-color: transparent;
+    display: inline-block;
+}
+
+.main-nav li a 
+{
+    background-color: transparent;
+    color: $secondary-color;
+    text-decoration: none;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: $nav-font-family;
+    font-size: $header-font-size;
+}
+
+.main-nav li.active a 
+{
+    color: $header-hover-color;
+    border-radius: 10px;
+    border-width: 2px;
+    background-color: black;
+}
+
+.main-nav li a:hover 
+{
+    color: $header-hover-color;
+}

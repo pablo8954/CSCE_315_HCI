@@ -1,0 +1,63 @@
+.main-body {
+  background-color: #fffafa;
+  margin: 0;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo {
+  width: 72px;
+  height: 72px;
+  margin-top: 10px;
+}
+
+.nav-logo-label {
+  font-family: "Garamond";
+  font-size: 30px;
+  color: #006767;
+  margin-left: 20px;
+}
+
+.main-nav {
+  /* background-image:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../imgs/img2.jpg); */
+  background-color: transparent;
+  text-align: center;
+  list-style: none;
+  clear: both;
+  padding-top: 10px;
+}
+
+.main-nav li {
+  background-color: transparent;
+  display: inline-block;
+}
+
+.main-nav li a {
+  background-color: transparent;
+  color: #484848;
+  text-decoration: none;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Courier New";
+  font-size: 20px;
+}
+
+.main-nav li.active a {
+  color: #fa9200;
+  border-radius: 10px;
+  border-width: 2px;
+  background-color: black;
+}
+
+.main-nav li a:hover {
+  color: #fa9200;
+}
+
+/*# sourceMappingURL=globalStyles.css.map */
