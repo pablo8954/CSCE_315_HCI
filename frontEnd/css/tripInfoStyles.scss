@@ -1,0 +1,127 @@
+@import "colors";
+@import "fontStuff";
+
+.main-body
+{
+    margin: 0;
+    position: relative;
+}
+
+// This div will cover everything and make it dark so that a list can be viewed nicely
+#darkener
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+    opacity: 0;
+    background-color:black;
+    transition: opacity 350ms ease-in-out;
+    pointer-events: none; // make sure mouse events pass through
+}
+
+//
+// Containers
+// 
+.page-container
+{
+    display: relative;
+}
+
+.info-container
+{
+    display:flex;
+    flex-direction: column;
+    width: 50vw;
+    float: left;
+}
+
+.list-container
+{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    float: right;
+    width: 50vw;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+
+//
+// Lists
+//
+
+.list-view
+{
+    text-align: center;
+    height: 400px;
+    width: 350px;
+    background-color: $list1-primary-color;
+    color: $list1-secondary-color;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-right: 50px;
+}
+
+.list-view h2
+{
+    font-size: 36px;
+}
+
+.list-view:hover
+{
+    filter: brightness(50%);
+}
+
+.list-view ul
+{
+    text-align: center;
+    list-style-type: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.list-view ul li
+{
+    cursor: pointer;
+    // padding: 12px 8px 12px 40px;
+    font-size: 22px;
+    color: #ccc;
+    vertical-align: middle;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+// This view will be centered on the screen and will make everything else go dark
+.list-view-big
+{
+    position: absolute;
+    color: $heading-color;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#medicines
+{
+    background-color: $list3-primary-color;
+    color: $list3-secondary-color;
+}
+
+#electronics
+{
+    background-color: $list2-primary-color;
+    color: $list2-secondary-color;
+}
+

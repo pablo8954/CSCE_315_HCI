@@ -5,12 +5,18 @@
     <title>Packer</title>
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
-    <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
+    <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body class="main-body">
-    
+
+    <div id="darkener"></div>
+
+    <!-- JavaScript files for functionality -->
+    <script src="/frontEnd/js/tripInfo.js"></script>
+
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
@@ -26,9 +32,69 @@
 
             </div>
         </ul>
+        </div>
 
         <!-- NEED JAVASCRIPT/BACKEND TO GET INFORMATION FOR THIS PAGE -->
+        
 
-        </div>
+
     </header>
+
+    <div class="page-container">
+        
+        <div class="info-container">
+        <!-- Information stuff to be added -->
+        </div>
+        <div class="list-container">
+            <div class="list-view" id="toiletries">
+                <h2 class="list-heading">Toiletries</h2>
+                <ul>
+                <li>Toothbrush</li>
+                <li>Mouthwash</li>
+                <li>Shampoo</li>
+                <li>Bathwash</li>
+                <li>Stuff</li>
+
+                </ul>
+            </div>
+            <div class="list-view" id="medicines">
+                <h2 class="list-heading">Medicines</h2>
+                <ul>
+                <li>Medicine 1</li>
+                <li>Medicine 2</li>
+                <li>Medicine 3</li>
+                <li>Medicine 4</li>
+                <li>Medicine 5</li>
+                </ul>
+            </div>
+            <div class="list-view" id="electronics">
+                <h2 class="list-heading">Electronics</h2>
+                <ul>
+                <li>Laptop</li>
+                <li>Phone</li>
+                <li>Laptop Charger</li>
+                <li>Phone Charger</li>
+                <li>Outlet Converter</li>
+
+                </ul>
+            </div>
+
+            <div class="list-view" id="clothes">
+                <h2 class="list-heading">Clothes</h2>
+                <ul>
+                <li>3 Jackets</li>
+                <li>1 Rain Jacket</li>
+                <li>2 Pants</li>
+                <li>5 Shirt</li>
+                <li>10 Shoes</li>
+
+                </ul>
+            </div>
+        </div>
+<!-- 
+        <ul class="list-view-big" id="toiletries-big"></ul>
+        <ul class="list-view-big" id="medicines-big"></ul>
+        <ul class="list-view-big" id="electronics-big"></ul> -->
+
+    </div>
 </body>

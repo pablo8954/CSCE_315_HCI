@@ -1,0 +1,99 @@
+.main-body {
+  margin: 0;
+  position: relative;
+}
+
+#darkener {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  opacity: 0;
+  background-color: black;
+  transition: opacity 350ms ease-in-out;
+  pointer-events: none;
+}
+
+.page-container {
+  display: relative;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  float: left;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  float: right;
+  width: 50vw;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.list-view {
+  text-align: center;
+  height: 400px;
+  width: 350px;
+  background-color: #00577b;
+  color: #fffafa;
+  border-radius: 10px;
+  margin-top: 50px;
+  margin-right: 50px;
+}
+
+.list-view h2 {
+  font-size: 36px;
+}
+
+.list-view:hover {
+  filter: brightness(50%);
+}
+
+.list-view ul {
+  text-align: center;
+  list-style-type: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.list-view ul li {
+  cursor: pointer;
+  font-size: 22px;
+  color: #ccc;
+  vertical-align: middle;
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.list-view-big {
+  position: absolute;
+  color: #FFCE00;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+#medicines {
+  background-color: #993333;
+  color: #ffeddc;
+}
+
+#electronics {
+  background-color: #008dc8;
+  color: #fffafa;
+}
+
+/*# sourceMappingURL=tripInfoStyles.css.map */
