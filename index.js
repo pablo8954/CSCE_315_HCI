@@ -30,7 +30,9 @@ app.get('/profile.html', function (req, res)
     res.sendFile(path.join(__dirname + '/frontEnd/html/profile.html'));
 });
 
-app.listen(3000, function () 
+let port = process.env.PORT;
+if (port == null || port == "") 
 {
-    console.log('Example app listening on port 3000!');
-});
+  port = 8000;
+}
+app.listen(port);
