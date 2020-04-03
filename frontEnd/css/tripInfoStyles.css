@@ -112,6 +112,14 @@
   font-size: 30px;
 }
 
+#departure-time {
+  margin-top: 50px;
+}
+
+#trip-length {
+  margin-top: 10px;
+}
+
 .big-label {
   margin-top: 50px;
   margin-bottom: 50px;
