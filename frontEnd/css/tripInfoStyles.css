@@ -25,6 +25,9 @@
   flex-direction: column;
   width: 50vw;
   float: left;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
 }
 
 .list-container {
@@ -94,6 +97,35 @@
 #electronics {
   background-color: #008dc8;
   color: #fffafa;
+}
+
+.s-label {
+  font-weight: bold;
+  color: #00577b;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 30px;
+}
+
+.place-label {
+  color: #008dc8;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 30px;
+}
+
+.big-label {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-weight: bold;
+  color: #00577b;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 30px;
+  color: #660000;
+}
+
+.small-label {
+  color: #00577b;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 30px;
 }
 
 /*# sourceMappingURL=tripInfoStyles.css.map */

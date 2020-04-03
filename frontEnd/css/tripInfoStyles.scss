@@ -36,6 +36,9 @@
     flex-direction: column;
     width: 50vw;
     float: left;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
 }
 
 .list-container
@@ -125,3 +128,41 @@
     color: $list2-secondary-color;
 }
 
+//
+// Labels
+//
+
+.s-label
+{
+    font-weight: bold;
+    color: $sd-label-color;
+    font-family: $place-font-family;
+    font-size: $place-font-size;
+}
+
+.place-label
+{
+    color: $place-label-color;
+    font-family: $place-font-family;
+    font-size: $place-font-size;
+
+}
+
+.big-label
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: bold;
+    color: $sd-label-color;
+    font-family: $place-font-family;
+    font-size: $place-font-size;
+    color: $time-change-color;
+}
+
+
+.small-label
+{
+    color: $sd-label-color;
+    font-family: $place-font-family;
+    font-size: $place-font-size;
+}
