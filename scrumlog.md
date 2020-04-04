@@ -44,3 +44,19 @@
     - Anuj Parakh - about 60% done with front end tasks
     - Drew Bezner - briefly assisted Maccoy with proposal, about 50% done with front end tasks
     - Maccoy Merrell - About half-way done with project proposal, authors for each paper assigned
+    
+# Scrum Meeting 4/3
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 5:00 am
+- Date: 4/3 
+- Duration: 15 min
+- Status: 
+    - Pablo Say - completed API research, having difficulty registering heroku app with Google Sign In API; task might get pushed into next sprint
+    - Anuj Parakh - about 85% done with front end tasks
+    - Drew Bezner - 90% complete with front end tasks
+    - Maccoy Merrell - 90% complete with project proposal paper, to help Anuj with front end   
+  
