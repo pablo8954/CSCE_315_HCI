@@ -13,7 +13,16 @@
 <body class="main-body">
     
     <div id="darkener"></div>
-    
+    <script src="/frontEnd/js/functionality.js"></script>
+    <div id="sidebar" class="collapsed">
+        <h2 class="old-trips-heading">Old Trips</h2>
+        <ul class="old-trips-list">
+            <li>Mumbai to Austin on 3/2/2020</li>
+            <li>Guatemala City to Mumbai on 2/9/2020</li>
+            <li>London to Guatemala City on 1/7/2020</li>
+            <li>Austin to London on 11/9/2019</li>
+        </ul>
+    </div>
     <!-- JavaScript files for functionality -->
     <script src="/frontEnd/js/tripInfo.js"></script>
     
@@ -27,7 +36,7 @@
                 
                 <li><a href="/"> Home</a></li>
                 <li class="active"><a href="newTrip.html"> New Trip</a></li>
-                <li><a href="oldTrips.html"> Old Trips</a></li>
+                <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
                 <li><a href="profile.html"> Profile</a></li>
                 
             </div>
@@ -73,7 +82,16 @@
         <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
+        <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
+            <div class="row">
+                <!--Needs to force a change in weather when clicked-->
+                <button class="button-change-info" id="button-change-info">1 Day</button>
+                <button class="button-change-info" id="button-change-info">3 Day</button>
+                <button class="button-change-info" id="button-change-info">5 Day</button>
+            </div>
 
+        </div>
+        
     </div>
         
     <div class="list-container">

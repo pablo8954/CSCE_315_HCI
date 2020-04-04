@@ -27,11 +27,11 @@
 // 
 .page-container
 {
-    display: relative;
+     display: relative;
 }
 
 .info-container
-{
+{ 
     display:flex;
     flex-direction: column;
     width: 50vw;
@@ -47,7 +47,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     float: right;
-    width: 50vw;
+    width: 45vw;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
@@ -162,7 +162,7 @@
 .big-label
 {
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     font-weight: bold;
     color: $sd-label-color;
     font-family: $place-font-family;
@@ -176,4 +176,31 @@
     color: $sd-label-color;
     font-family: $place-font-family;
     font-size: $place-font-size;
+}
+
+
+.button-change-info
+{
+    background-color: $buttons-primary-color1;
+    border: none;
+    color: $buttons-secondary-color1;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: $button-font-size;
+    font-family: $button-font-family;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 10px;
+}
+
+.button-change-info:hover
+{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#button-change-info
+{
+    margin-top: 20px;
 }

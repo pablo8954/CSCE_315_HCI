@@ -35,7 +35,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   float: right;
-  width: 50vw;
+  width: 45vw;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
@@ -122,7 +122,7 @@
 
 .big-label {
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   font-weight: bold;
   color: #00577b;
   font-family: "Helvetica Neue", sans-serif;
@@ -134,6 +134,30 @@
   color: #00577b;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
+}
+
+.button-change-info {
+  background-color: #00577b;
+  border: none;
+  color: #fffafa;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: "Garamond";
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 10px;
+}
+
+.button-change-info:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#button-change-info {
+  margin-top: 20px;
 }
 
 /*# sourceMappingURL=tripInfoStyles.css.map */

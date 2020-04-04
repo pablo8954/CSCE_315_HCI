@@ -10,7 +10,16 @@
 </head>
 
 <body class="main-body">
-    
+    <script src="/frontEnd/js/functionality.js"></script>
+    <div id="sidebar" class="collapsed">
+        <h2 class="old-trips-heading">Old Trips</h2>
+        <ul class="old-trips-list">
+            <li>Mumbai to Austin on 3/2/2020</li>
+            <li>Guatemala City to Mumbai on 2/9/2020</li>
+            <li>London to Guatemala City on 1/7/2020</li>
+            <li>Austin to London on 11/9/2019</li>
+        </ul>
+    </div>
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
@@ -21,7 +30,7 @@
 
             <li><a href="/"> Home</a></li>
             <li class="active"><a href="newTrip.html"> New Trip</a></li>
-            <li><a href="oldTrips.html"> Old Trips</a></li>
+            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
             <li><a href="profile.html"> Profile</a></li>
 
             </div>
