@@ -51,7 +51,7 @@
     - Anuj Parakh
     - Drew Bezner
     - Maccoy Merrell
-- Time: 5:00 am
+- Time: 5:00 pm
 - Date: 4/3 
 - Duration: 15 min
 - Status: 
