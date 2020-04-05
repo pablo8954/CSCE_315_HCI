@@ -31,28 +31,44 @@
   filter: brightness(40%);
 }
 
+.photo-organizer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.photo-outer {
+  width: 25%;
+  overflow: hidden;
+}
+
+.photo-outer img {
+  filter: brightness(40%);
+  transition: transform 0.5s ease;
+  height: 100%;
+}
+
+.photo-outer img:hover {
+  transform: scale(1.3);
+  filter: brightness(50%);
+}
+
 /* Responsive layout - makes a three column-layout instead of four columns */
 @media screen and (max-width: 1000px) {
-  .photo-column {
-    -ms-flex: 33.3%;
-    flex: 33.3%;
-    max-width: 33.3%;
+  .photo-outer {
+    width: 33%;
   }
 }
 /* Responsive layout - makes a two column-layout instead of four columns */
 @media screen and (max-width: 800px) {
-  .photo-column {
-    -ms-flex: 50%;
-    flex: 50%;
-    max-width: 50%;
+  .photo-outer {
+    width: 50%;
   }
 }
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .photo-column {
-    -ms-flex: 100%;
-    flex: 100%;
-    max-width: 100%;
+  .photo-outer {
+    width: 100%;
   }
 }
 .photos-container {
