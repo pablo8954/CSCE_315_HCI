@@ -6,12 +6,13 @@
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="main-body">
     <!-- <div class ="g-signin2" data-onsuccess="onSignIn"></div> -->
-    <div class ="g-signin2" data-onsuccess="onSignIn"></div>
     <script src="/frontEnd/js/functionality.js"></script>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
@@ -29,6 +30,7 @@
             <!-- Things: Picture, Name, Number of Saved Trips -->
             <img src="/frontEnd/img/temp/person.png" id="profile-image">
             <label id="name-label">Someone Somebody</label>
+            <div class ="g-signin2" data-onsuccess="onSignIn"></div>
 
             </div>
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
