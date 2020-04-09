@@ -1,5 +1,7 @@
+$blackish-gray: #222;
 $dark-gray: #484848;
 $nice-gray: #666;
+$very-light-gray: #aaa;
 $snow: #fffafa;
 $lemon-yellow:#FFCE00;
 $pastel-orange: #fa9200;
@@ -10,6 +12,11 @@ $light-sea-blue: #008dc8;
 $maroonish-red: #993333;
 $dark-red: #660000;
 
+$side-bar-background-color: $blackish-gray;
+$side-bar-heading-color: $snow;
+$side-bar-text-color: $snow;
+$side-bar-list-color-1: $nice-gray;
+$side-bar-list-color-2: $dark-gray;
 
 $primary-color: $snow;
 $secondary-color: $nice-gray;
@@ -19,7 +26,7 @@ $header-logo-text-color: $dark-teal;
 $nav-background-color: #ffeddc;
 $nav-options-color: $dark-gray;
 
-$heading-color: $lemon-yellow;
+$heading-color: $snow;
 
 $buttons-primary-color1: $dark-sea-blue;
 $buttons-secondary-color1: $snow;

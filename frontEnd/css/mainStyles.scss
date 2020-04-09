@@ -1,41 +1,5 @@
 @import "colors";
-
-.photo-row
-{
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    overflow: hidden;
-
-}
-
-/* Create four equal columns that sits next to each other */
-.photo-column 
-{
-    -ms-flex: 25%; /* IE10 */
-    flex: 25%;
-    max-width: 25%;
-    overflow: hidden;
-}
-
-.photo-column img
-{
-    vertical-align: middle;
-    width: 100%;
-    filter: brightness(30%);
-    transition: transform .5s ease;
-    overflow: hidden;
-}
-
-.photo-column img:hover
-{
-    vertical-align: middle;
-    width: 100%;
-    filter: brightness(40%);
-    // transform: scale(1.5);
-
-}
+@import "fontStuff";
 
 .photo-organizer
 {
@@ -69,7 +33,7 @@
 {
     .photo-outer 
     {
-        width: 33%;
+        width: 33.33%;
     }
 }
 
@@ -98,15 +62,16 @@
 
 .heading
 {
+    // position: fixed;
     position: absolute;
     text-align: center;
     color: $heading-color;
-    font-size: 6.5vw;
+    font-size: $heading-name-font-size;
     font-family: "Ariel";
-    letter-spacing: 10px;
+    letter-spacing: 7px;
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    user-select: none;
     z-index: 10;
 }

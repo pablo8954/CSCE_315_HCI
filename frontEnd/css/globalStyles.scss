@@ -29,6 +29,7 @@
     font-family: $heading-font-family;
     font-size: $heading-logo-text-size;
     color: $header-logo-text-color;
+    font-weight: none;
     margin-left: 20px;
 }
 
@@ -39,6 +40,7 @@
     list-style: none;
     clear: both;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .main-nav li 
@@ -82,47 +84,214 @@
 #sidebar, #content {
     height: 100%;
     overflow: auto;
-  }
-  
-  #sidebar {
-    position: absolute;
+}
+
+#sidebar 
+{
+    position: fixed;
     left: 0;
     top: 0;
-    z-index: 1;
-    background: #484848;
+    background: $side-bar-background-color;
     width: 25%;
+    margin-right: 0%;
     box-shadow: 2px 0 4px rgba(0, 0, 0, 0.5);
-    transition: width 0.35s;
+    transition: 0.35s;
     z-index: 20;
-  }
-  
-  #sidebar.collapsed 
-  {
-    width: 0;
+    overflow-x: hidden;
+    align-items: center;
+}
 
-  }
-  
-  .old-trips-heading {
-    font-size: 36px;
-    margin-top: 10px;
-    padding: 15px;
-    color: #fffafa;
-    text-align: center;
-    margin: auto;
-  }
-  
-  .old-trips-list {
+#sidebar.collapsed 
+{
+    left: -25%;
+}
+
+#close-sidebar-button
+{
     position: absolute;
+    top: 0px;
+    right: 10px;
+    padding: 0;
+    color: $nice-gray;
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    rotate: 180;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-    font-size: 20px;
-    margin-top: 10px;
-    padding: 15px;
-    color: #fffafa;
+#close-sidebar-button:hover
+{
+    rotate: 180;
+    color: white;
+}
+
+#old-trips-container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#settings-container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.old-trips-heading 
+{
+    font-size: $sidebar-heading-font-size;
+    font-family: $default-font-family;
+    margin-top: 20px;
+    // padding: 15px;
+    color: $side-bar-heading-color;
     text-align: center;
-    margin: auto;
+    width: 100%;
+}
+
+.old-trips-list 
+{
+    color: $side-bar-text-color;
+    width: 100%;
     list-style-type: none;
-  }
-  
-  .old-trips-list li {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    margin-top: 52px;
+}
+
+.old-trips-list li 
+{
+    background-color: $side-bar-list-color-1;
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
     padding: 10px;
-  }
+    font-size: $sidebar-list-font-size;
+    font-family: $default-font-family;
+    text-align: center;
+    transition: 0.1s;
+}
+
+.old-trips-list li:hover
+{
+    filter: brightness(90%);
+}
+
+
+.old-trips-list li:nth-child(even)
+{
+    background-color: $side-bar-list-color-2;
+}
+
+#profile-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 35%;
+}
+
+#profile-image
+{
+    border-radius: 50%;
+    width: 150px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#name-label
+{
+    color: $very-light-gray;
+    font-size: 32px;
+    margin-top: 22px;
+}
+
+#settings-heading
+{
+    color: $snow;
+    text-align: center;
+    width: 100%;
+}
+
+
+/*slider switch css */
+.theme-switch-wrapper 
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 34px;
+}
+
+#dark-mode-label
+{
+    color: $very-light-gray;
+    text-align: center;
+    margin-top: 10px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 22px;
+    font-weight: none;
+}
+
+.theme-switch 
+{
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+    margin: auto;
+    color: $snow;
+}
+
+.theme-switch input
+ {
+    display:none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider 
+{
+    background-color: $lemon-yellow;
+}
+
+input:checked + .slider:before 
+{
+    transform: translateX(26px);
+}
+
+.slider.round 
+{
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
