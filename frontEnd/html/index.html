@@ -3,14 +3,76 @@
 
 <head>
     <title>Packer</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/mainStyles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
+    
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/frontEnd/js/apiCalls.js"></script>
+    <style>
+        .g-signin2{
+            margin-top: 200 px;
+            float: right;
+        }
+    </style>
 </head>
 
 <body class="main-body">
-    
+    <div class ="g-signin2" data-onsuccess="onSignIn"></div>
+    <script src="/frontEnd/js/functionality.js"></script>
+    <div id="sidebar" class="collapsed">
+        <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
+        <div id="old-trips-container">
+            <h2 class="old-trips-heading">Old Trips</h2>
+            <ul class="old-trips-list">
+                <li><i class="fas fa-plane"></i> Mumbai to Austin on 3/2/2020</li>
+                <li><i class="fas fa-plane"></i> Guatemala City to Mumbai on 2/9/2020</li>
+                <li><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
+                <li><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+            </ul>
+        </div>
+        <div id="settings-container">
+            <div id="profile-container">
+            <!-- Things: Picture, Name, Number of Saved Trips -->
+            <img src="/frontEnd/img/temp/person.png" id="profile-image">
+            <label id="name-label">Someone Somebody</label>
+
+            </div>
+            <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
+
+            <h1 id="settings-heading">Settings</h1>
+			
+			<div class="rangeslider"> 
+			  <input type="range" min="1" max="200" value="20" class="myslider" id="sliderRange" > 
+			</div> 
+			<label id="dark-mode-label">Text Size</label>
+			
+			
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="dark-mode-checkbox">
+                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+
+            <label id="dark-mode-label">Dark Mode</label>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="color-blindness-checkbox">
+                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Color Blindness Mode</label>
+
+
+        </div>
+    </div>
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
@@ -21,8 +83,8 @@
 
             <li class="active"><a href=""> Home</a></li>
             <li><a href="newTrip.html"> New Trip</a></li>
-            <li><a href="oldTrips.html"> Old Trips</a></li>
-            <li><a href="profile.html"> Profile</a></li>
+            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
@@ -33,7 +95,7 @@
     <div class="photos-container">
     <h1 class="heading">Pack Advisor</h1>
 
-    <div class="photo-row"> 
+    <!-- <div class="photo-row"> 
 
 
         <div class="photo-column">
@@ -58,9 +120,22 @@
         </div>
       </div>
 
+    </div> -->
+        <div class="photo-organizer">
+            <div class="photo-outer"><img src="/frontend/img/places/eiffel.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/florence.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/niagra.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/london.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/reef.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/taj.jpeg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/rio.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/canyon.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/newyork.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/everest.webp" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/pyramid.jpg" style="width:100%"></div>
+            <div class="photo-outer"><img src="/frontend/img/places/aurora.jpg" style="width:100%"></div>
+        </div>
     </div>
-
 
     
 </body>
-

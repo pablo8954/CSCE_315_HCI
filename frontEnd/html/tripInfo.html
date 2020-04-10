@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -6,12 +5,63 @@
     <title>Packer</title>
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
-    <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body class="main-body">
-    
+    <div class ="g-signin2" data-onsuccess="onSignIn"></div>
+    <script src="/frontEnd/js/functionality.js"></script>
+    <div id="sidebar" class="collapsed">
+        <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
+        <div id="old-trips-container">
+            <h2 class="old-trips-heading">Old Trips</h2>
+            <ul class="old-trips-list">
+                <li><i class="fas fa-plane"></i> Mumbai to Austin on 3/2/2020</li>
+                <li><i class="fas fa-plane"></i> Guatemala City to Mumbai on 2/9/2020</li>
+                <li><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
+                <li><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+            </ul>
+        </div>
+        <div id="settings-container">
+            <div id="profile-container">
+            <!-- Things: Picture, Name, Number of Saved Trips -->
+            <img src="/frontEnd/img/temp/person.png" id="profile-image">
+            <label id="name-label">Someone Somebody</label>
+
+            </div>
+            <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
+
+            <h1 id="settings-heading">Settings</h1>
+			
+			<div class="rangeslider"> 
+			  <input type="range" min="1" max="200" value="20" class="myslider" id="sliderRange" > 
+			</div> 
+			<label id="dark-mode-label">Text Size</label>
+			
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="dark-mode-checkbox">
+                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+
+            <label id="dark-mode-label">Dark Mode</label>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="color-blindness-checkbox">
+                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Color Blindness Mode</label>
+			
+			
+			
+
+
+        </div>
+    </div>
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
@@ -22,64 +72,115 @@
 
             <li><a href="/"> Home</a></li>
             <li class="active"><a href="newTrip.html"> New Trip</a></li>
-            <li><a href="oldTrips.html"> Old Trips</a></li>
-            <li><a href="profile.html"> Profile</a></li>
+            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
 
-        <!-- NEED JAVASCRIPT/BACKEND TO GET INFORMATION FOR THIS PAGE -->
-		
-		<!--Flight Details-->
         </div>
-		<div class="questions-container">
-			 <label for="fnum" class="question-label" id="flight-number-label">Please Input Details about your Trip </label>
-			<label for="sCountry" class ="question-label">Choose Start Country and City:</label>
-			<div class = "question-label">
-				<select class="question-label" id="sCountry">
-				  <option value="sc1">Temp Country 1</option>
-				  <option value="sc2">Temp Country 2</option>
-				  <option value="sc3">Temp Country 3</option>
-				  <option value="sc4">Temp Country 4</option>
-				</select>
-				<select class ="question-label" id="sCity">
-				  <option value="sci1">Temp City 1</option>
-				  <option value="sci2">Temp City 2</option>
-				  <option value="sci3">Temp City 3</option>
-				  <option value="sci4">Temp City 4</option>
-				</select>
-			</div>
-			<br>
-			<label for="dCountry" class ="question-label">Choose Destination Country and City:</label>
-				<div class = "question-label">
-					<select id="dCountry" class ="question-label">
-					  <option value="dc1">Temp Country 1</option>
-					  <option value="dc2">Temp Country 2</option>
-					  <option value="dc3">Temp Country 3</option>
-					  <option value="dc4">Temp Country 4</option>
-					</select>
-					<select id="dCity" class ="question-label">
-					  <option value="dci1">Temp City 1</option>
-					  <option value="dci2">Temp City 2</option>
-					  <option value="dci3">Temp City 3</option>
-					  <option value="dci4">Temp City 4</option>
-					</select>
-				</div>
-			
-
-			<label for="time-zone" class="question-label" id="flight-number-label">Time Zone </label>
-			<!--Needs To Change upon selection of destination and source country-->
-			<!--would also be nice to add a warning image if time zone does change-->
-			<label for="stZone" class ="question-label"><b>Source Time Zone:</b> Pacific</label>
-			<label for="dtZone" class ="question-label"><b>Destination Time Zone:</b> Central</label>
-			<label for="tZoneChange" class ="question-label"><b>Time Zone Change:</b> You will <u>Lose</u> 2 Hours</label>
-			<label for="space" class ="question-label"></label>
-			
-			<label for="language" class="question-label" id="flight-number-label">Language Spoken </label>
-			<!--Needs to change upon selection of destination country-->
-			<label for="pLang" class ="question-label">Primary Language: Default Language 1</label>
-			<label for="sLang" class ="question-label">Secondary Language: Default Language 2</label>
-			
-		</div>
     </header>
+
+<div class="page-container">
+    
+    <div class="info-container">
+
+        <div class="row"> 
+            <label class="s-label">Source: </label>
+            <label class ="place-label" id="source">College Station, USA</label>
+        </div>
+       
+        <div class="row"> 
+            <label class="s-label">Destination: </label>
+            <label class ="place-label" id="destination">Middlefart, Denmark</label>
+        </div>
+
+        <label class="small-label" id="departure-time">You are leaving on <b>5th April 2020</b> at <b>6:35 pm.</b></label>
+        <label class="small-label" id="trip-length">Trip Length: <b>5 days</b></label>
+
+        <label for="time-zone" class="big-label" id="time-zone">Time Zone </label>
+        <!--Needs To Change upon selection of destination and source country-->
+        <!--would also be nice to add a warning image if time zone does change-->
+        <label for="stZone" class ="small-label"><b>Source Time Zone:</b> Pacific</label>
+        <label for="dtZone" class ="small-label"><b>Destination Time Zone:</b> Central</label>
+        <label for="tZoneChange" class ="small-label"><b>Time Zone Change:</b> You will <u>Lose</u> 2 Hours</label>
+        <label for="space" class ="small-label"></label>
+        
+        <label for="language" class="big-label" id="flight-number-label">Language Spoken </label>
+        <!--Needs to change upon selection of destination country-->
+        <label for="pLang" class ="small-label">Primary Language: Default Language 1</label>
+        <label for="sLang" class ="small-label">Secondary Language: Default Language 2</label>
+
+        <label for="exchangeRate" class="big-label">Exchange Rate</label>
+        <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
+
+        <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
+            <div class="row">
+                <!--Needs to force a change in weather when clicked-->
+                <button class="button-change-info" id="button-change-info">1 Day</button>
+                <button class="button-change-info" id="button-change-info">3 Day</button>
+                <button class="button-change-info" id="button-change-info">5 Day</button>
+            </div>
+            <img src="/frontEnd/img/weather-temp.png" class="weather-image" style="margin-top:40px">
+
+        </div>
+    </div>
+        
+    <div class="list-container">
+        <div class="list-view" id="toiletries">
+            <h2 class="list-heading">Toiletries</h2>
+            <ul>
+                <li>Toothbrush</li>
+                <li>Mouthwash</li>
+                <li>Shampoo</li>
+                <li>Bathwash</li>
+                <li>Stuff</li>
+                
+            </ul>
+        </div>
+        <div class="list-view" id="medicines">
+            <h2 class="list-heading">Medicines</h2>
+            <ul>
+                <li>Medicine 1</li>
+                <li>Medicine 2</li>
+                <li>Medicine 3</li>
+                <li>Medicine 4</li>
+                <li>Medicine 5</li>
+            </ul>
+        </div>
+        <div class="list-view" id="electronics">
+            <h2 class="list-heading">Electronics</h2>
+            <ul>
+                <li>Laptop</li>
+                <li>Phone</li>
+                <li>Laptop Charger</li>
+                <li>Phone Charger</li>
+                <li>Outlet Converter</li>
+                
+            </ul>
+        </div>
+        
+        <div class="list-view" id="clothes">
+            <h2 class="list-heading">Clothes</h2>
+            <ul>
+                <li>3 Jackets</li>
+                <li>1 Rain Jacket</li>
+                <li>2 Pants</li>
+                <li>5 Shirt</li>
+                <li>10 Shoes</li>
+                
+            </ul>
+        </div>
+    </div>
+    <!-- 
+        <ul class="list-view-big" id="toiletries-big"></ul>
+        <ul class="list-view-big" id="medicines-big"></ul>
+        <ul class="list-view-big" id="electronics-big"></ul> -->
+    </div>
+
+    </div>
+
+    <div class="footer">
+        <!-- Fill this in later -->
+    </div>
 </body>
