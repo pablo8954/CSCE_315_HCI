@@ -21,7 +21,7 @@
 {
     font-size: $questions-font-size;
     font-family: $questions-font-family;
-    color: $secondary-color;
+    // color: $secondary-color;
     text-align: center;
     margin-top: 15px;
 }
@@ -98,7 +98,7 @@
 
 .button-type-2:hover
 {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 12px 16px 0 rgba(1,0,1,0.32),0 17px 50px 0 rgba(0,0,0,0.16);
 }
 
 #next-button

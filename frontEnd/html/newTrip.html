@@ -12,8 +12,6 @@
 </head>
 
 <body class="main-body">
-    <!-- <div class ="g-signin2" data-onsuccess="onSignIn"></div> -->
-    <script src="/frontEnd/js/functionality.js"></script>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
@@ -31,14 +29,14 @@
             <img src="/frontEnd/img/temp/person.png" id="profile-image">
             <label id="name-label">Someone Somebody</label>
             <div class ="g-signin2" data-onsuccess="onSignIn"></div>
-
+        
             </div>
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
 
             <h1 id="settings-heading">Settings</h1>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
-                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <input type="checkbox" id="dark-mode-checkbox" onchange="toggleTheme()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -46,7 +44,7 @@
             <label id="dark-mode-label">Dark Mode</label>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <input type="checkbox" id="color-blindness-checkbox"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -63,10 +61,10 @@
         <ul class="main-nav">
             <div class="row">
 
-            <li><a href="/"> Home</a></li>
-            <li class="active"><a href="newTrip.html"> New Trip</a></li>
-            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
-            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
+            <li><a class="main-nav-link" href="/"> Home</a></li>
+            <li  class="active"><a class="main-nav-link" href="newTrip.html"> New Trip</a></li>
+            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a class="main-nav-link" onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
@@ -99,5 +97,8 @@
     </div>
 		   
 	<!--Should check if return date is after departure date here-->
-	<!--Should check for time zone change here (Use JavaScript for that)-->
+    <!--Should check for time zone change here (Use JavaScript for that)-->
+    
+    <script src="/frontEnd/js/functionality.js"></script>
+
 </body>

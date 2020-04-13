@@ -170,12 +170,22 @@
     color: $time-change-color;
 }
 
+.dark-big-label
+{
+    color: $dark-big-label-color;
+}
+
 
 .small-label
 {
     color: $sd-label-color;
     font-family: $place-font-family;
     font-size: $place-font-size;
+}
+
+.dark-small-label
+{
+    color: $dark-small-label-color;
 }
 
 

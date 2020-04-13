@@ -24,7 +24,6 @@
 </head>
 
 <body class="main-body">
-    <script src="/frontEnd/js/functionality.js"></script>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
@@ -49,7 +48,7 @@
             <h1 id="settings-heading">Settings</h1>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
-                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <input type="checkbox" id="dark-mode-checkbox" onchange="toggleTheme()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -57,7 +56,7 @@
             <label id="dark-mode-label">Dark Mode</label>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <input type="checkbox" id="color-blindness-checkbox"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -74,10 +73,10 @@
         <ul class="main-nav">
             <div class="row">
 
-            <li class="active"><a href=""> Home</a></li>
-            <li><a href="newTrip.html"> New Trip</a></li>
-            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
-            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
+            <li class="active"><a class="main-nav-link" href=""> Home</a></li>
+            <li><a class="main-nav-link" href="newTrip.html"> New Trip</a></li>
+            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a class="main-nav-link" onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
@@ -88,48 +87,23 @@
     <div class="photos-container">
     <h1 class="heading">Pack Advisor</h1>
 
-    <!-- <div class="photo-row"> 
-
-
-        <div class="photo-column">
-            <img src="/frontend/img/places/eiffel.jpg" style="width:100%">
-            <img src="/frontend/img/places/reef.jpg" style="width:100%">
-            <img src="/frontend/img/places/newyork.jpg" style="width:100%">
-        </div>
-        <div class="photo-column">
-            <img src="/frontend/img/places/florence.jpg" style="width:100%">
-            <img src="/frontend/img/places/taj.jpeg" style="width:100%">
-            <img src="/frontend/img/places/everest.webp" style="width:100%">
-        </div>  
-        <div class="photo-column">
-            <img src="/frontend/img/places/niagra.jpg" style="width:100%">
-            <img src="/frontend/img/places/rio.jpg" style="width:100%">
-            <img src="/frontend/img/places/pyramid.jpg" style="width:100%">
-        </div>
-        <div class="photo-column">
-            <img src="/frontend/img/places/london.jpg" style="width:100%">
-            <img src="/frontend/img/places/canyon.jpg" style="width:100%">
-            <img src="/frontend/img/places/aurora.jpg" style="width:100%">
-        </div>
-      </div>
-
-    </div> -->
-        <div class="photo-organizer">
-            <div class="photo-outer"><img src="/frontend/img/places/eiffel.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/florence.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/niagra.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/london.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/reef.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/taj.jpeg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/rio.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/canyon.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/newyork.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/everest.webp" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/pyramid.jpg" style="width:100%"></div>
-            <div class="photo-outer"><img src="/frontend/img/places/aurora.jpg" style="width:100%"></div>
-        </div>
+    <div class="photo-organizer">
+        <div class="photo-outer"><img src="/frontend/img/places/eiffel.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/florence.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/niagra.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/london.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/reef.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/taj.jpeg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/rio.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/canyon.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/newyork.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/everest.webp" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/pyramid.jpg" style="width:100%"></div>
+        <div class="photo-outer"><img src="/frontend/img/places/aurora.jpg" style="width:100%"></div>
+    </div>
     </div>
 
-    
+    <script src="/frontEnd/js/functionality.js"></script>
+
 </body>
 

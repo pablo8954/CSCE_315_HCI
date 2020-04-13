@@ -4,7 +4,16 @@
 .main-body
 {
     background-color: $primary-color;
+    color: $secondary-color;
     margin: 0;
+    overflow-x: hidden;
+    transition: 0.3s;
+}
+
+.dark
+{
+    background-color: $dark-primary-color;
+    color: $dark-secondary-color;
 }
 
 .logo-container
@@ -33,6 +42,11 @@
     margin-left: 20px;
 }
 
+.dark-nav-logo-label
+{
+    color: $dark-header-logo-text-color;
+}
+
 .main-nav {
     /* background-image:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../imgs/img2.jpg); */
     background-color: transparent;
@@ -49,7 +63,7 @@
     display: inline-block;
 }
 
-.main-nav li a 
+.main-nav-link 
 {
     background-color: transparent;
     color: $nav-options-color;
@@ -62,6 +76,11 @@
     cursor: pointer;
 }
 
+.dark-main-nav
+{
+    color: $dark-nav-options-color;
+}
+
 .main-nav li.active a 
 {
     color: $header-hover-color;
@@ -70,9 +89,10 @@
     background-color: black;
 }
 
-.main-nav li a:hover 
+.main-nav-link:hover
 {
     color: $header-hover-color;
+    text-decoration: none;
 }
 
 .footer
@@ -119,6 +139,7 @@
     rotate: 180;
     text-decoration: none;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 #close-sidebar-button:hover
@@ -211,6 +232,7 @@
     color: $very-light-gray;
     font-size: 32px;
     margin-top: 22px;
+    text-align: center;
 }
 
 #settings-heading

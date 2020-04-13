@@ -82,7 +82,7 @@
 
 .list-view-big {
   position: absolute;
-  color: #FFCE00;
+  color: #fffafa;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -130,10 +130,18 @@
   color: #660000;
 }
 
+.dark-big-label {
+  color: #ff6666;
+}
+
 .small-label {
   color: #00577b;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
+}
+
+.dark-small-label {
+  color: #00a5a5;
 }
 
 .button-change-info {
