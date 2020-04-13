@@ -19,10 +19,7 @@
 </head>
 
 <body class="main-body">
-   
-
     <script src="/frontEnd/js/functionality.js"></script>
-    
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
@@ -38,8 +35,10 @@
             <div id="profile-container">
             <!-- Things: Picture, Name, Number of Saved Trips -->
             <img src="/frontEnd/img/temp/person.png" id="profile-image">
-            <label id="name-label">Someone Somebody</label>
-            <div class ="g-signin2" data-onsuccess="onSignIn"></div>
+            <label id="name-label"></label>
+            <div class ="g-signin2" id ="google-signin-button" data-onsuccess="onSignIn"></div>
+            <button class="generic-button" id="logout-button" onclick="signout()"> Sign Out </button>
+
             </div>
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
 

@@ -2,15 +2,13 @@ function onSignIn(googleUser)
 {
     var profile = googleUser.getBasicProfile();
 
+    //replace image and names
     var name = document.getElementById('name-label')
     name.innerHTML = profile.getName();
-
     var image = document.getElementById('profile-image');
     image.src = profile.getImageUrl();
 
-}
-
-function signout(){
-    var auth2 = gapi.auth2.getAuthInstance();
-    
+    //replace buttons
+    document.getElementById("google-signin-button").style.display="none";
+    document.getElementById("logout-button").style.display="block";
 }
