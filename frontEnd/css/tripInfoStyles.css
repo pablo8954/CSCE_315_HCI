@@ -4,7 +4,7 @@
 }
 
 #darkener {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
@@ -13,7 +13,151 @@
   opacity: 0;
   background-color: black;
   transition: opacity 350ms ease-in-out;
+}
+
+.unclickable {
   pointer-events: none;
+}
+
+.center-list-view {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  height: 65vh;
+  width: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 450px;
+  background-color: black;
+  border-radius: 10px;
+  z-index: 30;
+  align-items: center;
+  font-family: "Helvetica Neue", sans-serif;
+  overflow: scroll;
+}
+
+.center-list-view h2 {
+  font-size: 36px;
+  text-align: center;
+}
+
+.center-list-heading {
+  text-align: center;
+}
+
+.center-list {
+  text-align: center;
+  list-style-type: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.add-container {
+  width: 70%;
+  height: 40px;
+  margin-bottom: 35px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#add-input {
+  padding: 0 5px 0 5px;
+  margin: 0 auto;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  border: none;
+}
+
+#add-input:focus {
+  outline: none;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.5);
+}
+
+#add-button {
+  position: absolute;
+  padding: 0 5px 0 5px;
+  border: none;
+  right: 0;
+  width: 22%;
+  height: 40px;
+  background: #d9d9d9;
+  color: #555;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+  margin-right: 50px;
+}
+
+#add-button:hover {
+  background-color: #999;
+}
+
+#add-button:focus {
+  outline: none;
+}
+
+.editable-list-item {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.editable-list-label {
+  font-size: 22px;
+  color: #ddd;
+  vertical-align: middle;
+  cursor: text;
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 10px 0;
+  margin-left: 50px;
+}
+
+.delete-list-button {
+  border: none;
+  background-color: transparent;
+  color: #bbb;
+  padding: 5px 10px;
+  margin-right: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 22px;
+  font-family: "Garamond";
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  font-family: "Helvetica Neue", sans-serif;
+  border-radius: 50%;
+  float: right;
+}
+
+.delete-list-button:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.checkbox-list {
+  height: 100%;
+  width: 25px;
+  background-color: black;
+  margin: 0;
+  padding-right: 10px;
 }
 
 .page-container {
@@ -45,19 +189,24 @@
   text-align: center;
   height: 400px;
   width: 350px;
-  background-color: #00577b;
+  background-color: #008dc8;
   color: #fffafa;
   border-radius: 10px;
   margin-top: 50px;
   margin-right: 50px;
+  font-family: "Helvetica Neue", sans-serif;
+  overflow: scroll;
 }
 
 .list-view h2 {
   font-size: 36px;
+  text-align: center;
+  pointer-events: none;
 }
 
 .list-view:hover {
   filter: brightness(50%);
+  cursor: pointer;
 }
 
 .list-view ul {
@@ -66,27 +215,21 @@
   align-items: center;
   margin: 0;
   padding: 0;
+  pointer-events: none;
 }
 
-.list-view ul li {
+.list-view-item {
   cursor: pointer;
   font-size: 22px;
-  color: #ccc;
+  color: #ddd;
   vertical-align: middle;
   /* make the list items unselectable */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.list-view-big {
-  position: absolute;
-  color: #fffafa;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  border-color: black;
+  margin: 10px 0;
 }
 
 #medicines {
@@ -95,7 +238,7 @@
 }
 
 #electronics {
-  background-color: #008dc8;
+  background-color: #0f9d58;
   color: #fffafa;
 }
 
@@ -104,12 +247,14 @@
   color: #00577b;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
+  text-align: center;
 }
 
 .place-label {
   color: #008dc8;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
+  text-align: center;
 }
 
 #departure-time {
@@ -128,6 +273,7 @@
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
   color: #660000;
+  text-align: center;
 }
 
 .dark-big-label {
@@ -138,6 +284,7 @@
   color: #00577b;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 30px;
+  text-align: center;
 }
 
 .dark-small-label {

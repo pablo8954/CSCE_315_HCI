@@ -1,10 +1,11 @@
 
 // Variables to keep track of
 var transEndEventName = ('WebkitTransition' in document.documentElement.style) ? 'webkitTransitionEnd' : 'transitionend';
-var darkMode = sessionStorage.getItem('dark-mode');
+var darkMode = false;
+// window.onload = function() {
+darkMode = sessionStorage.getItem('dark-mode');
 
 console.log('dark mode found as ' + darkMode)
-
 if (darkMode)
 {
     // Set as opposite of what it is
@@ -19,7 +20,11 @@ if (darkMode)
 else
 {
     darkMode = false;
+    document.getElementById('dark-mode-checkbox').checked = true;
+    toggleTheme();        
 }
+// }
+
 
 var colorBlindness = false;
 
@@ -32,7 +37,7 @@ function oldTripsClicked()
         toggleSidebar();
         if (document.getElementById("old-trips-container").style.display == "flex")
         return;
-
+        
         document.addEventListener(transEndEventName , showOldTrips);
         return;
     }
@@ -55,7 +60,7 @@ function toggleTheme()
     // main-nav
     // big-label
     // small-label
-
+    
     // Toggle all dark themed classes
     toggleDarkThemeOfClass("main-body", "dark");
     toggleDarkThemeOfClass("main-nav-link", "dark-main-nav");
@@ -80,7 +85,7 @@ function settingsClicked()
     if (!sidebar.classList.contains("collapsed"))
     {
         toggleSidebar();
-
+        
         if (document.getElementById("settings-container").style.display == "flex")
         return;
         
@@ -89,7 +94,7 @@ function settingsClicked()
     }
     
     showSettings();
-
+    
     // TODO: Here we will get the information about the person/settings
     
 }
@@ -99,7 +104,7 @@ function showSettings()
     // Hide Old Trips and show Settings
     document.getElementById("settings-container").style.display = 'flex';
     document.getElementById("old-trips-container").style.display = 'none';
-
+    
     // Open the sidebar again
     toggleSidebar();
     document.removeEventListener(transEndEventName, showSettings);
@@ -110,7 +115,7 @@ function showOldTrips()
     // Show Old Trips and hide Settings
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
-
+    
     // Open the sidebar again
     toggleSidebar();
     document.removeEventListener(transEndEventName, showOldTrips);

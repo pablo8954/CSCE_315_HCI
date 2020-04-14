@@ -13,6 +13,7 @@
 </head>
 
 <body class="main-body">
+    <div id="darkener"></div>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
@@ -118,48 +119,41 @@
         </div>
     </div>
         
+    <div class="center-list-view" id="editable-list-view">
+        <h2 contenteditable=true class="center-list-heading"></h2>
+        <div class="add-container">
+            <input type="text" placeholder="Enter new item" id="add-input">
+            <button id="add-button">Add</button>
+        </div>
+        <ul class="center-list" id="editable-list"></ul>
+    </div>
+
     <div class="list-container">
         <div class="list-view" id="toiletries">
             <h2 class="list-heading">Toiletries</h2>
-            <ul>
-                <li>Toothbrush</li>
-                <li>Mouthwash</li>
-                <li>Shampoo</li>
-                <li>Bathwash</li>
-                <li>Stuff</li>
+            <ul id="toiletries-list">
+            
                 
             </ul>
         </div>
         <div class="list-view" id="medicines">
             <h2 class="list-heading">Medicines</h2>
-            <ul>
-                <li>Medicine 1</li>
-                <li>Medicine 2</li>
-                <li>Medicine 3</li>
-                <li>Medicine 4</li>
-                <li>Medicine 5</li>
+            <ul id="medicines-list">
+
             </ul>
         </div>
         <div class="list-view" id="electronics">
             <h2 class="list-heading">Electronics</h2>
-            <ul>
-                <li>Laptop</li>
-                <li>Phone</li>
-                <li>Laptop Charger</li>
-                <li>Phone Charger</li>
-                <li>Outlet Converter</li>
+            <ul id="electronics-list">
+
                 
             </ul>
         </div>
         
         <div class="list-view" id="clothes">
             <h2 class="list-heading">Clothes</h2>
-            <ul>
-                <li>3 Jackets</li>
-                <li>1 Rain Jacket</li>
-                <li>2 Pants</li>
-                <li>5 Shirt</li>
-                <li>10 Shoes</li>
+            <ul id="clothes-list">
+
                 
             </ul>
         </div>
@@ -177,5 +171,6 @@
     </div>
 
     <script src="/frontEnd/js/functionality.js"></script>
+    <script src="/frontEnd/js/tripInfo.js"></script>
 
 </body>
