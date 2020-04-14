@@ -80,6 +80,18 @@ function createEditableListItem(itemVal)
         value.style.textDecoration = 'line-through';
     }
 
+    value.addEventListener("focus", function(eve)
+    {
+        console.log("hello");
+        eve.target.parentElement.classList.toggle('bordered-editable-list-item');
+    });
+
+    value.addEventListener("focusout", function(eve)
+    {
+        console.log("hello");
+        eve.target.parentElement.classList.toggle('bordered-editable-list-item');
+    });
+
     // add delete option here
     var deleteButton = document.createElement("button");
     deleteButton.innerText = "x";

@@ -45,7 +45,7 @@
     z-index: 30;
     align-items: center;
     font-family: $sans-serif-font-family;
-    overflow: scroll;
+    overflow: auto;
 
 }
 
@@ -69,6 +69,8 @@
     padding: 0;
     // pointer-events: none;
     width: 100%;
+    overflow: auto;
+
 }
 
 .add-container
@@ -138,6 +140,11 @@
     width: 100%;
 }
 
+.bordered-editable-list-item
+{
+    border: 1px solid $dark-gray;
+}
+
 .editable-list-label
 {
     // padding: 12px 8px 12px 40px;
@@ -204,7 +211,7 @@
 { 
     display:flex;
     flex-direction: column;
-    width: 50vw;
+    width: 45vw;
     float: left;
     justify-content: center;
     align-items: center;
@@ -217,7 +224,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     float: right;
-    width: 45vw;
+    width: 50vw;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
@@ -232,15 +239,15 @@
 {
     text-align: center;
     height: 400px;
-    width: 350px;
+    width: 300px;
     background-color: $list1-primary-color;
     color: $list1-secondary-color;
     border-radius: 10px;
     margin-top: 50px;
     margin-right: 50px;
     font-family: $sans-serif-font-family;
-    overflow: scroll;
-    
+    overflow: auto;
+
 }
 
 .list-view h2
@@ -264,6 +271,8 @@
     margin: 0;
     padding: 0;
     pointer-events: none;
+    overflow: auto;
+
 }
 
 .list-view-item
