@@ -7,7 +7,7 @@
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
-    
+	<script type="text/javascript" src ='frontEnd/js/functionality.js'></script>
 </head>
 
 <body class="main-body">
@@ -35,8 +35,9 @@
 
             <h1 id="settings-heading">Settings</h1>
 			
+			 <script src="/frontEnd/js/functionality.js"></script>
 			<div class="rangeslider"> 
-			  <input type="range" min="1" max="200" value="20" class="myslider" id="sliderRange" > 
+			  <input type="range" min="1" max="100" value="50" class="myslider" id="sliderRange" onchange="change_text_size(this.value)"> 
 			</div> 
 			<label id="dark-mode-label">Text Size</label>
 			
@@ -55,11 +56,6 @@
                 </label>
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
-			
-			
-			
-
-
         </div>
     </div>
     <header class="nav-header">
@@ -110,8 +106,13 @@
         <!--Needs to change upon selection of destination country-->
         <label for="pLang" class ="small-label">Primary Language: Default Language 1</label>
         <label for="sLang" class ="small-label">Secondary Language: Default Language 2</label>
-
-        <label for="exchangeRate" class="big-label">Exchange Rate</label>
+		
+		<div class ="row">
+			<button class ="button-change-info" id ="button-change-info"> Generate Common Phrases </button>
+			<button class="button-change-info" id="button-change-info">Export Common Phrases</button>
+        </div>
+		
+	   <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
         <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 

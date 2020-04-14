@@ -7,6 +7,7 @@
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src ='frontEnd/js/functionality.js'></script>
 </head>
 
 <body class="main-body">
@@ -18,10 +19,7 @@
         <div id="old-trips-container">
             <h2 class="old-trips-heading">Old Trips</h2>
             <ul class="old-trips-list">
-                <li><i class="fas fa-plane"></i> Mumbai to Austin on 3/2/2020</li>
-                <li><i class="fas fa-plane"></i> Guatemala City to Mumbai on 2/9/2020</li>
-                <li><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
-                <li><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+                <li><i class="fas fa-plane"></i>Test</li>
             </ul>
         </div>
         <div id="settings-container">
@@ -36,7 +34,7 @@
             <h1 id="settings-heading">Settings</h1>
 			
 			<div class="rangeslider"> 
-			  <input type="range" min="1" max="200" value="20" class="myslider" id="sliderRange" > 
+			  <input type="range" min="1" max="100" value="50" class="myslider" id="sliderRange" onchange="change_text_size(this.value)"> 
 			</div> 
 			<label id="dark-mode-label">Text Size</label>
 			
