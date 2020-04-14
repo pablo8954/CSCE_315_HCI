@@ -126,3 +126,19 @@ function toggleSidebar()
     document.getElementById("sidebar").classList.toggle("collapsed");
 }
 
+// Google Sign out
+function signout(){
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut();
+
+    //set image and username to default
+    var name = document.getElementById('name-label')
+    name.innerHTML = "";
+    var image = document.getElementById('profile-image');
+    image.src = "/frontEnd/img/temp/person.png";
+
+    //replace buttons
+    document.getElementById("google-signin-button").style.display="block";
+    document.getElementById("logout-button").style.display="none";
+}
+
