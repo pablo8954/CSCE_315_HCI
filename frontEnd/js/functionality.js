@@ -1,5 +1,32 @@
 
+// Variables to keep track of
 var transEndEventName = ('WebkitTransition' in document.documentElement.style) ? 'webkitTransitionEnd' : 'transitionend';
+var darkMode = false;
+// window.onload = function() {
+darkMode = sessionStorage.getItem('dark-mode');
+
+console.log('dark mode found as ' + darkMode)
+if (darkMode)
+{
+    // Set as opposite of what it is
+    darkMode = (darkMode == "true");
+    if (darkMode)
+    {
+        darkMode = false;
+        document.getElementById('dark-mode-checkbox').checked = true;
+        toggleTheme();
+    }
+}
+else
+{
+    darkMode = false;
+    document.getElementById('dark-mode-checkbox').checked = true;
+    toggleTheme();        
+}
+// }
+
+
+var colorBlindness = false;
 
 function oldTripsClicked()
 {
@@ -10,7 +37,7 @@ function oldTripsClicked()
         toggleSidebar();
         if (document.getElementById("old-trips-container").style.display == "flex")
         return;
-
+        
         document.addEventListener(transEndEventName , showOldTrips);
         return;
     }
@@ -22,9 +49,33 @@ function oldTripsClicked()
 
 function toggleTheme()
 {
-    // Toggle all light themed classes
-
+    darkMode = !darkMode;
+    sessionStorage.setItem('dark-mode', JSON.stringify(darkMode));
+    var toCheck = sessionStorage.getItem('dark-mode');
+    console.log ('set to ' + darkMode);
+    console.log(typeof darkMode);
+    // ** To change **
+    // main-body
+    // logo heading
+    // main-nav
+    // big-label
+    // small-label
+    
     // Toggle all dark themed classes
+    toggleDarkThemeOfClass("main-body", "dark");
+    toggleDarkThemeOfClass("main-nav-link", "dark-main-nav");
+    toggleDarkThemeOfClass("nav-logo-label", "dark-nav-logo-label");
+    toggleDarkThemeOfClass("small-label", "dark-small-label");
+    toggleDarkThemeOfClass("big-label", "dark-big-label");
+}
+
+function toggleDarkThemeOfClass(className, darkClassName)
+{
+    var toChange = document.getElementsByClassName(className);
+    for (var i = 0; i < toChange.length; ++i)
+    {
+        toChange[i].classList.toggle(darkClassName);
+    }
 }
 
 function settingsClicked()
@@ -34,7 +85,7 @@ function settingsClicked()
     if (!sidebar.classList.contains("collapsed"))
     {
         toggleSidebar();
-
+        
         if (document.getElementById("settings-container").style.display == "flex")
         return;
         
@@ -43,7 +94,7 @@ function settingsClicked()
     }
     
     showSettings();
-
+    
     // TODO: Here we will get the information about the person/settings
     
 }
@@ -53,7 +104,7 @@ function showSettings()
     // Hide Old Trips and show Settings
     document.getElementById("settings-container").style.display = 'flex';
     document.getElementById("old-trips-container").style.display = 'none';
-
+    
     // Open the sidebar again
     toggleSidebar();
     document.removeEventListener(transEndEventName, showSettings);
@@ -64,7 +115,7 @@ function showOldTrips()
     // Show Old Trips and hide Settings
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
-
+    
     // Open the sidebar again
     toggleSidebar();
     document.removeEventListener(transEndEventName, showOldTrips);
@@ -75,75 +126,32 @@ function toggleSidebar()
     document.getElementById("sidebar").classList.toggle("collapsed");
 }
 
-function change_text_size(val) {
-	val = val - 50;
-	var elements = document.getElementsByClassName('s-label');
-	for(var i = 0; i < elements.length; i++) {
-		var element = elements[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('place-label');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('nav-logo-label');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('small-label');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('big-label');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('button-change-info');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 20 + val + "px";
-	}
-	var elements2 = document.getElementsByClassName('list-heading');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 30 + val + "px";
-	}
-	//need to add one for list info
-	var elements2 = document.getElementsByClassName('questions-container');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 10 + val + "px";
-	}
-	var elements2 = document.getElementsById('question-label');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 22 + val + "px";
-	}
-	var elements2 = document.getElementsById('button-type-1');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 22 + val + "px";
-	}
-	var elements2 = document.getElementsById('button-type-2');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 22 + val + "px";
-	}
-	var elements2 = document.getElementsById('heading');
-	for(var i = 0; i < elements2.length; i++) {
-		var element = elements2[i];
-		element.style.fontSize = 105 + val + "px";
-	}
+// Google Sign out
+function signout(){
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut();
+
+    //set image and username to default
+    var name = document.getElementById('name-label')
+    name.innerHTML = "";
+    var image = document.getElementById('profile-image');
+    image.src = "/frontEnd/img/temp/person.png";
+
+    //replace buttons
+    document.getElementById("google-signin-button").style.display="block";
+    document.getElementById("logout-button").style.display="none";
 }
 
-
-
-
-
-
+var rangeslider = document.getElementById("sliderRange"); 
+var output = document.getElementById("demo"); 
+output.innerHTML = rangeslider.value; 
+  
+rangeslider.oninput = function() { 
+  output.innerHTML = this.value; 
+  var val = this.value;
+  var numString = val.toString();
+  var zoomLevel = numString + "%";
+  document.body.style.zoom = zoomLevel;
+} 
 
 

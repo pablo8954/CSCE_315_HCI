@@ -1,16 +1,63 @@
+$blackish-gray: #222;
+$blackish-darker-gray: #1c1c1c;
 $dark-gray: #484848;
+$nice-gray: #666;
+$very-light-gray: #aaa;
 $snow: #fffafa;
 $lemon-yellow:#FFCE00;
-$pastel-orange: #fa9200;
+$medium-yellow: #f4b400;
+$pastel-orange: #e18300;
 $dark-teal: #006767;
+$light-teal: #00a5a5;
 $light-cream: #ffeddc;
+$dark-sea-blue: #00577b; 
+$light-sea-blue: #008dc8;
+$maroonish-red: #993333;
+$dark-red: #660000;
+$pastel-red: #ff6666;
+$grass-green: #0f9d58;
 
-
+$side-bar-background-color: $blackish-darker-gray;
+$side-bar-heading-color: $snow;
+$side-bar-text-color: $snow;
+$side-bar-list-color-1: $nice-gray;
+$side-bar-list-color-2: $dark-gray;
 
 $primary-color: $snow;
-$secondary-color: $dark-gray;
+$dark-primary-color: $blackish-gray;
+$secondary-color: $nice-gray;
+$dark-secondary-color: $snow;
+
 $header-hover-color: $pastel-orange;
 $header-logo-text-color: $dark-teal;
+$dark-header-logo-text-color: $light-teal;
 $nav-background-color: #ffeddc;
+$nav-options-color: $dark-gray;
+$dark-nav-options-color: #ffeddc;
 
-$heading-color: $lemon-yellow;
+$heading-color: $snow;
+
+$buttons-primary-color1: $dark-sea-blue;
+$buttons-secondary-color1: $snow;
+
+$buttons-primary-color2: $light-sea-blue;
+$buttons-secondary-color2: $snow;
+
+$list3-primary-color: $pastel-orange;
+$list3-secondary-color: $snow;
+
+$list2-primary-color: $grass-green;
+$list2-secondary-color: $snow;
+
+$list1-primary-color: $maroonish-red;
+$list1-secondary-color: $light-cream;
+
+$list4-primary-color: $light-sea-blue;
+$list4-secondary-color: $snow;
+
+$sd-label-color: $dark-sea-blue;
+$place-label-color: $light-sea-blue;
+$dark-small-label-color: $light-teal;
+
+$time-change-color: $dark-red;
+$dark-big-label-color: $pastel-red;

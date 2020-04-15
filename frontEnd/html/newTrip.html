@@ -2,46 +2,56 @@
 <html>
 
 <head>
-    <title>Packer</title>
+    <title>Pack Advisor</title>
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src ='frontEnd/js/functionality.js'></script>
+
+    <!-- Google API Stuff -->
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/frontEnd/js/apiCalls.js"></script>
 </head>
 
 <body class="main-body">
-    <!-- <div class ="g-signin2" data-onsuccess="onSignIn"></div> -->
-    <div class ="g-signin2" data-onsuccess="onSignIn"></div>
-    <script src="/frontEnd/js/functionality.js"></script>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
             <h2 class="old-trips-heading">Old Trips</h2>
             <ul class="old-trips-list">
-                <li><i class="fas fa-plane"></i>Test</li>
+                <li><i class="fas fa-plane"></i> Mumbai to Austin on 3/2/2020</li>
+                <li><i class="fas fa-plane"></i> Guatemala City to Mumbai on 2/9/2020</li>
+                <li><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
+                <li><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
             </ul>
         </div>
         <div id="settings-container">
             <div id="profile-container">
             <!-- Things: Picture, Name, Number of Saved Trips -->
             <img src="/frontEnd/img/temp/person.png" id="profile-image">
-            <label id="name-label">Someone Somebody</label>
+            <label id="name-label"></label>
+            <div class ="g-signin2" id ="google-signin-button" data-onsuccess="onSignIn"></div>
+            <button class="generic-button" id="logout-button" onclick="signout()"> Sign Out </button>
 
             </div>
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
 
             <h1 id="settings-heading">Settings</h1>
 			
+			<script src="/frontEnd/js/functionality.js"></script>
 			<div class="rangeslider"> 
-			  <input type="range" min="1" max="100" value="50" class="myslider" id="sliderRange" onchange="change_text_size(this.value)"> 
+			  <input type="range" min="50" max="150" value="100"
+							  class="myslider" id="sliderRange">  
 			</div> 
-			<label id="dark-mode-label">Text Size</label>
-			
+			<label id="dark-mode-label">Text Size: <span id="demo"></span>%</label>
 			
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
-                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <input type="checkbox" id="dark-mode-checkbox" onchange="toggleTheme()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -49,7 +59,7 @@
             <label id="dark-mode-label">Dark Mode</label>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <input type="checkbox" id="color-blindness-checkbox"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -61,15 +71,15 @@
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
-            <h1 class="nav-logo-label">Packadvisor</h1>
+            <p class="nav-logo-label">Packadvisor</p>
         </div>
         <ul class="main-nav">
             <div class="row">
 
-            <li><a href="/"> Home</a></li>
-            <li class="active"><a href="newTrip.html"> New Trip</a></li>
-            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
-            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
+            <li><a class="main-nav-link" href="/"> Home</a></li>
+            <li  class="active"><a class="main-nav-link" href="newTrip.html"> New Trip</a></li>
+            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a class="main-nav-link" onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
@@ -80,8 +90,11 @@
     <!--Flight number input-->
     <div class="questions-container">
         <label for="fnum" class="question-label" id="flight-number-label">What is your flight number?</label>
-        <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
-   
+        <div id="flight-number-container">
+            <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
+            <button id="dont-know-button">Don't Know</button>
+        </div>
+
 	
 	<!--Depart and Return Date-->
 	<label for="start" class="question-label" id="depart-date-label">Departure Date</label>
@@ -97,10 +110,13 @@
     <!-- Connect these buttons to javascript code!!! -->
     <div class="row">
         <button class="button-type-1" onclick="window.location.href = 'tripInfo.html';" id="next-button">Next</button>
-        <button class="button-type-2" id="skip-button">Skip</button>
+        <!-- <button class="button-type-2" id="skip-button">Skip</button> -->
     </div>
     </div>
 		   
 	<!--Should check if return date is after departure date here-->
-	<!--Should check for time zone change here (Use JavaScript for that)-->
+    <!--Should check for time zone change here (Use JavaScript for that)-->
+    
+    <script src="/frontEnd/js/functionality.js"></script>
+
 </body>
