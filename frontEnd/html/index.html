@@ -58,6 +58,13 @@
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
 
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="text-to-speech-checkbox">
+                    <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Text to Speech</label>
 
         </div>
     </div>
@@ -101,6 +108,7 @@
     </div>
     </div>
 
+    <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
 
 </body>

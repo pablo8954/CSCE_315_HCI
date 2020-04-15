@@ -1,17 +1,17 @@
 
 // Variables to keep track of
 var transEndEventName = ('WebkitTransition' in document.documentElement.style) ? 'webkitTransitionEnd' : 'transitionend';
+
+// Get settings/variables
 var darkMode = false;
-// window.onload = function() {
 darkMode = sessionStorage.getItem('dark-mode');
 
-console.log('dark mode found as ' + darkMode)
 if (darkMode)
 {
-    // Set as opposite of what it is
     darkMode = (darkMode == "true");
     if (darkMode)
     {
+        // Set as opposite of what it is
         darkMode = false;
         document.getElementById('dark-mode-checkbox').checked = true;
         toggleTheme();
@@ -21,9 +21,22 @@ else
 {
     darkMode = false;
     document.getElementById('dark-mode-checkbox').checked = true;
-    toggleTheme();        
+    toggleTheme();  
 }
-// }
+
+var textToSpeech = false;
+textToSpeech = sessionStorage.getItem('text-to-speech')
+if (textToSpeech)
+{
+    textToSpeech = (textToSpeech == "true");
+    if (textToSpeech)
+    {
+        // Set as opposite of what it is
+        textToSpeech = false;
+        document.getElementById('text-to-speech-checkbox').checked = true;
+        toggleTextToSpeech();
+    }
+}
 
 
 var colorBlindness = false;
@@ -51,9 +64,7 @@ function toggleTheme()
 {
     darkMode = !darkMode;
     sessionStorage.setItem('dark-mode', JSON.stringify(darkMode));
-    var toCheck = sessionStorage.getItem('dark-mode');
-    console.log ('set to ' + darkMode);
-    console.log(typeof darkMode);
+
     // ** To change **
     // main-body
     // logo heading
@@ -127,7 +138,8 @@ function toggleSidebar()
 }
 
 // Google Sign out
-function signout(){
+function signout()
+{
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
 
@@ -141,4 +153,21 @@ function signout(){
     document.getElementById("google-signin-button").style.display="block";
     document.getElementById("logout-button").style.display="none";
 }
+
+function toggleTextToSpeech()
+{
+    textToSpeech = !textToSpeech;
+    if (textToSpeech)
+    {
+        turnOnSpeakSelectedText();
+    }
+    else
+    {
+        turnOffSpeakSelectedText();
+    }
+
+    sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
+}
+
+
 
