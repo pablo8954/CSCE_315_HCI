@@ -16,7 +16,7 @@
 
 .photo-outer img
 {
-    filter: brightness(40%);
+    filter: brightness(35%);
     transition: transform .5s ease;
     height: 100%;
 }
@@ -58,6 +58,7 @@
 .photos-container
 {
     position: relative;
+    margin-top: 20px;
 }
 
 .heading
@@ -67,10 +68,11 @@
     text-align: center;
     color: $heading-color;
     font-size: $heading-name-font-size;
-    font-family: "Ariel";
+    font-family: $default-font-family;
     letter-spacing: 7px;
-    top: 20%;
+    top: 10%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
     user-select: none;
     z-index: 10;

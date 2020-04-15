@@ -35,13 +35,59 @@
 //
 // Input Option Stuff
 //
+
+#flight-number-container
+{
+    width: 40%;
+    max-width: 450px;
+    min-width: 300px;
+    height: 50px;
+    margin-top: 35px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    
+}
+
 #flight-number
 {
-    margin-top: 20px;
-    font-size: $questions-font-size;
-    font-family: $questions-font-family;
-    padding: 5px;
+    padding: 0 5px 0 5px;
+    margin: 0 auto;
     border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-family: $questions-font-family;
+    border:none;
+}
+
+#dont-know-button
+{
+    position: relative;
+    padding: 0 5px 0 5px;
+    border: none;
+    right: 10px;
+    width: 210px;
+    height: 100%;
+    background: #c9c9c9;
+    color: #555;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 20px;
+    font-family: $questions-font-family;
+
+    border-radius: 5px;
+    margin-right: 50px;
+}
+
+#dont-know-button:hover
+{
+    background-color: #888;
 }
 
 .date-picker
@@ -52,7 +98,6 @@
     padding: 5px;
     border-radius: 5px;
 }
-
 
 //
 // Button Stuff
@@ -76,6 +121,7 @@
 .button-type-1:hover
 {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    filter: brightness(70%);
 }
 
 .button-type-2
@@ -99,6 +145,7 @@
 .button-type-2:hover
 {
     box-shadow: 0 12px 16px 0 rgba(1,0,1,0.32),0 17px 50px 0 rgba(0,0,0,0.16);
+    filter: brightness(70%);
 }
 
 #next-button

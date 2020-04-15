@@ -39,6 +39,7 @@
     font-size: $heading-logo-text-size;
     color: $header-logo-text-color;
     font-weight: none;
+    margin: 0;
     margin-left: 20px;
 }
 
@@ -339,7 +340,7 @@ input:checked + .slider:before
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-#generic-button
+#logout-button
 {
     margin-top: 20px;
 }

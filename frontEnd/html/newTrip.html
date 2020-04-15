@@ -63,7 +63,7 @@
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
-            <h1 class="nav-logo-label">Packadvisor</h1>
+            <p class="nav-logo-label">Packadvisor</p>
         </div>
         <ul class="main-nav">
             <div class="row">
@@ -82,8 +82,11 @@
     <!--Flight number input-->
     <div class="questions-container">
         <label for="fnum" class="question-label" id="flight-number-label">What is your flight number?</label>
-        <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
-   
+        <div id="flight-number-container">
+            <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
+            <button id="dont-know-button">Don't Know</button>
+        </div>
+
 	
 	<!--Depart and Return Date-->
 	<label for="start" class="question-label" id="depart-date-label">Departure Date</label>
@@ -99,7 +102,7 @@
     <!-- Connect these buttons to javascript code!!! -->
     <div class="row">
         <button class="button-type-1" onclick="window.location.href = 'tripInfo.html';" id="next-button">Next</button>
-        <button class="button-type-2" id="skip-button">Skip</button>
+        <!-- <button class="button-type-2" id="skip-button">Skip</button> -->
     </div>
     </div>
 		   

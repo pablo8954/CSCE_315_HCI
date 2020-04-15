@@ -107,6 +107,45 @@
   outline: none;
 }
 
+#close-editable-button {
+  position: absolute;
+  right: 10px;
+  padding: 0;
+  color: #ddd;
+  background-color: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#close-editable-button:hover {
+  opacity: 1;
+}
+
+#close-editable-button:before, #close-editable-button:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 30px;
+  width: 2px;
+  background-color: #fffafa;
+}
+
+#close-editable-button:before {
+  transform: rotate(45deg);
+}
+
+#close-editable-button:after {
+  transform: rotate(-45deg);
+}
+
+#close-editable-button:hover {
+  color: white;
+}
+
 .editable-list-item {
   margin: 0;
   display: flex;
@@ -208,8 +247,8 @@
   text-align: center;
   height: 400px;
   width: 300px;
-  background-color: #008dc8;
-  color: #fffafa;
+  background-color: #993333;
+  color: #ffeddc;
   border-radius: 10px;
   margin-top: 50px;
   margin-right: 50px;
@@ -253,12 +292,17 @@
 }
 
 #medicines {
-  background-color: #993333;
-  color: #ffeddc;
+  background-color: #e18300;
+  color: #fffafa;
 }
 
 #electronics {
   background-color: #0f9d58;
+  color: #fffafa;
+}
+
+#clothes {
+  background-color: #008dc8;
   color: #fffafa;
 }
 
@@ -318,7 +362,7 @@
   padding: 10px 30px;
   text-align: center;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
   font-family: "Garamond";
   cursor: pointer;
   -webkit-transition-duration: 0.4s;

@@ -30,6 +30,7 @@
   font-size: 30px;
   color: #006767;
   font-weight: none;
+  margin: 0;
   margin-left: 20px;
 }
 
@@ -69,14 +70,14 @@
 }
 
 .main-nav li.active a {
-  color: #fa9200;
+  color: #e18300;
   border-radius: 10px;
   border-width: 2px;
   background-color: black;
 }
 
 .main-nav-link:hover {
-  color: #fa9200;
+  color: #e18300;
   text-decoration: none;
 }
 
@@ -284,7 +285,7 @@ input:checked + .slider:before {
   padding: 10px 30px;
   text-align: center;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
   font-family: "Garamond";
   cursor: pointer;
   -webkit-transition-duration: 0.4s;
@@ -298,7 +299,7 @@ input:checked + .slider:before {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-#generic-button {
+#logout-button {
   margin-top: 20px;
 }
 

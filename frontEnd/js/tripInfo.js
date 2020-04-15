@@ -167,7 +167,7 @@ function addNewElement()
     var newLi = createEditableListItem(itemVal);
     
     document.getElementById('editable-list').appendChild(newLi);
-
+    document.getElementById('add-input').value = '';
 }
 
 function repopulateAllLists()
@@ -256,6 +256,15 @@ window.onload = function()
 
     this.document.getElementById('darkener').classList.toggle('unclickable');
     this.document.getElementById('add-button').addEventListener('click', this.addNewElement);
+    document.getElementById("add-input").addEventListener("keyup", function(event) 
+    {
+        event.preventDefault();
+        if (event.keyCode === 13) // enter pressed
+        {
+            document.getElementById("add-button").click();
+        }
+    });
+    this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
 }
 
 // // Create a "close" button and append it to each list item

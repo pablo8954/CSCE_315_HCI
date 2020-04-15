@@ -10,7 +10,7 @@
 }
 
 .photo-outer img {
-  filter: brightness(40%);
+  filter: brightness(35%);
   transition: transform 0.5s ease;
   height: 100%;
 }
@@ -40,6 +40,7 @@
 }
 .photos-container {
   position: relative;
+  margin-top: 20px;
 }
 
 .heading {
@@ -47,10 +48,11 @@
   text-align: center;
   color: #fffafa;
   font-size: 105px;
-  font-family: "Ariel";
+  font-family: "Garamond";
   letter-spacing: 7px;
-  top: 20%;
+  top: 10%;
   left: 50%;
+  width: 100%;
   transform: translate(-50%, -50%);
   user-select: none;
   z-index: 10;
