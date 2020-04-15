@@ -2,17 +2,23 @@
 <html>
 
 <head>
-    <title>Packer</title>
+    <title>Pack Advisor</title>
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src ='frontEnd/js/functionality.js'></script>
+    
+    <!-- Google API Stuff -->
+    <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/frontEnd/js/apiCalls.js"></script>
 </head>
 
-<body class="main-body">
-    <div class ="g-signin2" data-onsuccess="onSignIn"></div>
-    <script src="/frontEnd/js/functionality.js"></script>
+<body spellcheck="false" class="main-body">
+    <div id="darkener"></div>
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
         <div id="old-trips-container">
@@ -28,22 +34,25 @@
             <div id="profile-container">
             <!-- Things: Picture, Name, Number of Saved Trips -->
             <img src="/frontEnd/img/temp/person.png" id="profile-image">
-            <label id="name-label">Someone Somebody</label>
+            <label id="name-label"></label>
+            <div class ="g-signin2" id ="google-signin-button" data-onsuccess="onSignIn"></div>
+            <button class="generic-button" id="logout-button" onclick="signout()"> Sign Out </button>
 
             </div>
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
 
             <h1 id="settings-heading">Settings</h1>
 			
-			 <script src="/frontEnd/js/functionality.js"></script>
+			<script src="/frontEnd/js/functionality.js"></script>
 			<div class="rangeslider"> 
-			  <input type="range" min="1" max="100" value="50" class="myslider" id="sliderRange" onchange="change_text_size(this.value)"> 
+			  <input type="range" min="50" max="150" value="100"
+							  class="myslider" id="sliderRange">  
 			</div> 
-			<label id="dark-mode-label">Text Size</label>
+			<label id="dark-mode-label">Text Size: <span id="demo"></span>%</label>
 			
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
-                    <input type="checkbox" id="dark-mode-checkbox" />
+                    <input type="checkbox" id="dark-mode-checkbox" onchange="toggleTheme()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
@@ -51,25 +60,27 @@
             <label id="dark-mode-label">Dark Mode</label>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox" />
+                    <input type="checkbox" id="color-blindness-checkbox"/>
                     <div class="slider round"></div>
                 </label>
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
+
+
         </div>
     </div>
     <header class="nav-header">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
-            <h1 class="nav-logo-label">Packadvisor</h1>
+            <p class="nav-logo-label">Packadvisor</p>
         </div>
         <ul class="main-nav">
             <div class="row">
 
-            <li><a href="/"> Home</a></li>
-            <li class="active"><a href="newTrip.html"> New Trip</a></li>
-            <li><a onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
-            <li><a onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
+            <li><a class="main-nav-link" href="/"> Home</a></li>
+            <li  class="active"><a class="main-nav-link" href="newTrip.html"> New Trip</a></li>
+            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a class="main-nav-link" onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
         </ul>
@@ -107,12 +118,20 @@
         <label for="pLang" class ="small-label">Primary Language: Default Language 1</label>
         <label for="sLang" class ="small-label">Secondary Language: Default Language 2</label>
 		
-		<div class ="row">
-			<button class ="button-change-info" id ="button-change-info"> Generate Common Phrases </button>
-			<button class="button-change-info" id="button-change-info">Export Common Phrases</button>
-        </div>
-		
-	   <label for="exchangeRate" class="big-label">Exchange Rate</label>
+		<div class="list-view" id="phrases">
+			<h2 class="list-heading">Common Phrases</h2>
+			<ul id="phrases-list">
+			   
+			</ul>
+		</div>
+		<br>
+		<div class="row"> 
+			<button class="button-change-info" id="generate-translation-button">View Translations</button>
+			<button class="button-change-info" id="generate-translation-button">Export Translations</button>
+		</div>
+	
+
+        <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
         <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
@@ -127,56 +146,47 @@
         </div>
     </div>
         
+    <div class="center-list-view" id="editable-list-view">
+        <button id="close-editable-button"></button>
+
+        <h2 contenteditable=true class="center-list-heading"></h2>
+        <div class="add-container">
+            <input type="text" placeholder="Enter new item" id="add-input">
+            <button id="add-button">Add</button>
+        </div>
+        <ul class="center-list" id="editable-list"></ul>
+    </div>
+
     <div class="list-container">
         <div class="list-view" id="toiletries">
             <h2 class="list-heading">Toiletries</h2>
-            <ul>
-                <li>Toothbrush</li>
-                <li>Mouthwash</li>
-                <li>Shampoo</li>
-                <li>Bathwash</li>
-                <li>Stuff</li>
+            <ul id="toiletries-list">
+            
                 
             </ul>
         </div>
         <div class="list-view" id="medicines">
             <h2 class="list-heading">Medicines</h2>
-            <ul>
-                <li>Medicine 1</li>
-                <li>Medicine 2</li>
-                <li>Medicine 3</li>
-                <li>Medicine 4</li>
-                <li>Medicine 5</li>
+            <ul id="medicines-list">
+
             </ul>
         </div>
         <div class="list-view" id="electronics">
             <h2 class="list-heading">Electronics</h2>
-            <ul>
-                <li>Laptop</li>
-                <li>Phone</li>
-                <li>Laptop Charger</li>
-                <li>Phone Charger</li>
-                <li>Outlet Converter</li>
+            <ul id="electronics-list">
+
                 
             </ul>
         </div>
         
         <div class="list-view" id="clothes">
             <h2 class="list-heading">Clothes</h2>
-            <ul>
-                <li>3 Jackets</li>
-                <li>1 Rain Jacket</li>
-                <li>2 Pants</li>
-                <li>5 Shirt</li>
-                <li>10 Shoes</li>
+            <ul id="clothes-list">
+
                 
             </ul>
         </div>
     </div>
-    <!-- 
-        <ul class="list-view-big" id="toiletries-big"></ul>
-        <ul class="list-view-big" id="medicines-big"></ul>
-        <ul class="list-view-big" id="electronics-big"></ul> -->
     </div>
 
     </div>
@@ -184,4 +194,8 @@
     <div class="footer">
         <!-- Fill this in later -->
     </div>
+
+    <script src="/frontEnd/js/functionality.js"></script>
+    <script src="/frontEnd/js/tripInfo.js"></script>
+
 </body>
