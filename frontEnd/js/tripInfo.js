@@ -54,9 +54,37 @@ function repopulateListByName(listName)
 
         // add element to toiletry list
         document.getElementById(listName + "-list").appendChild(li);
-
-
     }
+}
+
+function createCheckbox(alreadyChecked)
+{
+    var checkboxLabel = document.createElement('label');
+    checkboxLabel.className = 'checkbox-label';
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    if (alreadyChecked)
+        checkbox.checked = alreadyChecked;
+    var span = document.createElement('span');
+    span.className = "checkbox-custom";
+
+    checkboxLabel.appendChild(checkbox);
+    checkboxLabel.appendChild(span);
+
+    checkbox.addEventListener('change', function(eve)
+    {
+        var theLabel = eve.target.parentElement.parentElement.getElementsByTagName('label')[1];
+        if (eve.target.checked)
+        {
+            theLabel.style.textDecoration = 'line-through';
+        }
+        else
+        {
+            theLabel.style.textDecoration = 'none';
+        }
+    });
+
+    return checkboxLabel;
 }
 
 function createEditableListItem(itemVal)
@@ -66,9 +94,7 @@ function createEditableListItem(itemVal)
     li.classList.toggle('editable-list-item');
 
     // add check through option here
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox"
-    checkbox.classList.toggle('checkbox-list');
+    var checkbox = createCheckbox(itemVal.checked);
 
     // add the label
     var value = document.createElement("label");
@@ -82,13 +108,11 @@ function createEditableListItem(itemVal)
 
     value.addEventListener("focus", function(eve)
     {
-        console.log("hello");
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
 
     value.addEventListener("focusout", function(eve)
     {
-        console.log("hello");
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
 
@@ -101,7 +125,14 @@ function createEditableListItem(itemVal)
         eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
     });
 
-    // li.append(checkbox);
+    // li.addEventListener('click', function(eve)
+    // {
+    //     console.log(eve.target.tag + ' clicked');
+    //     var theLabel = eve.target.getElementsByTagName('label')[0];
+    //     theLabel.focus();
+    // });
+
+    li.append(checkbox);
     li.append(value);
     li.appendChild(deleteButton);
 
@@ -193,8 +224,7 @@ function closeEditableView ()
     for (var i = 0; i < elements.length; ++i)
     {
         var labelVals = elements[i].getElementsByTagName('label');
-
-        var newElement = { name: labelVals[0].innerText, checked: (labelVals[0].textDecoration == 'line-through')};
+        var newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
         newList.push(newElement);
     }
     
