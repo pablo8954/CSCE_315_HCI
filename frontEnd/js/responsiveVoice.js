@@ -727,7 +727,7 @@ window.addEventListener('load', function () {
             last_selectedText = selectedText;
 
             responsiveVoice.cancel(); // stop anything currently being spoken
-            responsiveVoice.speak(selectedText, 'Italian Female'); //speak the text as returned by getSelectionText
+            responsiveVoice.speak(selectedText, 'US English Female'); //speak the text as returned by getSelectionText
             trackEvent('agentFeature', 'highlightText');
         }
     }
@@ -834,7 +834,7 @@ window.addEventListener('load', function () {
                         if (code == '9') {
                             responsiveVoice.speak('Link 2 ' + e.target.text, 'US English Female');
                             trackEvent('agentFeature', 'accesibilityNavigation', 'tab');
-                        }
+                        }   
                         break;
 
                     case 'BUTTON':

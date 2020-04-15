@@ -264,14 +264,27 @@ function lightenBackground()
     this.document.getElementById('darkener').classList.toggle('unclickable');
 }
 
-// Called when window is loaded
-window.onload = function()
+// Load the data from the database
+function loadData()
 {
     // ***************************
     // **       BIG TODO:       **
     // ** GET ALL THE DATA HERE **
     // ***************************
 
+    // check if signed in and get the data from there
+
+    // otherwise get the default data
+
+    // send a request for the data
+    // set the data to appropriate lists
+    
+}
+
+// Called when window is loaded
+window.onload = function()
+{
+    loadData();
 
     // Populate all the lists with the data
     repopulateAllLists();

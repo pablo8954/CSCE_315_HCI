@@ -6,6 +6,10 @@
   transition: 0.3s;
 }
 
+button {
+  outline: none;
+}
+
 .dark {
   background-color: #222;
   color: #fffafa;
@@ -111,22 +115,39 @@
 
 #close-sidebar-button {
   position: absolute;
-  top: 0px;
-  right: 10px;
-  padding: 0;
-  color: #666;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  color: #ddd;
   background-color: transparent;
   border: none;
-  font-size: 30px;
-  rotate: 180;
-  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  opacity: 0.3;
   transition: 0.3s;
   cursor: pointer;
 }
 
 #close-sidebar-button:hover {
-  rotate: 180;
-  color: white;
+  opacity: 1;
+  rotate: 180deg;
+}
+
+#close-sidebar-button:before, #close-sidebar-button:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 30px;
+  width: 2px;
+  background-color: #fffafa;
+}
+
+#close-sidebar-button:before {
+  transform: rotate(45deg);
+}
+
+#close-sidebar-button:after {
+  transform: rotate(-45deg);
 }
 
 #old-trips-container {
