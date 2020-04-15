@@ -33,6 +33,7 @@ listOfLists = {
               };
 // ****************************
 
+// Repopulates a given regular list by giving the name of the list
 function repopulateListByName(listName)
 {
     // empty list
@@ -57,12 +58,15 @@ function repopulateListByName(listName)
     }
 }
 
+// called to create a checkbox for the editable list (already checked is a boolean specifying if the checkbox is checked)
 function createCheckbox(alreadyChecked)
 {
+    // Create the objects needed
     var checkboxLabel = document.createElement('label');
     checkboxLabel.className = 'checkbox-label';
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    // Set the default checked value
     if (alreadyChecked)
         checkbox.checked = alreadyChecked;
     var span = document.createElement('span');
@@ -71,8 +75,10 @@ function createCheckbox(alreadyChecked)
     checkboxLabel.appendChild(checkbox);
     checkboxLabel.appendChild(span);
 
+    // Add the event listener for onchange
     checkbox.addEventListener('change', function(eve)
     {
+        // the 2nd label because the 1st label is the checkboxLabel
         var theLabel = eve.target.parentElement.parentElement.getElementsByTagName('label')[1];
         if (eve.target.checked)
         {
@@ -87,16 +93,17 @@ function createCheckbox(alreadyChecked)
     return checkboxLabel;
 }
 
+// function to create a single item of the editable list
 function createEditableListItem(itemVal)
 {
     // create element using item
     var li = document.createElement('li');
     li.classList.toggle('editable-list-item');
 
-    // add check through option here
+    // create check through option here
     var checkbox = createCheckbox(itemVal.checked);
 
-    // add the label
+    // create the label
     var value = document.createElement("label");
     value.innerText = itemVal.name;
     value.className = 'editable-list-label';
@@ -106,11 +113,11 @@ function createEditableListItem(itemVal)
         value.style.textDecoration = 'line-through';
     }
 
+    // Add focus listeners to show focus mode for the list item
     value.addEventListener("focus", function(eve)
     {
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
-
     value.addEventListener("focusout", function(eve)
     {
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
@@ -125,13 +132,7 @@ function createEditableListItem(itemVal)
         eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
     });
 
-    // li.addEventListener('click', function(eve)
-    // {
-    //     console.log(eve.target.tag + ' clicked');
-    //     var theLabel = eve.target.getElementsByTagName('label')[0];
-    //     theLabel.focus();
-    // });
-
+    // Add all subviews to the list item
     li.append(checkbox);
     li.append(value);
     li.appendChild(deleteButton);
@@ -139,6 +140,7 @@ function createEditableListItem(itemVal)
     return li;
 }
 
+// Given name of the editable center list, repopulate it
 function repopulateCenterListByName(listName)
 {
     // empty list
@@ -155,6 +157,7 @@ function repopulateCenterListByName(listName)
     }
 }
 
+// Called to add a new element to list
 function addNewElement()
 {
     var text = document.getElementById('add-input').value;
@@ -170,6 +173,7 @@ function addNewElement()
     document.getElementById('add-input').value = '';
 }
 
+// Populates all the list using the keys from listOfLists
 function repopulateAllLists()
 {
     var keyList = Object.keys(listOfLists);
@@ -179,6 +183,7 @@ function repopulateAllLists()
     }
 }
 
+// Stores the current table name as a string to be used by two functions
 var currentTable;
 function showEditableView (eve)
 {
@@ -204,15 +209,12 @@ function showEditableView (eve)
 
     // set list items for editable view
     repopulateCenterListByName(listName);
-
-
-    // set addNewElement action
-
+    // show the editable view
     editableView.style.display = 'flex';
 
 }
 
-
+// Closes the editable list view in the center
 function closeEditableView ()
 {
     // get the updated list from the editable view
@@ -233,130 +235,16 @@ function closeEditableView ()
     // repopulate the appropriate table
     repopulateListByName(currentTable);
 
+    // reset the heading as needed
+    document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
+
     // close the editable view
     editableView.style.display = 'none';
 
     lightenBackground();
 }
 
-window.onload = function()
-{
-    // Populate all the lists with the data
-    repopulateAllLists();
-    // Add action listeners for the lists
-    var keyList = Object.keys(listOfLists);
-    for (var i = 0; i < keyList.length; ++i)
-    {
-        this.document.getElementById(keyList[i]).addEventListener("click", showEditableView);
-    }
-    // hide the center view
-    this.document.getElementById('editable-list-view').style.display = 'none';
-    this.document.getElementById('darkener').hidden = true;
-    this.document.getElementById('darkener').addEventListener('click', this.closeEditableView);
 
-    this.document.getElementById('darkener').classList.toggle('unclickable');
-    this.document.getElementById('add-button').addEventListener('click', this.addNewElement);
-    document.getElementById("add-input").addEventListener("keyup", function(event) 
-    {
-        event.preventDefault();
-        if (event.keyCode === 13) // enter pressed
-        {
-            document.getElementById("add-button").click();
-        }
-    });
-    this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
-}
-
-// // Create a "close" button and append it to each list item
-// var listItems = document.getElementsByTagName("LI");
-// var i;
-// for (i = 0; i < listItems.length; i++) 
-// {
-//     var span = document.createElement("SPAN");
-//     var txt = document.createTextNode("\u00D7");
-//     span.className = "close";
-//     span.appendChild(txt);
-//     listItems[i].appendChild(span);
-// }
-
-// // Click on a close button to hide the current list item
-// var close = document.getElementsByClassName("close");
-// var i;
-// for (i = 0; i < close.length; i++) 
-// {
-//     close[i].onclick = function() 
-//     {
-//         var div = this.parentElement;
-//         div.style.display = "none";
-//     }
-// }
-
-// // Add a "checked" symbol when clicking on a list item
-// var list = document.querySelector('ul');
-// list.addEventListener('click', function(ev) 
-// {
-//     if (ev.target.tagName === 'LI') {
-//         ev.target.classList.toggle('checked');
-//     }
-// }, false);
-
-// /////////////////////////
-// //  onClick Functions  //
-// /////////////////////////
-
-// function showBigList(listID)
-// {
-//     darkenBackground();
-//     var listToShow = listID + "-big";
-//     var bigList = document.getElementById(listToShow);
-//     bigList.hidden = false;
-// }
-
-// function hideBigList(listID)
-// {
-//     var list = document.getElementById(listID);
-//     list.hidden = true;
-// }
-
-
-// // Create a new list item when clicking on the "Add" button
-// function newElement(listID) 
-// {
-//     // Create new element with the input value
-//     var li = document.createElement("li");
-//     var inputValue = document.getElementById("inputVal").value;
-//     var t = document.createTextNode(inputValue);
-//     li.appendChild(t);
-//     // Make sure value isn't empty
-//     if (inputValue === '') 
-//     {
-//         alert("You must write something!");
-//     }
-//     else 
-//     {
-//         document.getElementById(listID).appendChild(li);
-//     }
-
-//     // Set it back to empty
-//     document.getElementById("inputVal").value = "";
-    
-//     // Add the close button
-//     var span = document.createElement("SPAN");
-//     var txt = document.createTextNode("\u00D7");
-//     span.className = "close";
-//     span.appendChild(txt);
-//     li.appendChild(span);
-    
-//     close = document.getElementsByClassName("close");
-//     for (i = 0; i < close.length; i++) 
-//     {
-//         close[i].onclick = function() 
-//         {
-//             var div = this.parentElement;
-//             div.style.display = "none";
-//         }
-//     }
-// }
 
 // Darken the background when opening up a card
 function darkenBackground()
@@ -367,10 +255,49 @@ function darkenBackground()
     this.document.getElementById('darkener').classList.toggle('unclickable');
 }
 
+// lighten the background again
 function lightenBackground()
 {
     var darkener = document.getElementById("darkener");
     darkener.style.opacity = 0;
     darkener.hidden = true;
     this.document.getElementById('darkener').classList.toggle('unclickable');
+}
+
+// Called when window is loaded
+window.onload = function()
+{
+    // ***************************
+    // **       BIG TODO:       **
+    // ** GET ALL THE DATA HERE **
+    // ***************************
+
+
+    // Populate all the lists with the data
+    repopulateAllLists();
+    // Add action listeners for the lists
+    var keyList = Object.keys(listOfLists);
+    for (var i = 0; i < keyList.length; ++i)
+    {
+        this.document.getElementById(keyList[i]).addEventListener("click", showEditableView);
+    }
+    // hide the center view
+    this.document.getElementById('editable-list-view').style.display = 'none';
+    // Get the screen darkener ready
+    this.document.getElementById('darkener').hidden = true;
+    this.document.getElementById('darkener').addEventListener('click', this.closeEditableView);
+    this.document.getElementById('darkener').classList.toggle('unclickable');
+    // Set add button onclick event listener
+    this.document.getElementById('add-button').addEventListener('click', this.addNewElement);
+    // add event listener for enter and press the add button
+    document.getElementById("add-input").addEventListener("keyup", function(event) 
+    {
+        event.preventDefault();
+        if (event.keyCode === 13) // enter pressed
+        {
+            document.getElementById("add-button").click();
+        }
+    });
+    // add event listener for editable view close button
+    this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
 }
