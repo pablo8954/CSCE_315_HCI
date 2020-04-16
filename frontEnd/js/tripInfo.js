@@ -289,12 +289,41 @@ function loadData()
     
 }
 
+function currencyExchangeRate(source_currency_code, destination_currency_code)
+{
+
+
+    fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from="+ source_currency_code + "&to=" + destination_currency_code + "&amount=1", {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
+            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb"
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then (data => {
+        var exchangeRate = JSON.stringify(data.result);
+        
+        //print currency rate to tripInfo
+        document.getElementById('exchange-rate-label').innerHTML = "1 " +  
+            JSON.stringify(source_currency_code).replace(/\"/g, "") + " = " + exchangeRate + " "+ 
+            JSON.stringify(destination_currency_code).replace(/\"/g, "");
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+}
+
+
 function loadFlightData()
 {
     //unpack json
     var data = this.sessionStorage.getItem('travel_json');
     var flight_data = JSON.parse(data);
-    
+
     var source_city = JSON.stringify(flight_data[0].departure.airport.municipalityName).replace(/\"/g, "");
     var destination_city = JSON.stringify(flight_data[0].arrival.airport.municipalityName).replace(/\"/g, "");
 
@@ -309,33 +338,27 @@ function loadFlightData()
         return response.json();
     })
     .then(data => {
+        
         var source_country = JSON.stringify(data.name).replace(/\"/g, "");
-
+        var source_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
+        
+        //grab destination country metadata
         return fetch(restCountryAPI + destination_countryCode)
         .then(response => {
             return response.json();
         })
         .then(data => {
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
+            var destination_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
 
-            console.log(source_city);
-            console.log(source_country);
-            console.log(destination_city);
-            console.log(destination_country);
 
+            currencyExchangeRate(source_currency,destination_currency);
+
+            //populate elements for user
             document.getElementById('source').innerHTML = source_city + ', ' + source_country;
             document.getElementById('destination').innerHTML = destination_city + ', ' + destination_country;
-
         });
-
     });
-    
-
-    // var sourceText = this.sessionStorage.getItem('source_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('source_country').replace(/\"/g, "");
-    // var destinationText = this.sessionStorage.getItem('destination_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('destination_country').replace(/\"/g, "");
-
-    // this.document.getElementById('source').innerHTML = sourceText;
-    // this.document.getElementById('destination').innerHTML = destinationText;
 
 
 }
@@ -364,6 +387,7 @@ window.onload = function()
     // add event listener for editable view close button
     this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
 
+    //grab flight data & use data to get other travel information
     loadFlightData();
 
 }
