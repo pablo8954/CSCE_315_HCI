@@ -168,7 +168,7 @@ function repopulateCenterListByName(listName)
 }
 
 function addNewElement()
-{
+{	
     var text = document.getElementById('add-input').value;
     if (text == '')
     {
@@ -177,7 +177,9 @@ function addNewElement()
     }
     var itemVal = {name: text, checked: false};
 	var newLi;
-	if(currentTable == "phrases") newLi = createEditablePhraseItem(itemVal);
+	if(currentTable == "phrases"){
+		newLi = createEditablePhraseItem(itemVal);
+	}
     else newLi = createEditableListItem(itemVal);
 
     document.getElementById('editable-list').appendChild(newLi);
@@ -287,10 +289,13 @@ window.onload = function()
         {
             document.getElementById("add-button").click();
         }
+		console.log(listOfPhrases['phrases']);
     });
     this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
-}
 
+	updateLanguage("Egypt"); //destination
+	updateTimeZone( "Mexico", "Egypt"); // source, destination
+}
 
 
 function populatePhraseList() {
@@ -392,6 +397,7 @@ function createEditablePhraseItem(itemVal)
     deleteButton.addEventListener('click', function(eve)
     {
         eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
+		for( var i = 0; i < arr.length; i++){ if ( arr[i] === 5) { arr.splice(i, 1); }}
     });
 
     li.append(value);
@@ -414,4 +420,152 @@ function lightenBackground()
     darkener.style.opacity = 0;
     darkener.hidden = true;
     this.document.getElementById('darkener').classList.toggle('unclickable');
+}
+
+function updateLanguage(name_of_country) {
+	var request = new XMLHttpRequest();
+	request.open('GET', "https://restcountries.eu/rest/v2/");
+	request.send();
+	request.onload = function() {
+		var data = JSON.parse(this.response);
+		//name-> === country name
+		//language, name -> === language name of country
+		var found = 0;
+		var lang;
+		data.forEach(country => {
+			if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
+				lang = country.languages[0].name;
+				found = 1;
+			}
+		});
+		
+		if(found == 1) {
+			document.getElementById("p-language-output").innerHTML = "Primary Language: " + lang;
+		}
+		else {
+			document.getElementById("p-language-output").innerHTML = "Could not find language for " + name_of_country;
+		}
+	}
+}
+
+function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
+	var request = new XMLHttpRequest();
+	request.open('GET', "https://restcountries.eu/rest/v2/");
+	request.send();
+	request.onload = function() {
+		var data = JSON.parse(this.response);
+		//name-> === country name
+		//language, name -> === language name of country
+		var sfound = 0;
+		var stimezone;
+		var dfound = 0;
+		var dtimezone;
+		data.forEach(country => {
+			if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry) {
+				if(country.timezones.length == 1) {
+					stimezone = country.timezones[0];
+					sfound = 1;
+				}
+				//
+				//Need to look for city too.. perhaps in next sprint?
+				//
+				else {
+					sfound = 2;
+					console.log("Error, multiple time zones detected(source country)... choosing first one");
+					stimezone = country.timezones[0];
+				}
+			}
+			else if(request.status >=200 && request.status < 400 && country.name == dest_name_of_country) {
+				if(country.timezones.length == 1) {
+					dtimezone = country.timezones[0];
+					dfound = 1;
+				}
+				//
+				//Need to look for city too.. perhaps in next sprint?
+				//
+				else {
+					dfound = 2;
+					console.log("Error, multiple time zones detected(dest country)... choosing first one");
+					dtimezone = country.timezones[0];
+				}
+			}
+		});
+		
+		if(sfound == 1) {
+			console.log('Source Time zone = ' + stimezone);
+			document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
+		}
+		else if (sfound == 2) {
+			document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
+		}
+		else {
+			document.getElementById("source-time-zone").innerHTML = "Could not find time zone for " + source_name_of_sCountry;
+		}
+		
+		if(dfound == 1) {
+			console.log('Source Time zone = ' + stimezone);
+			document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
+		}
+		else if (dfound == 2) {
+			document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
+		}
+		else {
+			document.getElementById("dest-time-zone").innerHTML = "Could not find time zone for " + dest_name_of_sCountry;
+		}
+		
+		// calculating lost/gained time
+		if(dfound != 0 && sfound != 0) { 
+		
+			//getting source time zone into float
+			var source_hours;
+			
+			stimezone = stimezone.substring(3);
+			if(stimezone == "") {
+				source_hours = 0;
+			}
+			else {
+				var sOperator = stimezone.charAt(0);
+				var shours = stimezone.charAt(1) + stimezone.charAt(2);
+				var sminutes = stimezone.charAt(4) + stimezone.charAt(5);
+				source_hours = parseInt(shours);
+				var source_minutes = parseInt(sminutes);
+				source_minutes = source_minutes / 60;
+				source_hours = source_hours + source_minutes;
+				if(sOperator == "-") source_hours = source_hours * -1;
+			}
+			
+			//getting dest time zone into float
+			dtimezone = dtimezone.substring(3);
+			var dest_hours;
+			if(dtimezone == "") {
+				dest_hours = 0;
+			}
+			else {
+				var dOperator = dtimezone.charAt(0);
+				var dhours = dtimezone.charAt(1) + dtimezone.charAt(2);
+				var dminutes = dtimezone.charAt(4) + dtimezone.charAt(5);
+				dest_hours = parseInt(dhours);
+				var dest_minutes = parseInt(dminutes);
+				dest_minutes = dest_minutes / 60;
+				dest_hours = dest_hours + dest_minutes;
+				if(dOperator == "-") dest_hours = dest_hours * -1;
+			}
+			
+			
+			//calculating change in time zone
+			var time_change = dest_hours - source_hours;
+			console.log(time_change);
+			if(time_change < 0) {
+				time_change = time_change * - 1;
+				document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Lose " + time_change.toString() + " hours";
+			}
+			else if (time_change > 0){
+				document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Gain " + time_change.toString() + " hours";
+			}
+			else {
+				document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will not change time zones";
+			}
+			
+		}
+	}
 }
