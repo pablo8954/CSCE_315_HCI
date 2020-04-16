@@ -1,58 +1,27 @@
-// Get data from database for lists right here
-var toiletriesList = new Array();
-var medicinesList = new Array();
-var electronicsList = new Array();
-var clothesList = new Array();
+var listOfLists = {};
 
-var listOfLists;
-
-//       TEMPORARY CODE
-// ****************************
-toiletriesList.push({name: "Toothbrush", checked: false});
-toiletriesList.push({name: "Toothpaste", checked: false});
-toiletriesList.push({name: "Shampoo", checked: false});
-toiletriesList.push({name: "Bathwash", checked: false});
-
-medicinesList.push({name: "Medicine 1", checked: false});
-medicinesList.push({name: "Medicine 2", checked: false});
-medicinesList.push({name: "Medicine 3", checked: false});
-
-electronicsList.push({name: "Laptop", checked: false});
-electronicsList.push({name: "Laptop charger", checked: false});
-electronicsList.push({name: "Smartphone", checked: true});
-
-clothesList.push({name: "3 Jackets", checked: false});
-clothesList.push({name: "1 Rain Jacket", checked: false});
-clothesList.push({name: "2 Pants", checked: false});
-
-listOfLists = { 
-                'toiletries': toiletriesList,
-                'medicines': medicinesList,
-                'electronics': electronicsList,
-                'clothes': clothesList
-              };
-// ****************************
+var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
 
 // Repopulates a given regular list by giving the name of the list
 function repopulateListByName(listName)
 {
     // empty list
     document.getElementById(listName + "-list").innerHTML = "";
-
+    
     var listVals = listOfLists[listName];
-
+    
     for (var i = 0; i < listVals.length; ++i)
     {
         // create element using item
         var li = document.createElement("li");
         li.classList.toggle("list-view-item");
         li.innerHTML = listVals[i].name;
-
+        
         if (listVals[i].checked)
         {
             li.style.textDecoration = 'line-through';
         }
-
+        
         // add element to toiletry list
         document.getElementById(listName + "-list").appendChild(li);
     }
@@ -68,13 +37,13 @@ function createCheckbox(alreadyChecked)
     checkbox.type = 'checkbox';
     // Set the default checked value
     if (alreadyChecked)
-        checkbox.checked = alreadyChecked;
+    checkbox.checked = alreadyChecked;
     var span = document.createElement('span');
     span.className = "checkbox-custom";
-
+    
     checkboxLabel.appendChild(checkbox);
     checkboxLabel.appendChild(span);
-
+    
     // Add the event listener for onchange
     checkbox.addEventListener('change', function(eve)
     {
@@ -89,7 +58,7 @@ function createCheckbox(alreadyChecked)
             theLabel.style.textDecoration = 'none';
         }
     });
-
+    
     return checkboxLabel;
 }
 
@@ -99,10 +68,10 @@ function createEditableListItem(itemVal)
     // create element using item
     var li = document.createElement('li');
     li.classList.toggle('editable-list-item');
-
+    
     // create check through option here
     var checkbox = createCheckbox(itemVal.checked);
-
+    
     // create the label
     var value = document.createElement("label");
     value.innerText = itemVal.name;
@@ -112,7 +81,7 @@ function createEditableListItem(itemVal)
     {
         value.style.textDecoration = 'line-through';
     }
-
+    
     // Add focus listeners to show focus mode for the list item
     value.addEventListener("focus", function(eve)
     {
@@ -122,7 +91,7 @@ function createEditableListItem(itemVal)
     {
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
-
+    
     // add delete option here
     var deleteButton = document.createElement("button");
     deleteButton.innerText = "x";
@@ -131,12 +100,12 @@ function createEditableListItem(itemVal)
     {
         eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
     });
-
+    
     // Add all subviews to the list item
     li.append(checkbox);
     li.append(value);
     li.appendChild(deleteButton);
-
+    
     return li;
 }
 
@@ -145,13 +114,13 @@ function repopulateCenterListByName(listName)
 {
     // empty list
     document.getElementById("editable-list").innerHTML = "";
-
+    
     var listVals = listOfLists[listName];
-
+    
     for (var i = 0; i < listVals.length; ++i)
     {
         var li = createEditableListItem(listVals[i]);
-
+        
         // add element to toiletry list
         document.getElementById("editable-list").appendChild(li);
     }
@@ -188,7 +157,7 @@ var currentTable;
 function showEditableView (eve)
 {
     darkenBackground();
-
+    
     var listName = eve.target.id;
     currentTable = listName;
     // get the editable view to be showed
@@ -198,7 +167,7 @@ function showEditableView (eve)
     var listData = listOfLists[listName];
     // get the listView
     var listView = document.getElementById(listName);
-
+    
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
@@ -206,12 +175,12 @@ function showEditableView (eve)
     editableView.getElementsByTagName("h2")[0].innerHTML = heading;
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
-
+    
     // set list items for editable view
     repopulateCenterListByName(listName);
     // show the editable view
     editableView.style.display = 'flex';
-
+    
 }
 
 // Closes the editable list view in the center
@@ -231,16 +200,16 @@ function closeEditableView ()
     }
     
     listOfLists[currentTable] = newList;
-
+    
     // repopulate the appropriate table
     repopulateListByName(currentTable);
-
+    
     // reset the heading as needed
     document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
-
+    
     // close the editable view
     editableView.style.display = 'none';
-
+    
     lightenBackground();
 }
 
@@ -264,6 +233,24 @@ function lightenBackground()
     this.document.getElementById('darkener').classList.toggle('unclickable');
 }
 
+function createListView(listName, bgcolor)
+{
+    var viewDiv = document.createElement('div');
+    viewDiv.className = "list-view";
+    viewDiv.id = listName.toLowerCase();
+    viewDiv.addEventListener("click", showEditableView);
+    var heading = document.createElement('h2');
+    heading.className = "list-heading";
+    heading.innerHTML = listName;
+    var list = document.createElement('ul');
+    list.id = listName.toLowerCase() + "-list";
+
+    viewDiv.appendChild(heading);
+    viewDiv.appendChild(list);
+    viewDiv.style.backgroundColor = bgcolor;
+    document.getElementById("list-container").appendChild(viewDiv); 
+}
+
 // Load the data from the database
 function loadData()
 {
@@ -271,13 +258,34 @@ function loadData()
     // **       BIG TODO:       **
     // ** GET ALL THE DATA HERE **
     // ***************************
-
+    
     // check if signed in and get the data from there
-
+    
     // otherwise get the default data
-
+    
     // send a request for the data
     // set the data to appropriate lists
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            var res = JSON.parse(xhttp.response);
+            console.log(res);
+            var keyList = Object.keys(res);
+
+            for (var i = 0; i < keyList.length; ++i)
+            {
+                createListView(keyList[i], listColors[i % listColors.length]);
+                listOfLists[keyList[i].toLowerCase()] = res[keyList[i]];
+            }
+
+            // Populate all the lists with the data
+            repopulateAllLists();
+        }
+    };
+    xhttp.open("GET", "default-lists", true);
+    xhttp.send();
     
 }
 
@@ -285,15 +293,6 @@ function loadData()
 window.onload = function()
 {
     loadData();
-
-    // Populate all the lists with the data
-    repopulateAllLists();
-    // Add action listeners for the lists
-    var keyList = Object.keys(listOfLists);
-    for (var i = 0; i < keyList.length; ++i)
-    {
-        this.document.getElementById(keyList[i]).addEventListener("click", showEditableView);
-    }
     // hide the center view
     this.document.getElementById('editable-list-view').style.display = 'none';
     // Get the screen darkener ready

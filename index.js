@@ -2,31 +2,40 @@ var express = require('express'); // Get the express module
 var app = express(); // Start the app
 var path = require('path');
 var mongodb = require('mongodb');
-var MongoClient = mongodb.MongoClient;
 var mongourl = 'mongodb+srv://mongoaccessaccount:PackAdvisor123@packadvisordatabase-hp7rv.gcp.mongodb.net/test?retryWrites=true&w=majority';
+const mongoClient = mongodb.MongoClient(mongourl);
+
+var listOfLists = {};
+
+// Called once to setup the mongo client
+async function dbSetup()
+{
+    await mongoClient.connect();
+    // Setting these statically because they're not gonna change usually
+    // If they do, we need to restart the server
+    setListOfDefaultLists();
+}
+
+async function setListOfDefaultLists()
+{
+    mongoClient.db('users').collection("lists").find({}).toArray(function(err, result) 
+    {
+        if (err) throw err;
+        // Go through the results and assign the lists
+        for (var i = 0; i < result.length; ++i)
+        {
+            listOfLists[result[i].name] = result[i].list;
+            for (var j = 0; j < listOfLists[result[i].name].length; ++j)
+            {
+                listOfLists[result[i].name][j] = {name: listOfLists[result[i].name][j], checked: false};
+            }
+        }
+    });
+}
+
+dbSetup();
 
 app.use('/frontEnd', express.static(__dirname + '/frontEnd'));
-
-// MongoClient.connect(url, function(err, db) {
-//     if (err) throw err;
-//     console.log("Connection Established");
-//     console.log("Switched to " + db.databaseName + " database");
-//     // var doc = {name: "Maccoy Merrell", googleid: "12616121313"};
-//     // var dbo = db.db("users")
-//     // dbo.collection("google").insertOne(doc,function(err,res)
-//     // {
-//     // if (err) throw err;
-//     // console.log("Document inserted");
-    
-    
-//     dbo.collection("google").find({}).toArray(function(err, result) {
-//         if (err) throw err;
-//         console.log(result);
-//         dbo.close();
-//     });
-//     // });
-// });
-
 
 app.get('/', function (req, res) // When server requests '/' page
 {
@@ -42,6 +51,11 @@ app.get('/tripInfo.html', function (req, res)
 {
     // This one's gonna need some information about the trip too
     res.sendFile(path.join(__dirname + '/frontEnd/html/tripInfo.html'));
+});
+
+app.get('/default-lists', function (req, res)
+{
+    res.json(listOfLists);
 });
 
 

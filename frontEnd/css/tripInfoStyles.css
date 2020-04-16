@@ -34,7 +34,7 @@
   z-index: 30;
   align-items: center;
   font-family: "Helvetica Neue", sans-serif;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .center-list-view h2 {
@@ -53,6 +53,10 @@
   margin: 0;
   padding: 0;
   width: 100%;
+  overflow: hidden;
+}
+
+.center-list:hover {
   overflow: auto;
 }
 
@@ -253,7 +257,7 @@
   margin-top: 50px;
   margin-right: 50px;
   font-family: "Helvetica Neue", sans-serif;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .list-view h2 {
@@ -265,6 +269,7 @@
 .list-view:hover {
   filter: brightness(50%);
   cursor: pointer;
+  overflow: auto;
 }
 
 .list-view ul {
@@ -274,6 +279,10 @@
   margin: 0;
   padding: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.list-view ul:hover {
   overflow: auto;
 }
 
