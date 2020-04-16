@@ -1,17 +1,17 @@
 
 // Variables to keep track of
 var transEndEventName = ('WebkitTransition' in document.documentElement.style) ? 'webkitTransitionEnd' : 'transitionend';
+
+// Get settings/variables
 var darkMode = false;
-// window.onload = function() {
 darkMode = sessionStorage.getItem('dark-mode');
 
-console.log('dark mode found as ' + darkMode)
 if (darkMode)
 {
-    // Set as opposite of what it is
     darkMode = (darkMode == "true");
     if (darkMode)
     {
+        // Set as opposite of what it is
         darkMode = false;
         document.getElementById('dark-mode-checkbox').checked = true;
         toggleTheme();
@@ -21,9 +21,22 @@ else
 {
     darkMode = false;
     document.getElementById('dark-mode-checkbox').checked = true;
-    toggleTheme();        
+    toggleTheme();  
 }
-// }
+
+var textToSpeech = false;
+textToSpeech = sessionStorage.getItem('text-to-speech')
+if (textToSpeech)
+{
+    textToSpeech = (textToSpeech == "true");
+    if (textToSpeech)
+    {
+        // Set as opposite of what it is
+        textToSpeech = false;
+        document.getElementById('text-to-speech-checkbox').checked = true;
+        toggleTextToSpeech();
+    }
+}
 
 
 var colorBlindness = false;
@@ -153,5 +166,20 @@ rangeslider.oninput = function() {
   var zoomLevel = numString + "%";
   document.body.style.zoom = zoomLevel;
 } 
+function toggleTextToSpeech()
+{
+    textToSpeech = !textToSpeech;
+    if (textToSpeech)
+    {
+        turnOnSpeakSelectedText();
+    }
+    else
+    {
+        turnOffSpeakSelectedText();
+    }
+
+    sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
+}
+
 
 

@@ -20,7 +20,7 @@
 
 <body class="main-body">
     <div id="sidebar" class="collapsed">
-        <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
+        <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
             <h2 class="old-trips-heading">Old Trips</h2>
             <ul class="old-trips-list">
@@ -66,6 +66,13 @@
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
 
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="text-to-speech-checkbox">
+                    <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Text to Speech</label>
 
         </div>
     </div>
@@ -89,7 +96,10 @@
     </header>
 
     <div class="photos-container">
-    <h1 class="heading">Pack Advisor</h1>
+    <div class=heading-container>
+        <h1 class="heading">Pack Advisor</h1>
+        <!-- <button class="center-button"></button> -->
+    </div>
     <div class="photo-organizer">
         <div class="photo-outer"><img src="/frontend/img/places/eiffel.jpg" style="width:100%"></div>
         <div class="photo-outer"><img src="/frontend/img/places/florence.jpg" style="width:100%"></div>
@@ -106,6 +116,7 @@
     </div>
     </div>
 
+    <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
 
 </body>

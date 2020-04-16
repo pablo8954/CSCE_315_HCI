@@ -43,8 +43,7 @@
     z-index: 30;
     align-items: center;
     font-family: $sans-serif-font-family;
-    overflow: auto;
-    
+    overflow: hidden;
 }
 
 .center-list-view h2
@@ -67,8 +66,14 @@
     padding: 0;
     // pointer-events: none;
     width: 100%;
+    overflow: hidden;
+}
+
+.center-list:hover
+{
     overflow: auto;
 }
+
 
 .add-container
 {
@@ -131,12 +136,12 @@
 {
     position: absolute;
     right: 10px;
-    padding: 0;
+    padding: 10px;
     color: #ddd;
     background-color: transparent;
     border: none;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     opacity: 0.3;
     transition: 0.3s;
     cursor: pointer;
@@ -304,8 +309,7 @@
     margin-top: 50px;
     margin-right: 50px;
     font-family: $sans-serif-font-family;
-    overflow: auto;
-    
+    overflow: hidden;
 }
 
 .list-view h2
@@ -319,6 +323,8 @@
 {
     filter: brightness(50%);
     cursor: pointer;
+    overflow: auto;
+
 }
 
 .list-view ul
@@ -329,8 +335,13 @@
     margin: 0;
     padding: 0;
     pointer-events: none;
-    overflow: auto;
+    overflow: hidden;
     
+}
+
+.list-view ul:hover
+{
+    overflow: auto;
 }
 
 .list-view-item

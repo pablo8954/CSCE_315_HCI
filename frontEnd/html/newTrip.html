@@ -55,8 +55,8 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-
             <label id="dark-mode-label">Dark Mode</label>
+
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="color-blindness-checkbox">
                     <input type="checkbox" id="color-blindness-checkbox"/>
@@ -65,6 +65,13 @@
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
 
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="text-to-speech-checkbox">
+                    <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Text to Speech</label>
 
         </div>
     </div>
@@ -109,14 +116,13 @@
            
     <!-- Connect these buttons to javascript code!!! -->
     <div class="row">
-        <button class="button-type-1" onclick="window.location.href = 'tripInfo.html';" id="next-button">Next</button>
+        <button class="button-type-1" onclick="flightNumberParse()" id="next-button">Next</button>
         <!-- <button class="button-type-2" id="skip-button">Skip</button> -->
     </div>
     </div>
 		   
 	<!--Should check if return date is after departure date here-->
     <!--Should check for time zone change here (Use JavaScript for that)-->
-    
+    <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
-
 </body>

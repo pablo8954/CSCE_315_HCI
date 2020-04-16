@@ -4,7 +4,21 @@
 .main-body
 {
     background-color: $primary-color;
+    color: $secondary-color;
     margin: 0;
+    overflow-x: hidden;
+    transition: 0.3s;
+}
+
+button
+{
+    outline: none;
+}
+
+.dark
+{
+    background-color: $dark-primary-color;
+    color: $dark-secondary-color;
 }
 
 .logo-container
@@ -15,7 +29,6 @@
     
     align-items: center;
     justify-content: center;
-
 }
 
 .nav-logo
@@ -30,7 +43,14 @@
     font-family: $heading-font-family;
     font-size: $heading-logo-text-size;
     color: $header-logo-text-color;
+    font-weight: none;
+    margin: 0;
     margin-left: 20px;
+}
+
+.dark-nav-logo-label
+{
+    color: $dark-header-logo-text-color;
 }
 
 .main-nav {
@@ -40,6 +60,7 @@
     list-style: none;
     clear: both;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .main-nav li 
@@ -48,16 +69,22 @@
     display: inline-block;
 }
 
-.main-nav li a 
+.main-nav-link 
 {
     background-color: transparent;
-    color: $secondary-color;
+    color: $nav-options-color;
     text-decoration: none;
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
     font-family: $nav-font-family;
     font-size: $header-font-size;
+    cursor: pointer;
+}
+
+.dark-main-nav
+{
+    color: $dark-nav-options-color;
 }
 
 .main-nav li.active a 
@@ -68,7 +95,277 @@
     background-color: black;
 }
 
-.main-nav li a:hover 
+.main-nav-link:hover
 {
     color: $header-hover-color;
+    text-decoration: none;
+}
+
+.footer
+{
+    clear: both;
+    height: 15vh;
+}
+
+#sidebar, #content {
+    height: 100%;
+    overflow: auto;
+}
+
+#sidebar 
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: $side-bar-background-color;
+    width: 25%;
+    margin-right: 0%;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.5);
+    transition: 0.35s;
+    z-index: 20;
+    overflow-x: hidden;
+    align-items: center;
+}
+
+#sidebar.collapsed 
+{
+    left: -25%;
+}
+
+#close-sidebar-button
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    color: #ddd;
+    background-color: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#close-sidebar-button:hover 
+{
+    opacity: 1;
+    rotate: 180deg;
+}
+
+#close-sidebar-button:before, #close-sidebar-button:after 
+{
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 30px;
+    width: 2px;
+    background-color: $snow;
+}
+
+#close-sidebar-button:before 
+{
+    transform: rotate(45deg);
+}
+
+#close-sidebar-button:after
+{
+    transform: rotate(-45deg);
+}
+
+#old-trips-container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#settings-container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.old-trips-heading 
+{
+    font-size: $sidebar-heading-font-size;
+    font-family: $default-font-family;
+    margin-top: 20px;
+    // padding: 15px;
+    color: $side-bar-heading-color;
+    text-align: center;
+    width: 100%;
+}
+
+.old-trips-list 
+{
+    color: $side-bar-text-color;
+    width: 100%;
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    margin-top: 52px;
+}
+
+.old-trips-list li 
+{
+    background-color: $side-bar-list-color-1;
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    font-size: $sidebar-list-font-size;
+    font-family: $default-font-family;
+    text-align: center;
+    transition: 0.1s;
+}
+
+.old-trips-list li:hover
+{
+    filter: brightness(90%);
+}
+
+
+.old-trips-list li:nth-child(even)
+{
+    background-color: $side-bar-list-color-2;
+}
+
+#profile-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 35%;
+}
+
+#profile-image
+{
+    border-radius: 50%;
+    width: 150px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#name-label
+{
+    color: $very-light-gray;
+    font-size: 32px;
+    margin-top: 22px;
+    text-align: center;
+}
+
+#settings-heading
+{
+    color: $snow;
+    text-align: center;
+    width: 100%;
+}
+
+
+/*slider switch css */
+.theme-switch-wrapper 
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 34px;
+}
+
+#dark-mode-label
+{
+    color: $very-light-gray;
+    text-align: center;
+    margin-top: 10px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 22px;
+    font-weight: none;
+}
+
+.theme-switch 
+{
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+    margin: auto;
+    color: $snow;
+}
+
+.theme-switch input
+ {
+    display:none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider 
+{
+    background-color: $lemon-yellow;
+}
+
+input:checked + .slider:before 
+{
+    transform: translateX(26px);
+}
+
+.slider.round 
+{
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.generic-button{
+    background-color: $buttons-primary-color1;
+    border: none;
+    color: $buttons-secondary-color1;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: $button-font-size;
+    font-family: $button-font-family;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    display: none;
+}
+
+.generic-button:hover
+{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#logout-button
+{
+    margin-top: 20px;
 }

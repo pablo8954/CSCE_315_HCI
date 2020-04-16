@@ -44,71 +44,81 @@ listOfLists = {
               };
 // ****************************
 
+var listOfLists = {};
+
+var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
+
+// Repopulates a given regular list by giving the name of the list
 function repopulateListByName(listName)
 {
     // empty list
     document.getElementById(listName + "-list").innerHTML = "";
-
+    
     var listVals = listOfLists[listName];
-
+    
     for (var i = 0; i < listVals.length; ++i)
     {
         // create element using item
         var li = document.createElement("li");
         li.classList.toggle("list-view-item");
         li.innerHTML = listVals[i].name;
-
+        
         if (listVals[i].checked)
         {
             li.style.textDecoration = 'line-through';
         }
-
+        
         // add element to toiletry list
         document.getElementById(listName + "-list").appendChild(li);
     }
 }
 
+// called to create a checkbox for the editable list (already checked is a boolean specifying if the checkbox is checked)
 function createCheckbox(alreadyChecked)
 {
+    // Create the objects needed
     var checkboxLabel = document.createElement('label');
     checkboxLabel.className = 'checkbox-label';
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    // Set the default checked value
     if (alreadyChecked)
-        checkbox.checked = alreadyChecked;
+    checkbox.checked = alreadyChecked;
     var span = document.createElement('span');
     span.className = "checkbox-custom";
-
+    
     checkboxLabel.appendChild(checkbox);
     checkboxLabel.appendChild(span);
-
+    
+    // Add the event listener for onchange
     checkbox.addEventListener('change', function(eve)
     {
-		var theLabel = eve.target.parentElement.parentElement.getElementsByTagName('label')[1];
-
-		if (eve.target.checked)
-		{
-			theLabel.style.textDecoration = 'line-through';
-		}
-		else
-		{
-			theLabel.style.textDecoration = 'none';
-		}
+        // the 2nd label because the 1st label is the checkboxLabel
+        var theLabel = eve.target.parentElement.parentElement.getElementsByTagName('label')[1];
+        if (eve.target.checked)
+        {
+            theLabel.style.textDecoration = 'line-through';
+        }
+        else
+        {
+            theLabel.style.textDecoration = 'none';
+        }
     });
-
+    
     return checkboxLabel;
 }
 
+// function to create a single item of the editable list
 function createEditableListItem(itemVal)
 {
     // create element using item
     var li = document.createElement('li');
     li.classList.toggle('editable-list-item');
-
-    // add check through option here
+    
+    // create check through option here
     var checkbox = createCheckbox(itemVal.checked);
-
-    // add the label
+    
+    // create the label
     var value = document.createElement("label");
     value.innerText = itemVal.name;
     value.className = 'editable-list-label';
@@ -117,17 +127,17 @@ function createEditableListItem(itemVal)
     {
         value.style.textDecoration = 'line-through';
     }
-
+    
+    // Add focus listeners to show focus mode for the list item
     value.addEventListener("focus", function(eve)
     {
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
-
     value.addEventListener("focusout", function(eve)
     {
         eve.target.parentElement.classList.toggle('bordered-editable-list-item');
     });
-
+    
     // add delete option here
     var deleteButton = document.createElement("button");
     deleteButton.innerText = "x";
@@ -136,39 +146,35 @@ function createEditableListItem(itemVal)
     {
         eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
     });
-
-    // li.addEventListener('click', function(eve)
-    // {
-    //     console.log(eve.target.tag + ' clicked');
-    //     var theLabel = eve.target.getElementsByTagName('label')[0];
-    //     theLabel.focus();
-    // });
-
+    
+    // Add all subviews to the list item
     li.append(checkbox);
     li.append(value);
     li.appendChild(deleteButton);
-
+    
     return li;
 }
 
+// Given name of the editable center list, repopulate it
 function repopulateCenterListByName(listName)
 {
     // empty list
     document.getElementById("editable-list").innerHTML = "";
-
+    
     var listVals = listOfLists[listName];
-
+    
     for (var i = 0; i < listVals.length; ++i)
     {
         var li = createEditableListItem(listVals[i]);
-
+        
         // add element to toiletry list
         document.getElementById("editable-list").appendChild(li);
     }
 }
 
+// Called to add a new element to list
 function addNewElement()
-{	
+{
     var text = document.getElementById('add-input').value;
     if (text == '')
     {
@@ -186,6 +192,7 @@ function addNewElement()
     document.getElementById('add-input').value = '';
 }
 
+// Populates all the list using the keys from listOfLists
 function repopulateAllLists()
 {
     var keyList = Object.keys(listOfLists);
@@ -195,11 +202,12 @@ function repopulateAllLists()
     }
 }
 
+// Stores the current table name as a string to be used by two functions
 var currentTable;
 function showEditableView (eve)
 {
     darkenBackground();
-
+    
     var listName = eve.target.id;
     currentTable = listName;
     // get the editable view to be showed
@@ -209,7 +217,7 @@ function showEditableView (eve)
     var listData = listOfLists[listName];
     // get the listView
     var listView = document.getElementById(listName);
-
+    
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
@@ -217,18 +225,15 @@ function showEditableView (eve)
     editableView.getElementsByTagName("h2")[0].innerHTML = heading;
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
-
+    
     // set list items for editable view
     repopulateCenterListByName(listName);
-
-
-    // set addNewElement action
-
+    // show the editable view
     editableView.style.display = 'flex';
-
+    
 }
 
-
+// Closes the editable list view in the center
 function closeEditableView ()
 {
     // get the updated list from the editable view
