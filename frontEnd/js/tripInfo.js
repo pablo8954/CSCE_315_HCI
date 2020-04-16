@@ -291,8 +291,6 @@ function loadData()
 
 function currencyExchangeRate(source_currency_code, destination_currency_code)
 {
-
-
     fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from="+ source_currency_code + "&to=" + destination_currency_code + "&amount=1", {
         "method": "GET",
         "headers": {
@@ -317,9 +315,20 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
 
 }
 
+function tripTimeDetails()
+{
+    //unpack & place date difference on page
+    var day_diff = this.sessionStorage.getItem('day_diff');
+
+    if (day_diff == 1){ var day_text = "day"}
+    else {var day_text = "days"}
+    
+    document.getElementById('trip-length').innerHTML = "Trip Length: " + day_diff.bold() + " " + day_text.bold();
+}
 
 function loadFlightData()
 {
+    tripTimeDetails();
     //unpack json
     var data = this.sessionStorage.getItem('travel_json');
     var flight_data = JSON.parse(data);

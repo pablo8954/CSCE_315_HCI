@@ -18,10 +18,16 @@ function flightNumberParse(){
     //take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
     var departure_date = document.getElementById("start-date").value;
-   
+    var end_date = document.getElementById("return-date").value;
+
+    //verify dates are valid    
+    diff = Math.floor((Date.parse(end_date) - Date.parse(departure_date) )/ 86400000) + 1; //add 1 to account for day of departure
+    sessionStorage.setItem('day_diff', JSON.stringify(diff)); //TODO: error check that date difference is not negative
+    console.log(diff);
+
     var flight_api_url = "https://aerodatabox.p.rapidapi.com/flights/" + flight_num + '/' + departure_date + "?withLocation=false&withAircraftImage=false";    
 
-    // window.location.href = 'tripInfo.html'; - leave commented unless want to skip new trip page
+    //window.location.href = 'tripInfo.html'; //- leave commented unless want to skip new trip page
 
     fetch(flight_api_url, {
         "method": "GET",
@@ -58,6 +64,4 @@ function flightNumberParse(){
         .catch(err => {
             console.log(err);
         });
-
-      
 }
