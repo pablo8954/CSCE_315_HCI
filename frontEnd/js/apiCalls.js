@@ -43,53 +43,52 @@ function flightNumberParse(){
             var source_countryCode = data[0].departure.airport.countryCode;
             var destination_countryCode = data[0].arrival.airport.countryCode;
            
-            console.log(data[0].departure.airport);
-            console.log(data[0].arrival.airport);
+            // console.log(data[0].departure.airport);
+            // console.log(data[0].arrival.airport);
 
-            sessionStorage.setItem('travel_json', data);
+            sessionStorage.setItem('travel_json', JSON.stringify(data));
             window.location.href = 'tripInfo.html';
 
-            // console.log(source_city);
-            // console.log(destination_city);
-            // console.log(source_countryCode);
-            // console.log(destination_countryCode);
+            // // console.log(source_city);
+            // // console.log(destination_city);
+            // // console.log(source_countryCode);
+            // // console.log(destination_countryCode);
 
-            sessionStorage.setItem('source_city', JSON.stringify(source_city));
-            sessionStorage.setItem('destination_city', JSON.stringify(destination_city));
+            // sessionStorage.setItem('source_city', JSON.stringify(source_city));
+            // sessionStorage.setItem('destination_city', JSON.stringify(destination_city));
             
-            return fetch("https://restcountries.eu/rest/v2/alpha/"+source_countryCode)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    var source_country = data.name
-                    var source_timezone = data.timezones[0];
+            // return fetch("https://restcountries.eu/rest/v2/alpha/"+source_countryCode)
+            //     .then(response => {
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         var source_country = data.name
+            //         var source_timezone = data.timezones[0];
 
-                    return fetch("https://restcountries.eu/rest/v2/alpha/"+destination_countryCode)
-                        .then(response => {
-                            return response.json();
-                        })
-                        .then(data => {
-                            var destination_country = data.name;
-                            var destination_timezone = data.timezones[0];
+            //         return fetch("https://restcountries.eu/rest/v2/alpha/"+destination_countryCode)
+            //             .then(response => {
+            //                 return response.json();
+            //             })
+            //             .then(data => {
+            //                 var destination_country = data.name;
+            //                 var destination_timezone = data.timezones[0];
 
-                            // console.log(source_country);
-                            // console.log(destination_country);
+            //                 // console.log(source_country);
+            //                 // console.log(destination_country);
 
-                            // console.log(source_timezone);
-                            // console.log(destination_timezone);
-
+            //                 // console.log(source_timezone);
+            //                 // console.log(destination_timezone);
 
                         
-                            sessionStorage.setItem('source_country', JSON.stringify(source_country));
-                            sessionStorage.setItem('destination_country', JSON.stringify(destination_country));
+            //                 sessionStorage.setItem('source_country', JSON.stringify(source_country));
+            //                 sessionStorage.setItem('destination_country', JSON.stringify(destination_country));
                             
-                            sessionStorage.setItem('source_timezone', JSON.stringify(source_timezone));
-                            sessionStorage.setItem('destination_time', JSON.stringify(destination_timezone));
+            //                 sessionStorage.setItem('source_timezone', JSON.stringify(source_timezone));
+            //                 sessionStorage.setItem('destination_time', JSON.stringify(destination_timezone));
 
-                            window.location.href = 'tripInfo.html';
-                        })
-               })
+            //                 window.location.href = 'tripInfo.html';
+            //             })
+            //    })
         })
 
         .catch(err => {

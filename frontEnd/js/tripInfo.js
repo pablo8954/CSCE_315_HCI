@@ -292,15 +292,50 @@ function loadData()
 function loadFlightData()
 {
     //unpack json
-    // var data = this.sessionStorage.getItem('travel_json');
-    // console.log(data);
-    // console.log(this.sessionStorage.getItem('travel_json'));
+    var data = this.sessionStorage.getItem('travel_json');
+    var flight_data = JSON.parse(data);
+    
+    var source_city = JSON.stringify(flight_data[0].departure.airport.municipalityName).replace(/\"/g, "");
+    var destination_city = JSON.stringify(flight_data[0].arrival.airport.municipalityName).replace(/\"/g, "");
 
-    var sourceText = this.sessionStorage.getItem('source_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('source_country').replace(/\"/g, "");
-    var destinationText = this.sessionStorage.getItem('destination_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('destination_country').replace(/\"/g, "");
+    var source_countryCode = flight_data[0].departure.airport.countryCode;
+    var destination_countryCode = flight_data[0].arrival.airport.countryCode;
 
-    this.document.getElementById('source').innerHTML = sourceText;
-    this.document.getElementById('destination').innerHTML = destinationText;
+    var restCountryAPI = 'https://restcountries.eu/rest/v2/alpha/';
+
+    //grab source country metadata
+    fetch(restCountryAPI + source_countryCode)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        var source_country = JSON.stringify(data.name).replace(/\"/g, "");
+
+        return fetch(restCountryAPI + destination_countryCode)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
+
+            console.log(source_city);
+            console.log(source_country);
+            console.log(destination_city);
+            console.log(destination_country);
+
+            document.getElementById('source').innerHTML = source_city + ', ' + source_country;
+            document.getElementById('destination').innerHTML = destination_city + ', ' + destination_country;
+
+        });
+
+    });
+    
+
+    // var sourceText = this.sessionStorage.getItem('source_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('source_country').replace(/\"/g, "");
+    // var destinationText = this.sessionStorage.getItem('destination_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('destination_country').replace(/\"/g, "");
+
+    // this.document.getElementById('source').innerHTML = sourceText;
+    // this.document.getElementById('destination').innerHTML = destinationText;
 
 
 }
