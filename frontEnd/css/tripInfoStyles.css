@@ -315,6 +315,12 @@
   color: #fffafa;
 }
 
+#phrases{
+  background-color: grey;
+  width: 500px;
+  color: #fffafa;
+}
+
 .s-label {
   font-weight: bold;
   color: #00577b;
