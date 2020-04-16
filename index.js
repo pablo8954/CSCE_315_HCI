@@ -18,16 +18,18 @@ async function dbSetup()
 
 async function setListOfDefaultLists()
 {
-    mongoClient.db('users').collection("lists").find({}).toArray(function(err, result) 
+    mongoClient.db('users').collection("lists").find({email: "johnsmith@gmail.com"}).toArray(function(err, result) 
     {
         if (err) throw err;
+
+        var lists = result[0].lists;
         // Go through the results and assign the lists
-        for (var i = 0; i < result.length; ++i)
+        for (var i = 0; i < lists.length; ++i)
         {
-            listOfLists[result[i].name] = result[i].list;
-            for (var j = 0; j < listOfLists[result[i].name].length; ++j)
+            listOfLists[lists[i].name] = lists[i].items;
+            for (var j = 0; j < listOfLists[lists[i].name].length; ++j)
             {
-                listOfLists[result[i].name][j] = {name: listOfLists[result[i].name][j], checked: false};
+                listOfLists[lists[i].name][j] = {name: lists[i].items[j], checked: false};
             }
         }
     });
