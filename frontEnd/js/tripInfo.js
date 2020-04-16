@@ -289,6 +289,22 @@ function loadData()
     
 }
 
+function loadFlightData()
+{
+    //unpack json
+    // var data = this.sessionStorage.getItem('travel_json');
+    // console.log(data);
+    // console.log(this.sessionStorage.getItem('travel_json'));
+
+    var sourceText = this.sessionStorage.getItem('source_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('source_country').replace(/\"/g, "");
+    var destinationText = this.sessionStorage.getItem('destination_city').replace(/\"/g, "") + ', ' + this.sessionStorage.getItem('destination_country').replace(/\"/g, "");
+
+    this.document.getElementById('source').innerHTML = sourceText;
+    this.document.getElementById('destination').innerHTML = destinationText;
+
+
+}
+
 // Called when window is loaded
 window.onload = function()
 {
@@ -312,4 +328,7 @@ window.onload = function()
     });
     // add event listener for editable view close button
     this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
+
+    loadFlightData();
+
 }
