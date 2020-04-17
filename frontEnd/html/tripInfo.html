@@ -20,7 +20,7 @@
 <body spellcheck="false" class="main-body">
     <div id="darkener"></div>
     <div id="sidebar" class="collapsed">
-        <button id="close-sidebar-button" onclick="toggleSidebar()">x</button>
+        <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
             <h2 class="old-trips-heading">Old Trips</h2>
             <ul class="old-trips-list">
@@ -65,7 +65,14 @@
                 </label>
             </div>
             <label id="dark-mode-label">Color Blindness Mode</label>
-
+            
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="text-to-speech-checkbox">
+                    <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <label id="dark-mode-label">Text to Speech</label>
 
         </div>
     </div>
