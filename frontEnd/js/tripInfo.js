@@ -1,6 +1,8 @@
 var listOfLists = {};
-
+var languageChoice;
 var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
+
+var langCode;
 
 var phraseList= new Array();
 var listOfPhrases = {'phrases' : phraseList};
@@ -348,8 +350,9 @@ window.onload = function()
     // add event listener for editable view close button
     this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
     
-    updateLanguage("Egypt"); //destination
-    updateTimeZone( "Mexico", "Egypt"); // source, destination
+    //Need to use actual source and destination country
+    updateLanguage("Mexico"); //destination
+    updateTimeZone( "Afghanistan", "Mexico"); // source, destination
 }
 
 function populatePhraseList() {
@@ -458,7 +461,6 @@ function createEditablePhraseItem(itemVal)
     return li;
 }
 
-
 function updateLanguage(name_of_country) {
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
@@ -472,15 +474,19 @@ function updateLanguage(name_of_country) {
         data.forEach(country => {
             if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
                 lang = country.languages[0].name;
+                langCode=country.languages[0].iso639_1;
+                console.log("Language Code: " + langCode);
                 found = 1;
             }
         });
         
         if(found == 1) {
             document.getElementById("p-language-output").innerHTML = "Primary Language: " + lang;
+            languageChoice = lang;
         }
         else {
             document.getElementById("p-language-output").innerHTML = "Could not find language for " + name_of_country;
+            languageChoice = "English";
         }
     }
 }
@@ -662,6 +668,7 @@ function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
     populateTranslations();
     showTranslationsEditable();
+    translateText("Hello");
     
 }
 
@@ -685,12 +692,35 @@ function exportTranslatedPhrases() {
         csv += "\n";
     });
 
-    console.log(csv);
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target ='_blank';
     hiddenElement.download ='translations.csv';
     hiddenElement.click();
-
-
 }
+
+function translateText(text){
+    // console.log("Language Code is: " + langCode);
+    // fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", {
+    //     "method": "POST",
+    //     "headers": {
+    //         "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+    //         "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+    //        "content-type": "application/x-www-form-urlencoded"
+    //     },
+    //     "body": {
+    //         "source": "en", 
+    //         "q": text.toString(),
+    //         "target": langCode.toString()
+    //     }
+    // })
+    // .then(response => {
+    //    console.log(text + " Translated: " + response);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+    
+}
+
+
