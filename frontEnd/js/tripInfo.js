@@ -358,16 +358,42 @@ function tripTimeDetails(data)
     
     document.getElementById('trip-length').innerHTML = "Trip Length: " + day_diff.bold() + " " + day_text.bold();
 
-    //get departure time
+    //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
     depart_date_time = depart.split(" ");
 
     var depart_date = depart_date_time[0];
-    var depart_time = depart_date_time[1];
 
-    //get arrival time
+    var depart_data_array = depart_date.split("-");
+
+    var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
+    console.log(depart_date_phrase);
+
+    //get departure time - time stored as 24:00-5:00 (military time-UTC)
+    var depart_time = depart_date_time[1];
+    depart_time = depart_time.split("-");
+  
+    var depart_timezone = depart_time[1];
+    var depart_time = depart_time[0];
+
+    var depart_hour_array = depart_time.split(":");
+    var AM_PM = "";
+    //adjust time to standard form instead of military
+    if (depart_hour_array[0] > 12)
+    {
+        AM_PM = "pm";
+        depart_hour_array[0] = depart_hour_array[0]-12;
+        depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
+    }
+    else {
+        AM_PM = "am";
+        depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
+    }
+
+    document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold() + " at " + depart_time.bold() + "."
 
 }
+
 
 function loadFlightData()
 {
@@ -412,7 +438,6 @@ function loadFlightData()
             document.getElementById('destination').innerHTML = destination_city + ', ' + destination_country;
         });
     });
-
 
 }
 
