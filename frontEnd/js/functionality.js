@@ -126,11 +126,21 @@ function showSettings()
 function showOldTrips()
 {
     // Show Old Trips and hide Settings
+
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
+
+    var numTrips = 2; // TODO: get number of old trips from db
+
     
     // Open the sidebar again
     toggleSidebar();
+    for(var i = 1; i <= numTrips; i++) {
+        var id = "old-trip" + i.toString();
+        document.getElementById(id).style.display = 'flex';
+        console.log(id);
+    }
+
     document.removeEventListener(transEndEventName, showOldTrips);
 }
 
@@ -166,6 +176,7 @@ rangeslider.oninput = function() {
   var zoomLevel = numString + "%";
   document.body.style.zoom = zoomLevel;
 } 
+
 function toggleTextToSpeech()
 {
     textToSpeech = !textToSpeech;
@@ -180,6 +191,7 @@ function toggleTextToSpeech()
 
     sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
 }
+
 
 
 
