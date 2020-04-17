@@ -494,7 +494,6 @@ function populatePhraseList() {
 
 function showPhrasesEditableView(eve) {
     darkenBackground();
-    console.log(listOfPhrases['phrases']);
     var listName = eve.target.id;
     currentTable = listName;
     // get the editable view to be showed
@@ -722,7 +721,95 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
             else {
                 document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will not change time zones";
             }
-            
         }
     }
+}
+
+function showTranslationsEditable() {
+  
+    darkenBackground();
+    var listName = "translate";
+    currentTable = listName;
+    // get the editable view to be showed
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    // get the right list from tableName
+    var listData = listOfPhrases["phrases"];
+    // get the listView
+    var listView = document.getElementById(listName);
+    
+    // Set appropriate colors and values
+    var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
+    var color = getComputedStyle(listView, null).getPropertyValue("color");
+    var heading = listView.getElementsByTagName("h2")[0].innerHTML;
+    editableView.getElementsByTagName("h2")[0].innerHTML = heading;
+    editableView.style.backgroundColor = bgcolor;
+    editableView.style.color = color;
+    
+    // set list items for editable view
+   // repopulateCenterPhrasesByName(listName);
+    
+    
+    // set addNewElement action
+    
+    editableView.style.display = 'flex';
+        
+    
+
+}
+
+function populateTranslations() {
+    document.getElementById("translate-list").innerHTML = "";
+    
+    var listVals = listOfPhrases["phrases"];
+    
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        // create element using item
+        var li = document.createElement("li");
+        li.classList.toggle("list-view-item");
+        li.innerHTML = listVals[i].name;
+        
+        
+        // add element to toiletry list
+        document.getElementById("translate-list").appendChild(li);
+    }
+
+}
+
+function openTranslationWindow(){
+    //document.getElementById('translate').style.display = "block";
+    populateTranslations();
+    showTranslationsEditable();
+    
+}
+
+function exportTranslatedPhrases() {
+    var commonPhrases = listOfPhrases["phrases"];
+    var translatedPhrases = listOfPhrases["phrases"]; //needs translation
+
+    //combining into one list
+    var exportList = new Array();
+    for (var i = 0; i < commonPhrases.length; i += 2) {
+        var row = new Array();
+        row.push("\"" + commonPhrases[i].name + "\"");
+        row.push("\"" + translatedPhrases[i].name + "\"");
+        exportList.push(row);
+    }
+
+
+    var csv = 'Phrase,Translation\n';
+    exportList.forEach(function(row) {
+        csv+= row.join(',');
+        csv += "\n";
+    });
+
+    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target ='_blank';
+    hiddenElement.download ='translations.csv';
+    hiddenElement.click();
+
+
 }

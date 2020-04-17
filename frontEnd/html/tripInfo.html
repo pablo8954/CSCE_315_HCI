@@ -132,10 +132,16 @@
 		</div>
 		<br>
 		<div class="row"> 
-			<button class="button-change-info" id="generate-translation-button">View Translations</button>
-			<button class="button-change-info" id="generate-translation-button">Export Translations</button>
+            <button class="button-change-info" onclick=openTranslationWindow(); id="generate-translation-button">View Translations</button>
+			<button class="button-change-info" onclick=exportTranslatedPhrases(); id="export-translation-button">Export Translations</button>
+        </div>
+        <div class="list-view" id="translate" style="display:none;">
+			<h2 class="list-heading">Translations</h2>
+			<ul id="translate-list">
+			   
+			</ul>
 		</div>
-	
+
 
         <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
