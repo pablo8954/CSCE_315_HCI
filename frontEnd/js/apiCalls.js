@@ -11,6 +11,8 @@ function onSignIn(googleUser)
     //replace buttons
     document.getElementById("google-signin-button").style.display="none";
     document.getElementById("logout-button").style.display="block";
+
+    
 }
 
 function flightNumberParse(){

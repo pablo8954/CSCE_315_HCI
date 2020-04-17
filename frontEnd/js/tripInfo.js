@@ -315,7 +315,7 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
 
 }
 
-function tripTimeDetails()
+function tripTimeDetails(data)
 {
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
@@ -324,14 +324,25 @@ function tripTimeDetails()
     else {var day_text = "days"}
     
     document.getElementById('trip-length').innerHTML = "Trip Length: " + day_diff.bold() + " " + day_text.bold();
+
+    //get departure time
+    var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
+    depart_date_time = depart.split(" ");
+
+    var depart_date = depart_date_time[0];
+    var depart_time = depart_date_time[1];
+
+    //get arrival time
+
 }
 
 function loadFlightData()
 {
-    tripTimeDetails();
     //unpack json
     var data = this.sessionStorage.getItem('travel_json');
     var flight_data = JSON.parse(data);
+    
+    tripTimeDetails(flight_data);
 
     var source_city = JSON.stringify(flight_data[0].departure.airport.municipalityName).replace(/\"/g, "");
     var destination_city = JSON.stringify(flight_data[0].arrival.airport.municipalityName).replace(/\"/g, "");
