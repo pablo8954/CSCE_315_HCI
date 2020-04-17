@@ -321,6 +321,12 @@
   color: #fffafa;
 }
 
+#translate{
+  background-color: grey;
+  width: 500px;
+  color: #fffafa;
+}
+
 .s-label {
   font-weight: bold;
   color: #00577b;
@@ -512,5 +518,9 @@
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
 }
+
+
+
+
 
 /*# sourceMappingURL=tripInfoStyles.css.map */
