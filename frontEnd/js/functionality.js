@@ -64,7 +64,9 @@ function toggleTheme()
 {
     darkMode = !darkMode;
     sessionStorage.setItem('dark-mode', JSON.stringify(darkMode));
-
+    var toCheck = sessionStorage.getItem('dark-mode');
+    console.log ('set to ' + darkMode);
+    console.log(typeof darkMode);
     // ** To change **
     // main-body
     // logo heading
@@ -138,8 +140,7 @@ function toggleSidebar()
 }
 
 // Google Sign out
-function signout()
-{
+function signout(){
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
 
@@ -154,6 +155,17 @@ function signout()
     document.getElementById("logout-button").style.display="none";
 }
 
+var rangeslider = document.getElementById("sliderRange"); 
+var output = document.getElementById("demo"); 
+output.innerHTML = rangeslider.value; 
+  
+rangeslider.oninput = function() { 
+  output.innerHTML = this.value; 
+  var val = this.value;
+  var numString = val.toString();
+  var zoomLevel = numString + "%";
+  document.body.style.zoom = zoomLevel;
+} 
 function toggleTextToSpeech()
 {
     textToSpeech = !textToSpeech;

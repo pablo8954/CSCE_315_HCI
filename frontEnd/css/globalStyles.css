@@ -22,7 +22,35 @@ button {
   align-items: center;
   justify-content: center;
 }
-
+.rangeslider{ 
+	align-items:center;
+    width: 50%; 
+} 
+  
+.myslider { 
+	align-items:center;
+    -webkit-appearance: none; 
+    background: #FFFFFF  ; 
+    width: 100%; 
+	margin-left: 50%;
+    height: 20px; 
+    opacity: 2; 
+   } 
+  
+  
+.myslider::-webkit-slider-thumb { 
+    -webkit-appearance: none; 
+    cursor: pointer; 
+    background: #696969  ; 
+    width: 5%; 
+    height: 20px; 
+} 
+  
+  
+.myslider:hover { 
+    opacity: 1; 
+} 
+   
 .nav-logo {
   width: 72px;
   height: 72px;

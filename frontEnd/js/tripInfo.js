@@ -2,6 +2,22 @@ var listOfLists = {};
 
 var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
 
+var phraseList= new Array();
+var listOfPhrases = {'phrases' : phraseList};
+
+//       TEMPORARY CODE
+// ****************************
+
+phraseList.push({name: "Where is the restroom?"});
+phraseList.push({name: "Where is my hotel?"});
+phraseList.push({name: "Where is the airport?"});
+phraseList.push({name: "Where is a resturaunt?"});
+phraseList.push({name: "Hi, how are you?"});
+phraseList.push({name: "I dont speak your language?"});
+phraseList.push({name: "How much does this cost?"});
+phraseList.push({name: "What time is it?"});
+
+
 // Repopulates a given regular list by giving the name of the list
 function repopulateListByName(listName)
 {
@@ -9,7 +25,7 @@ function repopulateListByName(listName)
     document.getElementById(listName + "-list").innerHTML = "";
     
     var listVals = listOfLists[listName];
-    
+    console.log(listVals)
     for (var i = 0; i < listVals.length; ++i)
     {
         // create element using item
@@ -136,7 +152,13 @@ function addNewElement()
         return;
     }
     var itemVal = {name: text, checked: false};
-    var newLi = createEditableListItem(itemVal);
+    var newLi;
+    if(currentTable == "phrases"){
+        newLi = createEditablePhraseItem(itemVal);
+    }
+    else{ 
+        newLi = createEditableListItem(itemVal);
+    }
     
     document.getElementById('editable-list').appendChild(newLi);
     document.getElementById('add-input').value = '';
@@ -195,17 +217,28 @@ function closeEditableView ()
     for (var i = 0; i < elements.length; ++i)
     {
         var labelVals = elements[i].getElementsByTagName('label');
-        var newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
+        var newElement;
+        if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
+        else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
         newList.push(newElement);
     }
+    if (currentTable == "phrases"){
+        listOfPhrases[currentTable] = newList;
+        populatePhraseList();
+    }
+    else {
+        
+        listOfLists[currentTable] = newList;
+        
+        // repopulate the appropriate table
+        repopulateListByName(currentTable);
+        document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
+    }
     
-    listOfLists[currentTable] = newList;
     
     // repopulate the appropriate table
-    repopulateListByName(currentTable);
     
-    // reset the heading as needed
-    document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
+    // reset the heading as neede
     
     // close the editable view
     editableView.style.display = 'none';
@@ -244,7 +277,7 @@ function createListView(listName, bgcolor)
     heading.innerHTML = listName;
     var list = document.createElement('ul');
     list.id = listName.toLowerCase() + "-list";
-
+    
     viewDiv.appendChild(heading);
     viewDiv.appendChild(list);
     viewDiv.style.backgroundColor = bgcolor;
@@ -273,13 +306,13 @@ function loadData()
             var res = JSON.parse(xhttp.response);
             console.log(res);
             var keyList = Object.keys(res);
-
+            
             for (var i = 0; i < keyList.length; ++i)
             {
                 createListView(keyList[i], listColors[i % listColors.length]);
                 listOfLists[keyList[i].toLowerCase()] = res[keyList[i]];
             }
-
+            
             // Populate all the lists with the data
             repopulateAllLists();
         }
@@ -387,8 +420,10 @@ function loadFlightData()
 window.onload = function()
 {
     loadData();
+    populatePhraseList();
     // hide the center view
     this.document.getElementById('editable-list-view').style.display = 'none';
+    this.document.getElementById('phrases').addEventListener("click", showPhrasesEditableView);
     // Get the screen darkener ready
     this.document.getElementById('darkener').hidden = true;
     this.document.getElementById('darkener').addEventListener('click', this.closeEditableView);
@@ -410,4 +445,259 @@ window.onload = function()
     //grab flight data & use data to get other travel information
     loadFlightData();
 
+    updateLanguage("Egypt"); //destination
+    updateTimeZone( "Mexico", "Egypt"); // source, destination
+}
+
+function populatePhraseList() {
+    document.getElementById("phrases-list").innerHTML = "";
+    
+    var listVals = listOfPhrases["phrases"];
+    
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        // create element using item
+        var li = document.createElement("li");
+        li.classList.toggle("list-view-item");
+        li.innerHTML = listVals[i].name;
+        
+        
+        // add element to toiletry list
+        document.getElementById("phrases-list").appendChild(li);
+    }
+}
+
+function showPhrasesEditableView(eve) {
+    darkenBackground();
+    console.log(listOfPhrases['phrases']);
+    var listName = eve.target.id;
+    currentTable = listName;
+    // get the editable view to be showed
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    // get the right list from tableName
+    var listData = listOfPhrases[listName];
+    // get the listView
+    var listView = document.getElementById(listName);
+    
+    // Set appropriate colors and values
+    var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
+    var color = getComputedStyle(listView, null).getPropertyValue("color");
+    var heading = listView.getElementsByTagName("h2")[0].innerHTML;
+    editableView.getElementsByTagName("h2")[0].innerHTML = heading;
+    editableView.style.backgroundColor = bgcolor;
+    editableView.style.color = color;
+    
+    // set list items for editable view
+    repopulateCenterPhrasesByName(listName);
+    
+    
+    // set addNewElement action
+    
+    editableView.style.display = 'flex';
+    
+}
+
+function repopulateCenterPhrasesByName(listName)
+{
+    // empty list
+    document.getElementById("editable-list").innerHTML = "";
+    
+    var listVals = listOfPhrases[listName];
+    
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        var li = createEditablePhraseItem(listVals[i]);
+        
+        // add element to toiletry list
+        document.getElementById("editable-list").appendChild(li);
+    }
+}
+
+function createEditablePhraseItem(itemVal)
+{
+    // create element using item
+    var li = document.createElement('li');
+    li.classList.toggle('editable-list-item');
+    
+    
+    // add the label
+    var value = document.createElement("label");
+    value.innerText = itemVal.name;
+    value.className = 'editable-list-label';
+    value.contentEditable = true;
+    
+    value.addEventListener("focus", function(eve)
+    {
+        eve.target.parentElement.classList.toggle('bordered-editable-list-item');
+    });
+    
+    value.addEventListener("focusout", function(eve)
+    {
+        eve.target.parentElement.classList.toggle('bordered-editable-list-item');
+    });
+    
+    // add delete option here
+    var deleteButton = document.createElement("button");
+    deleteButton.innerText = "x";
+    deleteButton.className = "delete-list-button";
+    deleteButton.addEventListener('click', function(eve)
+    {
+        eve.target.parentElement.parentElement.removeChild(eve.target.parentElement);
+        for( var i = 0; i < arr.length; i++){ if ( arr[i] === 5) { arr.splice(i, 1); }}
+    });
+    
+    li.append(value);
+    li.appendChild(deleteButton);
+    
+    return li;
+}
+
+
+function updateLanguage(name_of_country) {
+    var request = new XMLHttpRequest();
+    request.open('GET', "https://restcountries.eu/rest/v2/");
+    request.send();
+    request.onload = function() {
+        var data = JSON.parse(this.response);
+        //name-> === country name
+        //language, name -> === language name of country
+        var found = 0;
+        var lang;
+        data.forEach(country => {
+            if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
+                lang = country.languages[0].name;
+                found = 1;
+            }
+        });
+        
+        if(found == 1) {
+            document.getElementById("p-language-output").innerHTML = "Primary Language: " + lang;
+        }
+        else {
+            document.getElementById("p-language-output").innerHTML = "Could not find language for " + name_of_country;
+        }
+    }
+}
+
+function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
+    var request = new XMLHttpRequest();
+    request.open('GET', "https://restcountries.eu/rest/v2/");
+    request.send();
+    request.onload = function() {
+        var data = JSON.parse(this.response);
+        //name-> === country name
+        //language, name -> === language name of country
+        var sfound = 0;
+        var stimezone;
+        var dfound = 0;
+        var dtimezone;
+        data.forEach(country => {
+            if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry) {
+                if(country.timezones.length == 1) {
+                    stimezone = country.timezones[0];
+                    sfound = 1;
+                }
+                //
+                //Need to look for city too.. perhaps in next sprint?
+                //
+                else {
+                    sfound = 2;
+                    console.log("Error, multiple time zones detected(source country)... choosing first one");
+                    stimezone = country.timezones[0];
+                }
+            }
+            else if(request.status >=200 && request.status < 400 && country.name == dest_name_of_country) {
+                if(country.timezones.length == 1) {
+                    dtimezone = country.timezones[0];
+                    dfound = 1;
+                }
+                //
+                //Need to look for city too.. perhaps in next sprint?
+                //
+                else {
+                    dfound = 2;
+                    console.log("Error, multiple time zones detected(dest country)... choosing first one");
+                    dtimezone = country.timezones[0];
+                }
+            }
+        });
+        
+        if(sfound == 1) {
+            console.log('Source Time zone = ' + stimezone);
+            document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
+        }
+        else if (sfound == 2) {
+            document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
+        }
+        else {
+            document.getElementById("source-time-zone").innerHTML = "Could not find time zone for " + source_name_of_sCountry;
+        }
+        
+        if(dfound == 1) {
+            console.log('Source Time zone = ' + stimezone);
+            document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
+        }
+        else if (dfound == 2) {
+            document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
+        }
+        else {
+            document.getElementById("dest-time-zone").innerHTML = "Could not find time zone for " + dest_name_of_sCountry;
+        }
+        
+        // calculating lost/gained time
+        if(dfound != 0 && sfound != 0) { 
+            
+            //getting source time zone into float
+            var source_hours;
+            
+            stimezone = stimezone.substring(3);
+            if(stimezone == "") {
+                source_hours = 0;
+            }
+            else {
+                var sOperator = stimezone.charAt(0);
+                var shours = stimezone.charAt(1) + stimezone.charAt(2);
+                var sminutes = stimezone.charAt(4) + stimezone.charAt(5);
+                source_hours = parseInt(shours);
+                var source_minutes = parseInt(sminutes);
+                source_minutes = source_minutes / 60;
+                source_hours = source_hours + source_minutes;
+                if(sOperator == "-") source_hours = source_hours * -1;
+            }
+            
+            //getting dest time zone into float
+            dtimezone = dtimezone.substring(3);
+            var dest_hours;
+            if(dtimezone == "") {
+                dest_hours = 0;
+            }
+            else {
+                var dOperator = dtimezone.charAt(0);
+                var dhours = dtimezone.charAt(1) + dtimezone.charAt(2);
+                var dminutes = dtimezone.charAt(4) + dtimezone.charAt(5);
+                dest_hours = parseInt(dhours);
+                var dest_minutes = parseInt(dminutes);
+                dest_minutes = dest_minutes / 60;
+                dest_hours = dest_hours + dest_minutes;
+                if(dOperator == "-") dest_hours = dest_hours * -1;
+            }
+            
+            
+            //calculating change in time zone
+            var time_change = dest_hours - source_hours;
+            console.log(time_change);
+            if(time_change < 0) {
+                time_change = time_change * - 1;
+                document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Lose " + time_change.toString() + " hours";
+            }
+            else if (time_change > 0){
+                document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Gain " + time_change.toString() + " hours";
+            }
+            else {
+                document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will not change time zones";
+            }
+            
+        }
+    }
 }

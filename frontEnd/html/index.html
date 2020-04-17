@@ -42,6 +42,14 @@
             <!-- Settings: Dark/Light Theme, Color Blindness Mode -->
 
             <h1 id="settings-heading">Settings</h1>
+			
+			<script src="/frontEnd/js/functionality.js"></script>
+			<div class="rangeslider"> 
+			  <input type="range" min="50" max="150" value="100"
+							  class="myslider" id="sliderRange">  
+			</div> 
+			<label id="dark-mode-label">Text Size: <span id="demo"></span>%</label>
+			
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
                     <input type="checkbox" id="dark-mode-checkbox" onchange="toggleTheme()"/>
