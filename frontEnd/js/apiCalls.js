@@ -11,17 +11,24 @@ function onSignIn(googleUser)
     //replace buttons
     document.getElementById("google-signin-button").style.display="none";
     document.getElementById("logout-button").style.display="block";
+    
 }
 
 function flightNumberParse(){
+
+    //take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
     var departure_date = document.getElementById("start-date").value;
-    // console.log(flight_num);
-    // console.log(departure_date);
-   
+    var end_date = document.getElementById("return-date").value;
+
+    //verify dates are valid    
+    diff = Math.floor((Date.parse(end_date) - Date.parse(departure_date) )/ 86400000) + 1; //add 1 to account for day of departure
+    sessionStorage.setItem('day_diff', JSON.stringify(diff)); //TODO: error check that date difference is not negative
+    console.log(diff);
+
     var flight_api_url = "https://aerodatabox.p.rapidapi.com/flights/" + flight_num + '/' + departure_date + "?withLocation=false&withAircraftImage=false";    
-    //var flight_api_url = 'https://aerodatabox.p.rapidapi.com/flights/UA624/2020-05-21?withLocation=false&withAircraftImage=false';
-    //console.log(flight_api_url);
+
+    //window.location.href = 'tripInfo.html'; //- leave commented unless want to skip new trip page
 
     fetch(flight_api_url, {
         "method": "GET",
@@ -42,58 +49,20 @@ function flightNumberParse(){
 
             var source_countryCode = data[0].departure.airport.countryCode;
             var destination_countryCode = data[0].arrival.airport.countryCode;
-           
-            // console.log(data[0].departure.airport);
-            // console.log(data[0].arrival.airport);
 
+            console.log(source_city);
+            console.log(destination_city);
+            console.log(source_countryCode);
+            console.log(destination_countryCode);
+
+            // alert("PAUSE");
+           
+            //store json for analysis in tripInfo.js
             sessionStorage.setItem('travel_json', JSON.stringify(data));
             window.location.href = 'tripInfo.html';
-
-            // // console.log(source_city);
-            // // console.log(destination_city);
-            // // console.log(source_countryCode);
-            // // console.log(destination_countryCode);
-
-            // sessionStorage.setItem('source_city', JSON.stringify(source_city));
-            // sessionStorage.setItem('destination_city', JSON.stringify(destination_city));
-            
-            // return fetch("https://restcountries.eu/rest/v2/alpha/"+source_countryCode)
-            //     .then(response => {
-            //         return response.json();
-            //     })
-            //     .then(data => {
-            //         var source_country = data.name
-            //         var source_timezone = data.timezones[0];
-
-            //         return fetch("https://restcountries.eu/rest/v2/alpha/"+destination_countryCode)
-            //             .then(response => {
-            //                 return response.json();
-            //             })
-            //             .then(data => {
-            //                 var destination_country = data.name;
-            //                 var destination_timezone = data.timezones[0];
-
-            //                 // console.log(source_country);
-            //                 // console.log(destination_country);
-
-            //                 // console.log(source_timezone);
-            //                 // console.log(destination_timezone);
-
-                        
-            //                 sessionStorage.setItem('source_country', JSON.stringify(source_country));
-            //                 sessionStorage.setItem('destination_country', JSON.stringify(destination_country));
-                            
-            //                 sessionStorage.setItem('source_timezone', JSON.stringify(source_timezone));
-            //                 sessionStorage.setItem('destination_time', JSON.stringify(destination_timezone));
-
-            //                 window.location.href = 'tripInfo.html';
-            //             })
-            //    })
         })
 
         .catch(err => {
             console.log(err);
         });
-
-      
 }

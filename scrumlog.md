@@ -59,4 +59,49 @@
     - Anuj Parakh - about 85% done with front end tasks
     - Drew Bezner - 90% complete with front end tasks
     - Maccoy Merrell - 90% complete with project proposal paper, to help Anuj with front end   
-  
+
+
+# Scrum Meeting 4/07
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 9:35 am
+- Date: 4/07
+- Duration: 15 min
+- Status: 
+    - Pablo Say - began work on implementing google API 
+    - Anuj Parakh - started working on populating settings tab with options
+    - Drew Bezner - started working on User Study Proposal, started looking up how to change text size on webpage
+    - Maccoy Merrell - started learning how to use MongoDB, setting up connection to web app
+
+# Scrum Meeting 4/09
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 9:35 am
+- Date: 4/09
+- Duration: 20 min
+- Status: 
+    - Pablo Say - completed google api implementation (all except storing user info into database)
+    - Anuj Parakh - implemented dark mode, currently working on list functionality
+    - Drew Bezner - 90% done with User Proposal document, continuing work on 
+    - Maccoy Merrell - continuing work on mongoDB, working with Anuj to pull information from mongoDB to populate lists
+
+# Scrum Meeting 4/14
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 9:35 am
+- Date: 4/14
+- Duration: 15 min
+- Status: 
+    - Pablo Say - learned basics of using fetch() and api calling
+    - Anuj Parakh - continued working on webpage design, implemented dar
+    - Drew Bezner - continuing work on text size slider, working on common phrases object & translations
+    - Maccoy Merrell - Majority of work done to set up mongoDB, working on electronics adapter listing in database
