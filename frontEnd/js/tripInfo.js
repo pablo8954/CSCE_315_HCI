@@ -387,10 +387,11 @@ function tripTimeDetails(data)
     //adjust time to standard form instead of military
     if (depart_hour_array[0] >= 12)
     {
+        console.log(depart_hour_array[0]);
         AM_PM = "pm";
-        if (depart_hour_array > 12)
+        if (depart_hour_array[0] > 12)
         {
-            depart_hour_array[0] = depart_hour_array[0]-12;
+            depart_hour_array[0] = depart_hour_array[0] - 12;
         }
         
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
