@@ -35,6 +35,7 @@ async function setListOfDefaultLists()
     });
 }
 
+
 dbSetup();
 
 app.use('/frontEnd', express.static(__dirname + '/frontEnd'));
@@ -57,8 +58,30 @@ app.get('/tripInfo.html', function (req, res)
 
 app.get('/default-lists', function (req, res)
 {
-    res.json(listOfLists);
+    // let 5 days be default duration of journey
+    var numDays = 5;
+    if (req.headers.numdays)
+    {
+        numDays = parseInt(req.headers.numdays);
+    }
+    
+    res.json(getDefaultLists(numDays));
 });
+
+function getDefaultLists(numDays)
+{
+    if (numDays == 5)
+        return listOfLists;
+    var toReturn = JSON.parse(JSON.stringify(listOfLists));
+    // Do some number of days specific stuff here for the lists
+    toReturn["Clothing"][0].name = numDays + " " + toReturn["Clothing"][0].name;
+    toReturn["Clothing"][1].name = numDays + " " + toReturn["Clothing"][1].name
+    toReturn["Clothing"][2].name = (numDays + 1) + " " + toReturn["Clothing"][2].name
+    toReturn["Clothing"][3].name = numDays + " " + toReturn["Clothing"][3].name
+    toReturn["Clothing"][4].name = Math.ceil(numDays / 4) + " " + toReturn["Clothing"][4].name
+
+    return toReturn;
+}
 
 
 let port = process.env.PORT;

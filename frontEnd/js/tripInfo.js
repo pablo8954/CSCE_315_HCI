@@ -25,7 +25,6 @@ function repopulateListByName(listName)
     document.getElementById(listName + "-list").innerHTML = "";
     
     var listVals = listOfLists[listName];
-    console.log(listVals)
     for (var i = 0; i < listVals.length; ++i)
     {
         // create element using item
@@ -304,7 +303,6 @@ function loadData()
         if (this.readyState == 4 && this.status == 200)
         {
             var res = JSON.parse(xhttp.response);
-            console.log(res);
             var keyList = Object.keys(res);
             
             for (var i = 0; i < keyList.length; ++i)
@@ -317,7 +315,10 @@ function loadData()
             repopulateAllLists();
         }
     };
+    var numDays = this.sessionStorage.getItem('day_diff');
     xhttp.open("GET", "default-lists", true);
+    // here we need to send this to the backend to get default lists for different number of days
+    xhttp.setRequestHeader("numdays", numDays);
     xhttp.send();
     
 }
@@ -413,6 +414,8 @@ function loadFlightData()
         });
     });
 
+    // grab weather data
+    trySettingWeatherData(destination_city);
 
 }
 
@@ -469,7 +472,6 @@ function populatePhraseList() {
 
 function showPhrasesEditableView(eve) {
     darkenBackground();
-    console.log(listOfPhrases['phrases']);
     var listName = eve.target.id;
     currentTable = listName;
     // get the editable view to be showed

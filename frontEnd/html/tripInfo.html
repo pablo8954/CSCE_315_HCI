@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
+    <link href="/frontEnd/css/weatherWidgetStyles.css" rel="stylesheet" type="text/css">
     <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
 
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
@@ -141,14 +142,50 @@
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
         <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
-            <div class="row">
-                <!--Needs to force a change in weather when clicked-->
-                <button class="button-change-info" id="button-change-info">1 Day</button>
-                <button class="button-change-info" id="button-change-info">3 Day</button>
-                <button class="button-change-info" id="button-change-info">5 Day</button>
+        <article class="widget">
+            <!-- <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div> -->
+            <div class="weatherInfo" id="weather-1">
+                <div class="temperature"><span id="temp-1">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-1">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
             </div>
-            <img src="/frontEnd/img/weather-temp.png" class="weather-image" style="margin-top:40px">
-
+            <div class="date" id="date-1">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-2">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-2">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-2">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-3">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-3">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-3">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-4">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-4">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-4">1st Jan</div>
+            <div class="weatherInfo" id="weather-5">
+            
+                <div class="temperature"><span id="temp-5">32&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-5">SUNNY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-5">2nd Jan</div>
+            </article>            
         </div>
     </div>
         
@@ -175,6 +212,7 @@
     </div>
     <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
+    <script src="/frontEnd/js/weather.js"></script>
     <script src="/frontEnd/js/tripInfo.js"></script>
 
 </body>
