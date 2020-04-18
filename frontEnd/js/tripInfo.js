@@ -5,6 +5,11 @@ var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
 var phraseList= new Array();
 var listOfPhrases = {'phrases' : phraseList};
 
+var translateList = new Array();
+var listOfTranslated = {'translated': translateList};
+
+var destination_language_code = "";
+
 //       TEMPORARY CODE
 // ****************************
 
@@ -13,7 +18,7 @@ phraseList.push({name: "Where is my hotel?"});
 phraseList.push({name: "Where is the airport?"});
 phraseList.push({name: "Where is a resturaunt?"});
 phraseList.push({name: "Hi, how are you?"});
-phraseList.push({name: "I dont speak your language?"});
+phraseList.push({name: "I don't speak your language."});
 phraseList.push({name: "How much does this cost?"});
 phraseList.push({name: "What time is it?"});
 
@@ -353,6 +358,7 @@ function tripTimeDetails(data)
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
 
+    //get number of days for travel
     if (day_diff == 1){ var day_text = "day"}
     else {var day_text = "days"}
     
@@ -463,8 +469,8 @@ function loadFlightData()
         .then(data => {
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
             var destination_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
-
-
+            destination_language_code = JSON.stringify(data.languages[0].iso639_1).replace(/\"/g, "");
+            console.log(destination_language_code);
             currencyExchangeRate(source_currency,destination_currency);
 
             //populate elements for user
@@ -620,6 +626,7 @@ function createEditablePhraseItem(itemVal)
 
 function updateLanguage(name_of_country) {
     var request = new XMLHttpRequest();
+
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
     request.onload = function() {
@@ -802,30 +809,82 @@ function populateTranslations() {
     
     var listVals = listOfPhrases["phrases"];
     
+    
+    var url_space = "%2C%20"
+    var url_setLang = "&target="+destination_language_code;
+    console.log(destination_language_code);
+    
     for (var i = 0; i < listVals.length; ++i)
     {
-        // create element using item
+        translateList.push({name: "Where is the restroom?"});
+    }
+
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        //create element using item
+     
         var li = document.createElement("li");
         li.classList.toggle("list-view-item");
-        li.innerHTML = listVals[i].name;
+        
+        //parse phrase and convert to url
+        var api_url = "source=en&q=";
+        console.log(listVals[i].name);
+        phrase = listVals[i].name.split(" ");
+        // console.log(phrase);
+        for (var j = 0; j < phrase.length; ++j)
+        {
+            api_url = api_url + phrase[j] + url_space;
+        }
+        //run API calls
+
+        // var data = "source=en&q=Hello%2C%20world!&target=es";
+        var data = api_url + url_setLang;
+        // console.log(data);
+    
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
+                console.log(translatedPhrase);
+                //place translated phrase in translated phrases array
+                translateList[i] = {name: translatedPhrase};
+                console.log(translateList);
+                console.log("LIST: "+  i + " " + translateList[i]);
+
+            }
+        });
+        
+        xhr.open("POST", "https://google-translate1.p.rapidapi.com/language/translate/v2", false);
+        xhr.setRequestHeader("x-rapidapi-host", "google-translate1.p.rapidapi.com");
+        xhr.setRequestHeader("x-rapidapi-key", "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb");
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        
+        xhr.send(data);
+        
+        // // // create element using item
+        // // var li = document.createElement("li");
+        // // li.classList.toggle("list-view-item");
+        // // li.innerHTML = listVals[i].name;
         
         
-        // add element to toiletry list
-        document.getElementById("translate-list").appendChild(li);
+        // // add element to toiletry list
+        // document.getElementById("translate-list").appendChild(li);
     }
 
 }
 
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
-    populateTranslations();
+    populateTranslations(); //translate phrases
     showTranslationsEditable();
     
 }
 
 function exportTranslatedPhrases() {
     var commonPhrases = listOfPhrases["phrases"];
-    var translatedPhrases = listOfPhrases["phrases"]; //needs translation
+    var translatedPhrases = listOfTranslated["translated"]; //needs translation
 
     //combining into one list
     var exportList = new Array();
