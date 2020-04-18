@@ -126,11 +126,32 @@ function showSettings()
 function showOldTrips()
 {
     // Show Old Trips and hide Settings
+
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
+
+
+    //TODO: Get old trips from database here... should be in an array
+    var oldTrips = new Array();
+    oldTrips.push(["Houston", "Tocumen", "5/7/2019",]);
+    oldTrips.push(["College Station", "New York City", "7/12/2017"]);
     
-    // Open the sidebar again
+    var numTrips = oldTrips.length;
+
     toggleSidebar();
+
+    for(var i = 0; i < numTrips; i++) {
+        var viewDiv = document.createElement('li');
+        var icon = document.createElement('i');
+        icon.classList.toggle('fas');
+        icon.classList.toggle('fa-plane');
+        viewDiv.appendChild(icon);
+        viewDiv.innerText = oldTrips[i][0] + " to " + oldTrips[i][1] + " on " +  oldTrips[i][2];
+        document.getElementsByClassName("old-trips-list")[0].appendChild(viewDiv);
+
+        
+    }
+
     document.removeEventListener(transEndEventName, showOldTrips);
 }
 
@@ -166,6 +187,7 @@ rangeslider.oninput = function() {
   var zoomLevel = numString + "%";
   document.body.style.zoom = zoomLevel;
 } 
+
 function toggleTextToSpeech()
 {
     textToSpeech = !textToSpeech;
@@ -180,6 +202,7 @@ function toggleTextToSpeech()
 
     sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
 }
+
 
 
 

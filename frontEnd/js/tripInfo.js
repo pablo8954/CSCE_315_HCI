@@ -1,6 +1,8 @@
 var listOfLists = {};
-
+var languageChoice;
 var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
+
+var langCode;
 
 var phraseList= new Array();
 var listOfPhrases = {'phrases' : phraseList};
@@ -359,16 +361,76 @@ function tripTimeDetails(data)
     
     document.getElementById('trip-length').innerHTML = "Trip Length: " + day_diff.bold() + " " + day_text.bold();
 
-    //get departure time
+    //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
     depart_date_time = depart.split(" ");
 
     var depart_date = depart_date_time[0];
+
+    var depart_data_array = depart_date.split("-");
+
+    var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
+    console.log(depart_date_phrase);
+
+    //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var depart_time = depart_date_time[1];
+    depart_time = depart_time.split("-");
+  
+    var depart_timezone = depart_time[1];
+    var depart_time = depart_time[0];
+
+    var depart_hour_array = depart_time.split(":");
+    var AM_PM = "";
+    //adjust time to standard form instead of military
+    if (depart_hour_array[0] > 12)
+    {
+        AM_PM = "pm";
+        depart_hour_array[0] = depart_hour_array[0]-12;
+        depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
+    }
+    else {
+        AM_PM = "am";
+        depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
+    }
+
+    document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold() + " at " + depart_time.bold() + "."
 
     //get arrival time
+    var arrival = JSON.stringify(data[0].arrival.scheduledTimeLocal).replace(/\"/g, "");
+    arrival_date_time = arrival.split(" ");
+
+    var arrival_date = arrival_date_time[0];
+
+    var arrival_data_array = arrival_date.split("-");
+
+    var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
+    console.log(arrival_date_phrase);
+
+    //get departure time - time stored as 24:00-5:00 (military time-UTC)
+    var arrival_time = arrival_date_time[1];
+    arrival_time = arrival_time.split("-");
+    
+    var arrival_timezone = arrival_time[1];
+    var arrival_time = arrival_time[0];
+
+    var arrival_hour_array = arrival_time.split(":");
+    var AM_PM = "";
+    //adjust time to standard form instead of military
+    if (arrival_hour_array[0] > 12)
+    {
+        AM_PM = "pm";
+        arrival_hour_array[0] = arrival_hour_array[0]-12;
+        arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
+    }
+    else {
+        AM_PM = "am";
+        arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
+    }
+
+    document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination Local)."
 
 }
+
 
 function loadFlightData()
 {
@@ -411,6 +473,12 @@ function loadFlightData()
             //populate elements for user
             document.getElementById('source').innerHTML = source_city + ', ' + source_country;
             document.getElementById('destination').innerHTML = destination_city + ', ' + destination_country;
+
+             //calls functions 
+            updateLanguage(destination_country); //destination
+            updateTimeZone(source_country, destination_country); // source, destination
+            
+
         });
     });
 
@@ -419,7 +487,7 @@ function loadFlightData()
 
 }
 
-// Called when window is loaded
+// Called when window is loaded -- MAIN
 window.onload = function()
 {
     loadData();
@@ -447,9 +515,8 @@ window.onload = function()
 
     //grab flight data & use data to get other travel information
     loadFlightData();
-
-    updateLanguage("Egypt"); //destination
-    updateTimeZone( "Mexico", "Egypt"); // source, destination
+    
+    //Need to use actual source and destination country
 }
 
 function populatePhraseList() {
@@ -555,7 +622,6 @@ function createEditablePhraseItem(itemVal)
     return li;
 }
 
-
 function updateLanguage(name_of_country) {
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
@@ -569,33 +635,82 @@ function updateLanguage(name_of_country) {
         data.forEach(country => {
             if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
                 lang = country.languages[0].name;
+                langCode=country.languages[0].iso639_1;
+                console.log("Language Code: " + langCode);
                 found = 1;
             }
         });
         
         if(found == 1) {
             document.getElementById("p-language-output").innerHTML = "Primary Language: " + lang;
+            languageChoice = lang;
         }
         else {
             document.getElementById("p-language-output").innerHTML = "Could not find language for " + name_of_country;
+            languageChoice = "English";
         }
     }
 }
 
 function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
+
+    //API key: 4knCwWVfukuKzDHuPEiP7iNDmHqNM3
+    //https://www.amdoren.com/time-zone-api/
+    // fetch("https://www.amdoren.com/time-zone-api/", {
+    //     "method": "POST",
+    //     "headers": {
+    //         "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+    //         "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+    //        "content-type": "application/x-www-form-urlencoded"
+    //     },
+    //     "body": {
+    //         "source": "en", 
+    //         "q": text.toString(),
+    //         "target": langCode.toString()
+    //     }
+    // })
+    // .then(response => {
+    //    console.log(text + " Translated: " + response);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+
+
+
+
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
     request.onload = function() {
         var data = JSON.parse(this.response);
-        //name-> === country name
-        //language, name -> === language name of country
         var sfound = 0;
         var stimezone;
         var dfound = 0;
         var dtimezone;
         data.forEach(country => {
-            if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry) {
+            if(source_name_of_sCountry == dest_name_of_country){
+                if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry){
+                    if(country.timezones.length == 1) {
+                        stimezone = country.timezones[0];
+                        sfound = 1;
+                        dtimezone = country.timezones[0];
+                        dtimezone = country.timezones[0];
+                    }
+                    //
+                    //Need to look for city too.. perhaps in next sprint?
+                    //
+                    else {
+                        sfound = 2;
+                        console.log("Error, multiple time zones detected(source country)... choosing first one");
+                        stimezone = country.timezones[0];
+                        dfound = 2;
+                        console.log("Error, multiple time zones detected(dest country)... choosing first one");
+                        dtimezone = country.timezones[0];
+                    }
+                }
+            }
+            else if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry) {
                 if(country.timezones.length == 1) {
                     stimezone = country.timezones[0];
                     sfound = 1;
@@ -607,6 +722,7 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
                     sfound = 2;
                     console.log("Error, multiple time zones detected(source country)... choosing first one");
                     stimezone = country.timezones[0];
+                    console.log("Source : " + stimezone);
                 }
             }
             else if(request.status >=200 && request.status < 400 && country.name == dest_name_of_country) {
@@ -621,6 +737,7 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
                     dfound = 2;
                     console.log("Error, multiple time zones detected(dest country)... choosing first one");
                     dtimezone = country.timezones[0];
+                    console.log("Dest : " + dtimezone);
                 }
             }
         });
@@ -637,15 +754,17 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
         }
         
         if(dfound == 1) {
-            console.log('Source Time zone = ' + stimezone);
             document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
         }
         else if (dfound == 2) {
             document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
         }
         else {
+            console.log(dfound);
             document.getElementById("dest-time-zone").innerHTML = "Could not find time zone for " + dest_name_of_sCountry;
         }
+        
+        
         
         // calculating lost/gained time
         if(dfound != 0 && sfound != 0) { 
@@ -658,6 +777,8 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
                 source_hours = 0;
             }
             else {
+                //convert to format 
+                //-0800
                 var sOperator = stimezone.charAt(0);
                 var shours = stimezone.charAt(1) + stimezone.charAt(2);
                 var sminutes = stimezone.charAt(4) + stimezone.charAt(5);
@@ -699,7 +820,116 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
             else {
                 document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will not change time zones";
             }
-            
         }
     }
 }
+
+function showTranslationsEditable() {
+  
+    darkenBackground();
+    var listName = "translate";
+    currentTable = listName;
+    // get the editable view to be showed
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    // get the right list from tableName
+    var listData = listOfPhrases["phrases"];
+    // get the listView
+    var listView = document.getElementById(listName);
+    
+    // Set appropriate colors and values
+    var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
+    var color = getComputedStyle(listView, null).getPropertyValue("color");
+    var heading = listView.getElementsByTagName("h2")[0].innerHTML;
+    editableView.getElementsByTagName("h2")[0].innerHTML = heading;
+    editableView.style.backgroundColor = bgcolor;
+    editableView.style.color = color;
+    
+    // set list items for editable view
+   // repopulateCenterPhrasesByName(listName);
+    
+    
+    // set addNewElement action
+    
+    editableView.style.display = 'flex';
+        
+}
+
+function populateTranslations() {
+    document.getElementById("translate-list").innerHTML = "";
+    
+    var listVals = listOfPhrases["phrases"];
+    
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        // create element using item
+        var li = document.createElement("li");
+        li.classList.toggle("list-view-item");
+        li.innerHTML = listVals[i].name;
+        
+        
+        // add element to toiletry list
+        document.getElementById("translate-list").appendChild(li);
+    }
+
+}
+
+function openTranslationWindow(){
+    //document.getElementById('translate').style.display = "block";
+    populateTranslations();
+    showTranslationsEditable();
+    translateText("Hello");
+    
+}
+
+function exportTranslatedPhrases() {
+    var commonPhrases = listOfPhrases["phrases"];
+    var translatedPhrases = listOfPhrases["phrases"]; //needs translation
+
+    //combining into one list
+    var exportList = new Array();
+    for (var i = 0; i < commonPhrases.length; i += 2) {
+        var row = new Array();
+        row.push("\"" + commonPhrases[i].name + "\"");
+        row.push("\"" + translatedPhrases[i].name + "\"");
+        exportList.push(row);
+    }
+
+
+    var csv = 'Phrase,Translation\n';
+    exportList.forEach(function(row) {
+        csv+= row.join(',');
+        csv += "\n";
+    });
+
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target ='_blank';
+    hiddenElement.download ='translations.csv';
+    hiddenElement.click();
+}
+
+function translateText(text){
+    fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
+        "method": "POST",
+        "headers": {
+            "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+           "content-type": "application/x-www-form-urlencoded"
+        },
+        "body": {
+            "source": "en", 
+            "q": text.toString(),
+            "target": langCode.toString()
+        }
+    })
+    .then(response => {
+       console.log(text + " Translated: " + response);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+    
+}
+
+

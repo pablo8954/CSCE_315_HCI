@@ -24,13 +24,17 @@
         <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
             <h2 class="old-trips-heading">Old Trips</h2>
-            <ul class="old-trips-list">
-                <li><i class="fas fa-plane"></i> Mumbai to Austin on 3/2/2020</li>
-                <li><i class="fas fa-plane"></i> Guatemala City to Mumbai on 2/9/2020</li>
-                <li><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
-                <li><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+            <ul class="old-trips-list" >
+                <li style="display:none;" id="old-trip1" ><i class="fas fa-plane" ></i> Mumbai to Austin on 3/2/2020</li>
+                <li style="display:none;" id="old-trip2"><i class="fas fa-plane" ></i> Guatemala City to Mumbai on 2/9/2020</li>
+                <li style="display:none;" id="old-trip3"><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
+                <li style="display:none;" id="old-trip4"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+                <li style="display:none;" id="old-trip5"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
+                <li style="display:none;" id="old-trip6"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
             </ul>
         </div>
+
+        <!--TODO Old trips stuff above-->
         <div id="settings-container">
             <div id="profile-container">
             <!-- Things: Picture, Name, Number of Saved Trips -->
@@ -111,6 +115,7 @@
         </div>
 
         <label class="small-label" id="departure-time">You are leaving on <b>5th April 2020</b> at <b>6:35 pm.</b></label>
+        <label class="small-label" id="arrival-time"> asdf</label>
         <label class="small-label" id="trip-length">Trip Length: <b>5 days</b></label>
 
         <label for="time-zone" class="big-label" id="time-zone">Time Zone </label>
@@ -133,10 +138,16 @@
 		</div>
 		<br>
 		<div class="row"> 
-			<button class="button-change-info" id="generate-translation-button">View Translations</button>
-			<button class="button-change-info" id="generate-translation-button">Export Translations</button>
+            <button class="button-change-info" onclick=openTranslationWindow(); id="generate-translation-button">View Translations</button>
+			<button class="button-change-info" onclick=exportTranslatedPhrases(); id="export-translation-button">Export Translations</button>
+        </div>
+        <div class="list-view" id="translate" style="display:none;">
+			<h2 class="list-heading">Translations</h2>
+			<ul id="translate-list">
+			   
+			</ul>
 		</div>
-	
+
 
         <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
