@@ -385,14 +385,24 @@ function tripTimeDetails(data)
     var depart_hour_array = depart_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
-    if (depart_hour_array[0] > 12)
+    if (depart_hour_array[0] >= 12)
     {
         AM_PM = "pm";
-        depart_hour_array[0] = depart_hour_array[0]-12;
+        if (depart_hour_array > 12)
+        {
+            depart_hour_array[0] = depart_hour_array[0]-12;
+        }
+        
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
     else {
         AM_PM = "am";
+
+        if (depart_hour_array[0] == 0)
+        {
+            depart_hour_array[0] = depart_hour_array[0] + 12;
+        }
+
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
 
@@ -419,14 +429,24 @@ function tripTimeDetails(data)
     var arrival_hour_array = arrival_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
-    if (arrival_hour_array[0] > 12)
+    if (arrival_hour_array[0] >= 12)
     {
         AM_PM = "pm";
-        arrival_hour_array[0] = arrival_hour_array[0]-12;
+        if (arrival_hour_array[0] > 12)
+        {
+            arrival_hour_array[0] = arrival_hour_array[0]-12;
+        }
+        
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
     else {
         AM_PM = "am";
+
+        if (arrival_hour_array[0] == 0)
+        {
+            arrival_hour_array[0] = arrival_hour_array[0] + 12;
+        }
+
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
 
