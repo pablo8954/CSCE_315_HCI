@@ -1,5 +1,8 @@
-var express = require('express'); // Get the express module
-var app = express(); // Start the app
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+app.use(bodyParser.json());
 var path = require('path');
 var mongodb = require('mongodb');
 var mongourl = 'mongodb+srv://mongoaccessaccount:PackAdvisor123@packadvisordatabase-hp7rv.gcp.mongodb.net/test?retryWrites=true&w=majority';
@@ -60,6 +63,11 @@ app.get('/default-lists', function (req, res)
     res.json(listOfLists);
 });
 
+app.post('/newtripdata', function (req, res)
+{
+   console.log(req.body)
+  res.send("success")
+});
 
 let port = process.env.PORT;
 if (port == null || port == "") 
