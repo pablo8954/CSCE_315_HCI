@@ -86,7 +86,6 @@ xhr.send(JSON.stringify(tripbase));
     
     //store json for analysis in tripInfo.js
     sessionStorage.setItem('travel_json', JSON.stringify(data));
-    alert("ASGIhgHJKJGkjG")
     window.location.href = 'tripInfo.html';
   })
   
