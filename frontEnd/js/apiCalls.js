@@ -1,18 +1,33 @@
 function onSignIn(googleUser)
 {
     var profile = googleUser.getBasicProfile();
-
     //replace image and names
     var name = document.getElementById('name-label')
     name.innerHTML = profile.getName();
     var image = document.getElementById('profile-image');
     image.src = profile.getImageUrl();
-
     //replace buttons
     document.getElementById("google-signin-button").style.display="none";
     document.getElementById("logout-button").style.display="block";
-    
-}
+      if (client.auth.isLoggedIn) {
+    const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('userauthentication');
+  client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user =>
+    db.collection('information').updateOne({owner_id: client.auth.user.id, email:profile.getEmail()}, {$set:{name: profile.getName(), image: profile.getImageUrl()}}, {upsert:true})
+  ).then(() =>
+    db.collection('information').find({owner_id: client.auth.user.id, email: profile.getEmail()}, { limit: 100}).asArray()
+  ).then(docs => {
+      console.log("Verifying existance of account")
+      console.log("Found account", docs)
+  }).catch(err => {
+    console.error(err)
+    return profile.getEmail();
+  });
+      }
+      else{
+          console.log("Not signed-in, returning null")
+          return(null)
+      }
+ }
 
 function flightNumberParse(){
 
