@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var StitchServiceClientImpl = (function () {
+    function StitchServiceClientImpl(proxy) {
+        this.proxy = proxy;
+    }
+    StitchServiceClientImpl.prototype.callFunction = function (name, args, codec) {
+        return this.proxy.callFunction(name, args, codec);
+    };
+    StitchServiceClientImpl.prototype.streamFunction = function (name, args, codec) {
+        return this.proxy.streamFunction(name, args, codec);
+    };
+    return StitchServiceClientImpl;
+}());
+exports.default = StitchServiceClientImpl;
+//# sourceMappingURL=StitchServiceClientImpl.js.map
