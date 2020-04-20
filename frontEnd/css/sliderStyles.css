@@ -1,0 +1,50 @@
+.rangeslider {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.myslider {
+  background: linear-gradient(to right, #FFCE00 0%, #FFCE00 50%, #fff 50%, #fff 100%);
+  border: solid 1px #FFCE00;
+  border-radius: 8px;
+  height: 10px;
+  margin: 10px 0;
+  width: 100%;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 5px #000000;
+  border: 1px solid #FFCE00;
+  height: 20px;
+  width: 20px;
+  border-radius: 25px;
+  background: #E8FFFD;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 5px #000000;
+  border: 1px solid #FFCE00;
+  height: 20px;
+  width: 20px;
+  border-radius: 25px;
+  background: #E8FFFD;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 1px 1px 5px #000000;
+  border: 1px solid #FFCE00;
+  height: 20px;
+  width: 20px;
+  border-radius: 25px;
+  background: #E8FFFD;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=sliderStyles.css.map */

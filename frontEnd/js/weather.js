@@ -18,7 +18,7 @@ function trySettingWeatherData(theCity)
     })
     .catch(err => {
         console.log(err);
-        ++everythingReadyCounter;
+        checkIfEverythingDone();
     });
 }
 
@@ -34,7 +34,7 @@ function grabWeatherData(lat, long)
     })
     .catch(err => {
         console.log(err);
-        ++everythingReadyCounter;
+        checkIfEverythingDone();
     });
 }
 
@@ -55,5 +55,5 @@ function updateWeatherData(weatherData)
         console.log(theDate)
         document.getElementById("date-" + i).innerHTML = months[theDate.getMonth()] + " " + theDate.getDate();
     }
-    ++everythingReadyCounter;
+    checkIfEverythingDone();
 }
