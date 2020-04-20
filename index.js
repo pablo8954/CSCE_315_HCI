@@ -67,7 +67,7 @@ app.get('/default-lists', function (req, res)
     {
         numDays = parseInt(req.headers.numdays);
     }
-    
+
     res.json(getDefaultLists(numDays));
 });
 
@@ -76,12 +76,15 @@ function getDefaultLists(numDays)
     if (numDays == 5)
         return listOfLists;
     var toReturn = JSON.parse(JSON.stringify(listOfLists));
+
+    var normalizedDays = Math.min(numDays, 10);
+
     // Do some number of days specific stuff here for the lists
-    toReturn["Clothing"][0].name = numDays + " " + toReturn["Clothing"][0].name;
-    toReturn["Clothing"][1].name = numDays + " " + toReturn["Clothing"][1].name
-    toReturn["Clothing"][2].name = (numDays + 1) + " " + toReturn["Clothing"][2].name
-    toReturn["Clothing"][3].name = numDays + " " + toReturn["Clothing"][3].name
-    toReturn["Clothing"][4].name = Math.ceil(numDays / 4) + " " + toReturn["Clothing"][4].name
+    toReturn["Clothing"][0].name = normalizedDays + " " + toReturn["Clothing"][0].name;
+    toReturn["Clothing"][1].name = normalizedDays + " " + toReturn["Clothing"][1].name
+    toReturn["Clothing"][2].name = (normalizedDays + 1) + " " + toReturn["Clothing"][2].name
+    toReturn["Clothing"][3].name = normalizedDays + " " + toReturn["Clothing"][3].name
+    toReturn["Clothing"][4].name = Math.ceil(normalizedDays / 2) + " " + toReturn["Clothing"][4].name
 
     return toReturn;
 }

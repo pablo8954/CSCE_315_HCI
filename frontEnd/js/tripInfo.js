@@ -252,26 +252,6 @@ function closeEditableView ()
     lightenBackground();
 }
 
-
-
-// Darken the background when opening up a card
-function darkenBackground()
-{
-    var darkener = document.getElementById("darkener");
-    darkener.style.opacity = 0.8;
-    darkener.hidden = false;
-    this.document.getElementById('darkener').classList.toggle('unclickable');
-}
-
-// lighten the background again
-function lightenBackground()
-{
-    var darkener = document.getElementById("darkener");
-    darkener.style.opacity = 0;
-    darkener.hidden = true;
-    this.document.getElementById('darkener').classList.toggle('unclickable');
-}
-
 function createListView(listName, bgcolor)
 {
     var viewDiv = document.createElement('div');
@@ -320,6 +300,8 @@ function loadData()
             
             // Populate all the lists with the data
             repopulateAllLists();
+
+            checkIfEverythingDone();
         }
     };
     var numDays = this.sessionStorage.getItem('day_diff');
@@ -349,9 +331,11 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
         document.getElementById('exchange-rate-label').innerHTML = "1 " +  
             JSON.stringify(source_currency_code).replace(/\"/g, "") + " = " + exchangeRate + " "+ 
             JSON.stringify(destination_currency_code).replace(/\"/g, "");
+        checkIfEverythingDone();
     })
     .catch(err => {
         console.log(err);
+        checkIfEverythingDone();
     });
 
 }
@@ -455,7 +439,6 @@ function tripTimeDetails(data)
     }
 
     document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination Local)."
-
 }
 
 
@@ -484,7 +467,8 @@ function loadFlightData()
         
         var source_country = JSON.stringify(data.name).replace(/\"/g, "");
         var source_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
-        
+        checkIfEverythingDone();
+
         //grab destination country metadata
         return fetch(restCountryAPI + destination_countryCode)
         .then(response => {
@@ -504,9 +488,17 @@ function loadFlightData()
              //calls functions 
             updateLanguage(destination_country); //destination
             updateTimeZone(source_country, destination_country); // source, destination
-            
+            checkIfEverythingDone();
 
+        })
+        .catch(err => {
+            console.log(err);
+            checkIfEverythingDone();
         });
+    })
+    .catch(err => {
+        console.log(err);
+        checkIfEverythingDone();
     });
 
     // grab weather data
@@ -517,6 +509,7 @@ function loadFlightData()
 // Called when window is loaded -- MAIN
 window.onload = function()
 {
+    this.showLoadingScreen()
     loadData();
     populatePhraseList();
     // hide the center view
@@ -1011,5 +1004,15 @@ function translateText(text){
     });
     
 }
+
+// Wait for everything to be ready and then hide the loading screen
+var everythingReadyCounter = 0;
+function checkIfEverythingDone()
+{
+    ++everythingReadyCounter;
+    if (everythingReadyCounter == 4)
+        hideLoadingScreen();
+}
+
 
 

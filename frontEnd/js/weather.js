@@ -16,6 +16,10 @@ function trySettingWeatherData(theCity)
         // send the results to grab weather data
         grabWeatherData(data.results[0].geometry.lat, data.results[0].geometry.lng)
     })
+    .catch(err => {
+        console.log(err);
+        ++everythingReadyCounter;
+    });
 }
 
 function grabWeatherData(lat, long)
@@ -28,6 +32,10 @@ function grabWeatherData(lat, long)
     .then(data=> {
         updateWeatherData(data);
     })
+    .catch(err => {
+        console.log(err);
+        ++everythingReadyCounter;
+    });
 }
 
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -47,4 +55,5 @@ function updateWeatherData(weatherData)
         console.log(theDate)
         document.getElementById("date-" + i).innerHTML = months[theDate.getMonth()] + " " + theDate.getDate();
     }
+    ++everythingReadyCounter;
 }
