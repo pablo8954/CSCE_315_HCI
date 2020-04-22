@@ -673,33 +673,8 @@ function updateLanguage(name_of_country) {
     }
 }
 
-function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
-
-    //API key: 4knCwWVfukuKzDHuPEiP7iNDmHqNM3
-    //https://www.amdoren.com/time-zone-api/
-    // fetch("https://www.amdoren.com/time-zone-api/", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-    //         "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-    //        "content-type": "application/x-www-form-urlencoded"
-    //     },
-    //     "body": {
-    //         "source": "en", 
-    //         "q": text.toString(),
-    //         "target": langCode.toString()
-    //     }
-    // })
-    // .then(response => {
-    //    console.log(text + " Translated: " + response);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
-
-
-
-
+function updateTimeZone(source_name_of_sCountry, dest_name_of_country) 
+{
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
