@@ -928,4 +928,19 @@ function translateText(text){
     
 }
 
+function saveTrip() {
+    var source = document.getElementById("source").textContent;
+    var s_array = source.split(" ");
+    var s_array2 = s_array[0].split(",");
+    var dest = document.getElementById("destination").textContent;
+    var d_array = dest.split(" ");
+    var d_array2 = d_array[0].split(",");
+    var date = document.getElementById("departure-time").textContent;
+    var date_array = date.split(" ");
+    var oldTrip = s_array2[0] + " to " + d_array2[0] + " on " + date_array[4];
+    
+    //send old trip to database here
+    console.log("Need to send this to old trips database: " + oldTrip);
+}
+
 
