@@ -46,7 +46,7 @@ function onSignIn(googleUser)
       "method": "GET",
       "headers": {
         "x-rapidapi-host": "aerodatabox.p.rapidapi.com",
-        "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb"
+        "x-rapidapi-key": "a5aeadcc4fmshc5ec51281dba8a2p1ae4a3jsnb29493dd2409"
       }
     })
     
@@ -66,28 +66,28 @@ function onSignIn(googleUser)
       tripbase["destination_city"] = destination_city
       tripbase["destination_countryCode"] = destination_countryCode
       var xhr = new XMLHttpRequest();
-xhr.open("POST", '/newtripdata', true);
-//Send the proper header information along with the request
-xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-xhr.onreadystatechange = function() { // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        // Request finished. Do processing here.
-    }
-}
-console.log(JSON.stringify(tripbase))
-xhr.send(JSON.stringify(tripbase));
-// xhr.send(new Int8Array()); 
-// xhr.send(document);
-    console.log(source_city);
-    console.log(destination_city);
-    console.log(source_countryCode);
-    console.log(destination_countryCode);
+      xhr.open("POST", '/newtripdata', true);
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function() { // Call a function when the state changes.
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              // Request finished. Do processing here.
+          }
+      }
+      console.log(JSON.stringify(tripbase))
+      xhr.send(JSON.stringify(tripbase));
+      // xhr.send(new Int8Array()); 
+      // xhr.send(document);
+      console.log(source_city);
+      console.log(destination_city);
+      console.log(source_countryCode);
+      console.log(destination_countryCode);
     
-    // alert("PAUSE");
-    
-    //store json for analysis in tripInfo.js
-    sessionStorage.setItem('travel_json', JSON.stringify(data));
-    window.location.href = 'tripInfo.html';
+      // alert("PAUSE");
+      
+      //store json for analysis in tripInfo.js
+      sessionStorage.setItem('travel_json', JSON.stringify(data));
+      window.location.href = 'tripInfo.html';
   })
   
   .catch(err => {

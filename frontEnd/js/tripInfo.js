@@ -221,7 +221,7 @@ function createNewList()
     listOfLists[niceName] = {}
     // create the list view
     createListView(newListName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
-
+    
     // Show editable view with the new list
     darkenBackground()
     // set the current table id
@@ -230,10 +230,10 @@ function createNewList()
     var editableView = document.getElementById('editable-list-view');
     var editableList = document.getElementById('editable-list');
     var listView = document.getElementById(niceName)
-
+    
     repopulateCenterListByName(niceName);
-
-
+    
+    
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
@@ -241,7 +241,7 @@ function createNewList()
     editableView.getElementsByTagName("h2")[0].innerHTML = "New Trip";
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
-
+    
     editableView.style.display = 'flex';
 }
 
@@ -249,7 +249,7 @@ function deleteList()
 {
     delete listOfLists[currentTable]
     document.getElementById(currentTable).parentElement.style.display = 'none'
-
+    
     var editableView = document.getElementById('editable-list-view');
     editableView.style.display = 'none'
     lightenBackground()
@@ -303,14 +303,14 @@ function createListView(listName, bgcolor)
     var viewDiv = document.createElement('div');
     var viewDivForList = document.createElement('div');
     viewDiv.className = "list-view";
-
+    
     viewDivForList = document.createElement('div');
     viewDivForList.addEventListener("click", showEditableView);
-
+    
     viewDivForList.id = listName.toLowerCase().replace(/\s+/g, '');
-
+    
     viewDivForList.classList.toggle('view-div-list');
-
+    
     // Add edit button
     var editButton = document.createElement('i');
     editButton.classList.add("far", "fa-edit", "list-edit-button")
@@ -325,13 +325,13 @@ function createListView(listName, bgcolor)
     var hoverMessage = document.createElement('p');
     hoverMessage.classList.add("hover-message");    
     hoverMessage.innerHTML = "<i class=\"fas fa-hand-pointer\" style=\"color:white; font-size: 32px;\"></i><br>Click to Edit";
-
+    
     viewDivForList.appendChild(heading);
     viewDivForList.appendChild(list);
     viewDivForList.appendChild(editButton);
     viewDiv.appendChild(viewDivForList);
     viewDiv.appendChild(hoverMessage);
-
+    
     viewDivForList.style.backgroundColor = bgcolor;
     document.getElementById("list-container").appendChild(viewDiv); 
 }
@@ -366,7 +366,7 @@ function loadData()
             
             // Populate all the lists with the data
             repopulateAllLists();
-
+            
             checkIfEverythingDone();
         }
     };
@@ -381,28 +381,28 @@ function loadData()
 function currencyExchangeRate(source_currency_code, destination_currency_code)
 {
     fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from="+ source_currency_code + "&to=" + destination_currency_code + "&amount=1", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
-            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb"
-        }
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then (data => {
-        var exchangeRate = JSON.stringify(data.result);
-        
-        //print currency rate to tripInfo
-        document.getElementById('exchange-rate-label').innerHTML = "1 " +  
-            JSON.stringify(source_currency_code).replace(/\"/g, "") + " = " + exchangeRate + " "+ 
-            JSON.stringify(destination_currency_code).replace(/\"/g, "");
-        checkIfEverythingDone();
-    })
-    .catch(err => {
-        console.log(err);
-        checkIfEverythingDone();
-    });
+    "method": "GET",
+    "headers": {
+        "x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
+        "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb"
+    }
+})
+.then(response => {
+    return response.json();
+})
+.then (data => {
+    var exchangeRate = JSON.stringify(data.result);
+    
+    //print currency rate to tripInfo
+    document.getElementById('exchange-rate-label').innerHTML = "1 " +  
+    JSON.stringify(source_currency_code).replace(/\"/g, "") + " = " + exchangeRate + " "+ 
+    JSON.stringify(destination_currency_code).replace(/\"/g, "");
+    checkIfEverythingDone();
+})
+.catch(err => {
+    console.log(err);
+    checkIfEverythingDone();
+});
 
 }
 
@@ -410,31 +410,31 @@ function tripTimeDetails(data)
 {
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
-
+    
     //get number of days for travel
     if (day_diff == 1){ var day_text = "day"}
     else {var day_text = "days"}
     
     document.getElementById('trip-length').innerHTML = "Trip Length: " + day_diff.bold() + " " + day_text.bold();
-
+    
     //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
     depart_date_time = depart.split(" ");
-
+    
     var depart_date = depart_date_time[0];
-
+    
     var depart_data_array = depart_date.split("-");
-
+    
     var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
     console.log(depart_date_phrase);
-
+    
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var depart_time = depart_date_time[1];
     depart_time = depart_time.split("-");
-  
+    
     var depart_timezone = depart_time[1];
     var depart_time = depart_time[0];
-
+    
     var depart_hour_array = depart_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
@@ -451,35 +451,35 @@ function tripTimeDetails(data)
     }
     else {
         AM_PM = "am";
-
+        
         if (depart_hour_array[0] == 0)
         {
             depart_hour_array[0] = depart_hour_array[0] + 12;
         }
-
+        
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
-
+    
     document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold() + " at " + depart_time.bold() + "."
-
+    
     //get arrival time
     var arrival = JSON.stringify(data[0].arrival.scheduledTimeLocal).replace(/\"/g, "");
     arrival_date_time = arrival.split(" ");
-
+    
     var arrival_date = arrival_date_time[0];
-
+    
     var arrival_data_array = arrival_date.split("-");
-
+    
     var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
     console.log(arrival_date_phrase);
-
+    
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var arrival_time = arrival_date_time[1];
     arrival_time = arrival_time.split("-");
     
     var arrival_timezone = arrival_time[1];
     var arrival_time = arrival_time[0];
-
+    
     var arrival_hour_array = arrival_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
@@ -495,15 +495,15 @@ function tripTimeDetails(data)
     }
     else {
         AM_PM = "am";
-
+        
         if (arrival_hour_array[0] == 0)
         {
             arrival_hour_array[0] = arrival_hour_array[0] + 12;
         }
-
+        
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
-
+    
     document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination Local)."
 }
 
@@ -515,15 +515,15 @@ function loadFlightData()
     var flight_data = JSON.parse(data);
     
     tripTimeDetails(flight_data);
-
+    
     var source_city = JSON.stringify(flight_data[0].departure.airport.municipalityName).replace(/\"/g, "");
     var destination_city = JSON.stringify(flight_data[0].arrival.airport.municipalityName).replace(/\"/g, "");
-
+    
     var source_countryCode = flight_data[0].departure.airport.countryCode;
     var destination_countryCode = flight_data[0].arrival.airport.countryCode;
-
+    
     var restCountryAPI = 'https://restcountries.eu/rest/v2/alpha/';
-
+    
     //grab source country metadata
     fetch(restCountryAPI + source_countryCode)
     .then(response => {
@@ -534,30 +534,59 @@ function loadFlightData()
         var source_country = JSON.stringify(data.name).replace(/\"/g, "");
         var source_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
         checkIfEverythingDone();
-
+        
         //grab destination country metadata
         return fetch(restCountryAPI + destination_countryCode)
         .then(response => {
             return response.json();
         })
         .then(data => {
+            //TODO: here's the destination country - access it within this .then(data) scope
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
+            var destination_country_native = JSON.stringify(data.nativeName).replace(/\"/g, "");
+            /* 
+            * destination_country -> pass to mongoDB 
+            * fetch json object from mongoDB
+            * var json_object
+            * var volt = json_object.voltage <- "voltage is the key to the value you want in the json"
+            * json_object.frequency
+            * 
+            * document.getElementById("name-of-id-object-you-want-to-modify").innerHTML = var/"string"/something;              
+            * 
+            */
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", 'outletdata', true);
+            //Send the proper header information along with the request
+            // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.setRequestHeader("country", destination_country_native)
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    outletinfo = JSON.parse(xhr.response)[0]
+                    console.log(xhr.response)
+                    var volt = outletinfo.Voltage
+                    var freq = outletinfo.Frequency
+                    var adapter = outletinfo["Outlet Type"]
+                    document.getElementById('power-adapter-label').innerHTML = "Outlet Type: " + adapter;
+                    document.getElementById('power-voltage-label').innerHTML ="Voltage: " + volt;
+                    document.getElementById('power-frequency-label').innerHTML ="Frequency: " + freq;
+                }
+            }
+            xhr.send();
+            
             trySettingWeatherData(destination_city, destination_country);
-
             var destination_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
             destination_language_code = JSON.stringify(data.languages[0].iso639_1).replace(/\"/g, "");
             console.log(destination_language_code);
             currencyExchangeRate(source_currency,destination_currency);
-
             //populate elements for user
             document.getElementById('source').innerHTML = source_city + ', ' + source_country;
             document.getElementById('destination').innerHTML = destination_city + ', ' + destination_country;
-
-             //calls functions 
+            
+            //calls functions 
             updateLanguage(destination_country); //destination
             updateTimeZone(source_country, destination_country); // source, destination
             checkIfEverythingDone();
-
+            
         })
         .catch(err => {
             console.log(err);
@@ -568,7 +597,7 @@ function loadFlightData()
         console.log(err);
         checkIfEverythingDone();
     });
-
+    
 }
 
 // Called when window is loaded -- MAIN
@@ -597,7 +626,7 @@ window.onload = function()
     });
     // add event listener for editable view close button
     this.document.getElementById('close-editable-button').addEventListener('click', this.closeEditableView);
-
+    
     //grab flight data & use data to get other travel information
     loadFlightData();
     
@@ -709,7 +738,7 @@ function createEditablePhraseItem(itemVal)
 
 function updateLanguage(name_of_country) {
     var request = new XMLHttpRequest();
-
+    
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
     request.onload = function() {
@@ -886,7 +915,7 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country)
 }
 
 function showTranslationsEditable() {
-  
+    
     darkenBackground();
     var listName = "translate";
     currentTable = listName;
@@ -907,13 +936,13 @@ function showTranslationsEditable() {
     editableView.style.color = color;
     
     // set list items for editable view
-   // repopulateCenterPhrasesByName(listName);
+    // repopulateCenterPhrasesByName(listName);
     
     
     // set addNewElement action
     
     editableView.style.display = 'flex';
-        
+    
 }
 
 function populateTranslations() 
@@ -931,11 +960,11 @@ function populateTranslations()
     {
         translateList.push({name: "Where is the restroom?", translated: false});
     }
-
+    
     for (var i = 0; i < listVals.length; ++i)
     {
         //create element using item
-     
+        
         var li = document.createElement("li");
         li.classList.toggle("list-view-item");
         
@@ -949,11 +978,11 @@ function populateTranslations()
             api_url = api_url + phrase[j] + url_space;
         }
         //run API calls
-
+        
         // var data = "source=en&q=Hello%2C%20world!&target=es";
         var data = api_url + url_setLang;
         // console.log(data);
-    
+        
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         
@@ -963,7 +992,7 @@ function populateTranslations()
                 var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
                 //place translated phrase in translated phrases array
                 translateList[i] = {name: translatedPhrase, translated: true};
-
+                
                 checkIfTranslationsDone()
             }
         });
@@ -984,23 +1013,23 @@ function populateTranslations()
         // // add element to toiletry list
         // document.getElementById("translate-list").appendChild(li);
     }
-
+    
 }
 
 function checkIfTranslationsDone()
 {
     for (var i = 0; i < translateList.length(); ++i)
-        if (!translateList[i].translated)
-            return
+    if (!translateList[i].translated)
+    return
     // means all translations are ready
     console.log(translateList)
 }
 
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
-
+    
     populateTranslations(); //translate phrases
-
+    
     // showTranslationsEditable();
     // translateText("Hello");
     
@@ -1009,7 +1038,7 @@ function openTranslationWindow(){
 function exportTranslatedPhrases() {
     var commonPhrases = listOfPhrases["phrases"];
     var translatedPhrases = listOfTranslated["translated"]; //needs translation
-
+    
     //combining into one list
     var exportList = new Array();
     for (var i = 0; i < commonPhrases.length; i += 2) {
@@ -1018,14 +1047,14 @@ function exportTranslatedPhrases() {
         row.push("\"" + translatedPhrases[i].name + "\"");
         exportList.push(row);
     }
-
-
+    
+    
     var csv = 'Phrase,Translation\n';
     exportList.forEach(function(row) {
         csv+= row.join(',');
         csv += "\n";
     });
-
+    
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target ='_blank';
@@ -1035,25 +1064,25 @@ function exportTranslatedPhrases() {
 
 function translateText(text){
     fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
-        "method": "POST",
-        "headers": {
-            "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-           "content-type": "application/x-www-form-urlencoded"
-        },
-        "body": {
-            "source": "en", 
-            "q": text.toString(),
-            "target": langCode.toString()
-        }
-    })
-    .then(response => {
-       console.log(text + " Translated: " + response);
-    })
-    .catch(err => {
-        console.log(err);
-    });
-    
+    "method": "POST",
+    "headers": {
+        "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+        "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+        "content-type": "application/x-www-form-urlencoded"
+    },
+    "body": {
+        "source": "en", 
+        "q": text.toString(),
+        "target": langCode.toString()
+    }
+})
+.then(response => {
+    console.log(text + " Translated: " + response);
+})
+.catch(err => {
+    console.log(err);
+});
+
 }
 
 // Wait for everything to be ready and then hide the loading screen
@@ -1062,7 +1091,7 @@ function checkIfEverythingDone()
 {
     ++everythingReadyCounter;
     if (everythingReadyCounter == 4)
-        hideLoadingScreen();
+    hideLoadingScreen();
 }
 
 

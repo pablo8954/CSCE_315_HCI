@@ -37,7 +37,14 @@ async function setListOfDefaultLists()
         }
     });
 }
-
+async function getoutletdata(countryname)
+{
+    mongoClient.db('countries').collection("outletlookup").find({Country: countryname}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result)
+        return(result)
+    });
+}
 
 dbSetup();
 
@@ -58,6 +65,7 @@ app.get('/tripInfo.html', function (req, res)
     // This one's gonna need some information about the trip too
     res.sendFile(path.join(__dirname + '/frontEnd/html/tripInfo.html'));
 });
+
 
 app.get('/default-lists', function (req, res)
 {
@@ -93,6 +101,16 @@ app.post('/newtripdata', function (req, res)
 {
    console.log(req.body)
   res.send("success")
+});
+
+app.get('/outletdata', function (req, res)
+{
+    console.log(req.headers.country)
+    mongoClient.db('countries').collection("outletlookup").find({Country: JSON.stringify(req.headers.country).replace(/\"/g, "")}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result)
+        res.json(result)
+    });
 });
 
 let port = process.env.PORT;
