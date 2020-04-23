@@ -32,7 +32,14 @@ function onSignIn(googleUser)
     var end_date = document.getElementById("return-date").value;
     //verify dates are valid    
     diff = Math.floor((Date.parse(end_date) - Date.parse(departure_date) )/ 86400000) + 1; //add 1 to account for day of departure
-    sessionStorage.setItem('day_diff', JSON.stringify(diff)); //TODO: error check that date difference is not negative
+    sessionStorage.setItem('day_diff', JSON.stringify(diff)); 
+
+    //error statement & abort function
+    if (diff < 1){
+      alert("Hmm, your dates inputs seem off. Please input a return date which is after the departure date.");
+      return;
+    }
+
     console.log(diff);
     tripbase["flight_number"] = flight_num
     tripbase["departure_date"] = departure_date
@@ -60,23 +67,47 @@ function onSignIn(googleUser)
       
       var source_countryCode = data[0].departure.airport.countryCode;
       var destination_countryCode = data[0].arrival.airport.countryCode;
+
+      var depart_time_local = data[0].departure.scheduledTimeLocal;
+
+      var arrival_time_local = data[0].arrival.scheduledTimeLocal;
+
+      // console.log(source_city);
+      // console.log(destination_city);
+      // console.log(source_countryCode);
+      // console.log(destination_countryCode);
+      // console.log(depart_time_local);
+      // console.log(arrival_time_local);
+
+      if (source_city == undefined || destination_city == undefined || 
+        source_countryCode == undefined || destination_countryCode == undefined || 
+        depart_time_local == undefined || arrival_time_local == undefined)
+      {
+        alert("something went wrong with the flight number");
+        return;
+      }
+
       tripbase["source_city"] = source_city
       tripbase["source_countryCode"] = source_countryCode
       tripbase["destination_city"] = destination_city
       tripbase["destination_countryCode"] = destination_countryCode
+
+
+
+
       var xhr = new XMLHttpRequest();
-xhr.open("POST", '/newtripdata', true);
-//Send the proper header information along with the request
-xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-xhr.onreadystatechange = function() { // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        // Request finished. Do processing here.
+      xhr.open("POST", '/newtripdata', true);
+      //Send the proper header information along with the request
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function() { // Call a function when the state changes.
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          // Request finished. Do processing here.
+      }
     }
-}
-console.log(JSON.stringify(tripbase))
-xhr.send(JSON.stringify(tripbase));
-// xhr.send(new Int8Array()); 
-// xhr.send(document);
+    console.log(JSON.stringify(tripbase))
+    xhr.send(JSON.stringify(tripbase));
+    // xhr.send(new Int8Array()); 
+    // xhr.send(document);
     console.log(source_city);
     console.log(destination_city);
     console.log(source_countryCode);
