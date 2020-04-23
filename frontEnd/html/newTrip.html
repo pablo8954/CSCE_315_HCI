@@ -99,7 +99,22 @@
         <label for="fnum" class="question-label" id="flight-number-label">What is your flight number?</label>
         <div id="flight-number-container">
             <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
-            <button id="dont-know-button">Don't Know</button>
+            <button id="dont-know-button" onclick="showManualInfoOptions()">Don't Know</button>
+        </div>
+        <div id="manual-info-container">
+            <label for="fnum" class="question-label">Source Details</label>
+
+            <div class="row">
+                <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
+                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country">
+            </div>
+            <label for="fnum" class="question-label">Destination Details</label>
+
+            <div class="row">
+                <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
+                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                
+            </div>
+
         </div>
 
 	
@@ -124,5 +139,6 @@
 	<!--Should check if return date is after departure date here-->
     <!--Should check for time zone change here (Use JavaScript for that)-->
     <script src="/frontEnd/js/responsiveVoice.js"></script>
+    <script src="/frontEnd/js/newTrip.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
 </body>

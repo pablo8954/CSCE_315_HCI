@@ -851,9 +851,10 @@ function showTranslationsEditable() {
         
 }
 
-function populateTranslations() {
+function populateTranslations() 
+{
+    showLoadingScreen()
     document.getElementById("translate-list").innerHTML = "";
-    
     var listVals = listOfPhrases["phrases"];
     
     
@@ -863,7 +864,7 @@ function populateTranslations() {
     
     for (var i = 0; i < listVals.length; ++i)
     {
-        translateList.push({name: "Where is the restroom?"});
+        translateList.push({name: "Where is the restroom?", translated: false});
     }
 
     for (var i = 0; i < listVals.length; ++i)
@@ -891,15 +892,14 @@ function populateTranslations() {
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         
-        xhr.addEventListener("readystatechange", function () {
+        xhr.addEventListener("readystatechange", function () 
+        {
             if (this.readyState === this.DONE) {
                 var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
-                console.log(translatedPhrase);
                 //place translated phrase in translated phrases array
-                translateList[i] = {name: translatedPhrase};
-                console.log(translateList);
-                console.log("LIST: "+  i + " " + translateList[i]);
+                translateList[i] = {name: translatedPhrase, translated: true};
 
+                checkIfTranslationsDone()
             }
         });
         
@@ -922,11 +922,22 @@ function populateTranslations() {
 
 }
 
+function checkIfTranslationsDone()
+{
+    for (var i = 0; i < translateList.length(); ++i)
+        if (!translateList[i].translated)
+            return
+    // means all translations are ready
+    console.log(translateList)
+}
+
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
+
     populateTranslations(); //translate phrases
-    showTranslationsEditable();
-    translateText("Hello");
+
+    // showTranslationsEditable();
+    // translateText("Hello");
     
 }
 
