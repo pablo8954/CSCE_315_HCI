@@ -44,6 +44,7 @@
 
 .center-list-heading {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .center-list {
@@ -58,6 +59,23 @@
 
 .center-list:hover {
   overflow: auto;
+}
+
+#delete-list-button {
+  background-color: #ff6666;
+  color: #fffafa;
+  padding: 10px 15px;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-family: "Helvetica Neue", sans-serif;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#delete-list-button:hover {
+  filter: brightness(50%);
 }
 
 .add-container {
@@ -227,6 +245,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 100px;
+  height: 100%;
 }
 
 .info-container {
@@ -236,6 +255,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+  height: 100%;
 }
 
 .list-container {

@@ -211,9 +211,12 @@ function showEditableView (eve)
     
 }
 
+var newTripNumber = 0
+
 function createNewList()
 {
-    var newListName = "New List " + Object.keys(listOfLists).length;
+    var newListName = "New List " + newTripNumber;
+    ++newTripNumber
     var niceName = newListName.toLowerCase().replace(/\s+/g, '')
     listOfLists[niceName] = {}
     // create the list view
@@ -234,13 +237,24 @@ function createNewList()
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
-    var heading = listView.getElementsByTagName("h2")[0].innerHTML;
-    editableView.getElementsByTagName("h2")[0].innerHTML = heading;
+    listView.getElementsByTagName("h2")[0].innerHTML = "New Trip"
+    editableView.getElementsByTagName("h2")[0].innerHTML = "New Trip";
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
 
     editableView.style.display = 'flex';
 }
+
+function deleteList()
+{
+    delete listOfLists[currentTable]
+    document.getElementById(currentTable).parentElement.style.display = 'none'
+
+    var editableView = document.getElementById('editable-list-view');
+    editableView.style.display = 'none'
+    lightenBackground()
+}
+
 
 // Closes the editable list view in the center
 function closeEditableView ()
