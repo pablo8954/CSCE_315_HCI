@@ -673,33 +673,8 @@ function updateLanguage(name_of_country) {
     }
 }
 
-function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
-
-    //API key: 4knCwWVfukuKzDHuPEiP7iNDmHqNM3
-    //https://www.amdoren.com/time-zone-api/
-    // fetch("https://www.amdoren.com/time-zone-api/", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-    //         "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-    //        "content-type": "application/x-www-form-urlencoded"
-    //     },
-    //     "body": {
-    //         "source": "en", 
-    //         "q": text.toString(),
-    //         "target": langCode.toString()
-    //     }
-    // })
-    // .then(response => {
-    //    console.log(text + " Translated: " + response);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
-
-
-
-
+function updateTimeZone(source_name_of_sCountry, dest_name_of_country) 
+{
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
@@ -876,9 +851,10 @@ function showTranslationsEditable() {
         
 }
 
-function populateTranslations() {
+function populateTranslations() 
+{
+    showLoadingScreen()
     document.getElementById("translate-list").innerHTML = "";
-    
     var listVals = listOfPhrases["phrases"];
     
     
@@ -888,7 +864,7 @@ function populateTranslations() {
     
     for (var i = 0; i < listVals.length; ++i)
     {
-        translateList.push({name: "Where is the restroom?"});
+        translateList.push({name: "Where is the restroom?", translated: false});
     }
 
     for (var i = 0; i < listVals.length; ++i)
@@ -916,15 +892,14 @@ function populateTranslations() {
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         
-        xhr.addEventListener("readystatechange", function () {
+        xhr.addEventListener("readystatechange", function () 
+        {
             if (this.readyState === this.DONE) {
                 var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
-                console.log(translatedPhrase);
                 //place translated phrase in translated phrases array
-                translateList[i] = {name: translatedPhrase};
-                console.log(translateList);
-                console.log("LIST: "+  i + " " + translateList[i]);
+                translateList[i] = {name: translatedPhrase, translated: true};
 
+                checkIfTranslationsDone()
             }
         });
         
@@ -947,11 +922,22 @@ function populateTranslations() {
 
 }
 
+function checkIfTranslationsDone()
+{
+    for (var i = 0; i < translateList.length(); ++i)
+        if (!translateList[i].translated)
+            return
+    // means all translations are ready
+    console.log(translateList)
+}
+
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
+
     populateTranslations(); //translate phrases
-    showTranslationsEditable();
-    translateText("Hello");
+
+    // showTranslationsEditable();
+    // translateText("Hello");
     
 }
 

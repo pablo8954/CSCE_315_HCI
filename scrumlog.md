@@ -105,3 +105,18 @@
     - Anuj Parakh - continued working on webpage design, implemented dar
     - Drew Bezner - continuing work on text size slider, working on common phrases object & translations
     - Maccoy Merrell - Majority of work done to set up mongoDB, working on electronics adapter listing in database
+
+# Scrum Meeting 4/21
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 9:35 am
+- Date: 4/21
+- Duration: 10 min
+- Status: 
+    - Pablo Say - started basic stuff on backlog (remove unecessary elements)
+    - Anuj Parakh - started basic stuff on backlog (add loading screen, debug item)
+    - Drew Bezner - to start some stuff on backlog today 
+    - Maccoy Merrell - to start some stuff on backlog today 
