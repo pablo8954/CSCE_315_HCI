@@ -286,6 +286,7 @@
 
 .list-container
 {
+    position: relative;
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -321,6 +322,26 @@
 // Lists
 //
 
+#create-list-button
+{
+    position: absolute;
+    top: -25px;
+    right: 100px;
+    border-radius: 10px;
+    font-size: 22px;
+    background-color: #727272;
+    padding: 10px 15px;
+    border: none;
+    color: $snow;
+    cursor: pointer;
+
+}
+
+#create-list-button:hover
+{
+    filter: brightness(50%);
+}
+
 .list-view
 {
     text-align: center;
@@ -333,6 +354,40 @@
     margin-right: 50px;
     font-family: $sans-serif-font-family;
     overflow: hidden;
+    position: relative;
+
+    .list-edit-button
+    {
+        color: $snow;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 22px;
+        pointer-events: none;
+    }
+
+    .hover-message
+    {
+        display: none;
+        color: $snow;
+        font-size: 32px;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        // cursor: pointer;
+        pointer-events: none;
+    }
+}
+
+.view-div-list
+{
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
 }
 
 .list-view h2
@@ -344,9 +399,16 @@
 
 .list-view:hover
 {
-    filter: brightness(50%);
-    cursor: pointer;
-    overflow: auto;
+    .view-div-list
+    {
+        filter: brightness(20%);
+        cursor: pointer;
+        overflow: auto;
+    }
+    .hover-message
+    {
+        display: block;
+    }
 
 }
 
@@ -365,6 +427,7 @@
 .list-view ul:hover
 {
     overflow: auto;
+ 
 }
 
 .list-view-item
@@ -384,6 +447,7 @@
     border-color: black;
     margin: 10px 0;
 }
+
 
 #phrases
 {

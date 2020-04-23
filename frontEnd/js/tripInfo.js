@@ -211,6 +211,37 @@ function showEditableView (eve)
     
 }
 
+function createNewList()
+{
+    var newListName = "New List " + Object.keys(listOfLists).length;
+    var niceName = newListName.toLowerCase().replace(/\s+/g, '')
+    listOfLists[niceName] = {}
+    // create the list view
+    createListView(newListName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
+
+    // Show editable view with the new list
+    darkenBackground()
+    // set the current table id
+    currentTable = niceName;
+    // get the editable view to be showed
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    var listView = document.getElementById(niceName)
+
+    repopulateCenterListByName(niceName);
+
+
+    // Set appropriate colors and values
+    var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
+    var color = getComputedStyle(listView, null).getPropertyValue("color");
+    var heading = listView.getElementsByTagName("h2")[0].innerHTML;
+    editableView.getElementsByTagName("h2")[0].innerHTML = heading;
+    editableView.style.backgroundColor = bgcolor;
+    editableView.style.color = color;
+
+    editableView.style.display = 'flex';
+}
+
 // Closes the editable list view in the center
 function closeEditableView ()
 {
@@ -234,6 +265,7 @@ function closeEditableView ()
     }
     else {
         
+        console.log(currentTable)
         listOfLists[currentTable] = newList;
         
         // repopulate the appropriate table
@@ -255,18 +287,38 @@ function closeEditableView ()
 function createListView(listName, bgcolor)
 {
     var viewDiv = document.createElement('div');
+    var viewDivForList = document.createElement('div');
     viewDiv.className = "list-view";
-    viewDiv.id = listName.toLowerCase();
-    viewDiv.addEventListener("click", showEditableView);
+
+    viewDivForList = document.createElement('div');
+    viewDivForList.addEventListener("click", showEditableView);
+
+    viewDivForList.id = listName.toLowerCase().replace(/\s+/g, '');
+
+    viewDivForList.classList.toggle('view-div-list');
+
+    // Add edit button
+    var editButton = document.createElement('i');
+    editButton.classList.add("far", "fa-edit", "list-edit-button")
+    // Add heading
     var heading = document.createElement('h2');
     heading.className = "list-heading";
     heading.innerHTML = listName;
+    // Add list
     var list = document.createElement('ul');
-    list.id = listName.toLowerCase() + "-list";
-    
-    viewDiv.appendChild(heading);
-    viewDiv.appendChild(list);
-    viewDiv.style.backgroundColor = bgcolor;
+    list.id = listName.toLowerCase().replace(/\s+/g, '') + "-list";
+    // Add hover message
+    var hoverMessage = document.createElement('p');
+    hoverMessage.classList.add("hover-message");    
+    hoverMessage.innerHTML = "<i class=\"fas fa-hand-pointer\" style=\"color:white; font-size: 32px;\"></i><br>Click to Edit";
+
+    viewDivForList.appendChild(heading);
+    viewDivForList.appendChild(list);
+    viewDivForList.appendChild(editButton);
+    viewDiv.appendChild(viewDivForList);
+    viewDiv.appendChild(hoverMessage);
+
+    viewDivForList.style.backgroundColor = bgcolor;
     document.getElementById("list-container").appendChild(viewDiv); 
 }
 

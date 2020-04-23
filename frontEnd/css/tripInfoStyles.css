@@ -239,6 +239,7 @@
 }
 
 .list-container {
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -259,6 +260,23 @@
     margin-top: 50px;
   }
 }
+#create-list-button {
+  position: absolute;
+  top: -25px;
+  right: 100px;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: #727272;
+  padding: 10px 15px;
+  border: none;
+  color: #fffafa;
+  cursor: pointer;
+}
+
+#create-list-button:hover {
+  filter: brightness(50%);
+}
+
 .list-view {
   text-align: center;
   height: 400px;
@@ -270,6 +288,34 @@
   margin-right: 50px;
   font-family: "Helvetica Neue", sans-serif;
   overflow: hidden;
+  position: relative;
+}
+.list-view .list-edit-button {
+  color: #fffafa;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 22px;
+  pointer-events: none;
+}
+.list-view .hover-message {
+  display: none;
+  color: #fffafa;
+  font-size: 32px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.view-div-list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .list-view h2 {
@@ -278,10 +324,13 @@
   pointer-events: none;
 }
 
-.list-view:hover {
-  filter: brightness(50%);
+.list-view:hover .view-div-list {
+  filter: brightness(20%);
   cursor: pointer;
   overflow: auto;
+}
+.list-view:hover .hover-message {
+  display: block;
 }
 
 .list-view ul {
