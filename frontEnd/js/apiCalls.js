@@ -22,25 +22,35 @@ function onSignIn(googleUser)
       return profile.getEmail();
     });
     
-  }
+}
   
-  var tripbase = {};
+var tripbase = {};
 
-  function manualInput()
-  {
-    var city = document.getElementById("citySrcId");
-    var state = document.getElementById("stateSrcId");
-    var country = document.getElementById("countrySrcId");
+function manualInput()
+{
+  var srcCity = document.getElementById("citySrcId");
+  var srcState = document.getElementById("stateSrcId");
+  var srcCountry = document.getElementById("countrySrcId");
 
-    // console.log(document.getElementById("citySrcId"));
-    console.log(country.options[country.selectedIndex].value);
-    console.log(country.options[country.selectedIndex].text);
-  }
+  var desCity = document.getElementById("cityDesId");
+  var desState = document.getElementById("stateDesId");
+  var desCountry = document.getElementById("countryDesId");
+
+  // console.log(srcCity.options[srcCity.selectedIndex].value);
+  // console.log(srcState.options[srcState.selectedIndex].value);
+  // console.log(srcCountry.options[srcCountry.selectedIndex].value);
+
+  // console.log(desCity.options[desCity.selectedIndex].value);
+  // console.log(desState.options[desState.selectedIndex].value);
+  // console.log(desCountry.options[desCountry.selectedIndex].value);
+
+   
+
+}
 
 
-  function flightNumberParse(){
-    manualInput();
-    return;
+function flightNumberParse()
+{
     //take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
     var departure_date = document.getElementById("start-date").value;
@@ -52,10 +62,10 @@ function onSignIn(googleUser)
     //error statement & abort function
     if (diff < 1){
       alert("Hmm, your dates inputs seem off. Please input a return date which is after the departure date.");
-      manualInput();
+      return
     }
 
-    console.log(diff);
+    // console.log(diff);
     tripbase["flight_number"] = flight_num
     tripbase["departure_date"] = departure_date
     tripbase["end_date"] = end_date
@@ -92,7 +102,6 @@ function onSignIn(googleUser)
         depart_time_local == undefined || arrival_time_local == undefined)
       {
         alert("something went wrong with the flight number");
-        manualInput();
         return;
       }
 
@@ -110,6 +119,7 @@ function onSignIn(googleUser)
           // Request finished. Do processing here.
       }
     }
+
     console.log(JSON.stringify(tripbase))
     xhr.send(JSON.stringify(tripbase));
     // xhr.send(new Int8Array()); 
@@ -118,8 +128,6 @@ function onSignIn(googleUser)
     console.log(destination_city);
     console.log(source_countryCode);
     console.log(destination_countryCode);
-    
-    // alert("PAUSE");
     
     //store json for analysis in tripInfo.js
     sessionStorage.setItem('travel_json', JSON.stringify(data));
