@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css);
 .widget {
@@ -71,6 +72,85 @@
 
 #date-5 {
   border-bottom-right-radius: 20px;
+}
+
+.onoffswitch {
+  position: relative;
+  width: 100px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin-top: 20px;
+}
+
+.onoffswitch-checkbox {
+  display: none;
+}
+
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-radius: 20px;
+}
+
+.onoffswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 36px;
+  padding: 0;
+  line-height: 36px;
+  font-size: 20px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+  content: "°C";
+  padding-left: 10px;
+  background-color: #34A7C1;
+  color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+  content: "°F";
+  padding-right: 10px;
+  background-color: #3366cc;
+  color: #FFFFFF;
+  text-align: right;
+}
+
+.onoffswitch-switch {
+  display: block;
+  width: 32px;
+  margin: 0px;
+  background: #FFFFFF;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 64px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px;
 }
 
 /*# sourceMappingURL=weatherWidgetStyles.css.map */

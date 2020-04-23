@@ -476,6 +476,8 @@ function loadFlightData()
         })
         .then(data => {
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
+            trySettingWeatherData(destination_city, destination_country);
+
             var destination_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
             destination_language_code = JSON.stringify(data.languages[0].iso639_1).replace(/\"/g, "");
             console.log(destination_language_code);
@@ -500,9 +502,6 @@ function loadFlightData()
         console.log(err);
         checkIfEverythingDone();
     });
-
-    // grab weather data
-    trySettingWeatherData(destination_city);
 
 }
 
