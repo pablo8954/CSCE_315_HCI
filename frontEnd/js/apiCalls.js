@@ -26,6 +26,7 @@ function onSignIn(googleUser)
   var tripbase = {};
   function flightNumberParse(){
     
+    showLoadingScreen()
     //take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
     var departure_date = document.getElementById("start-date").value;

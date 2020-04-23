@@ -206,5 +206,17 @@ function toggleTextToSpeech()
     sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
 }
 
+function showLoadingScreen()
+{
+    var loader = document.getElementById("loader");
+    loader.style.display = 'flex';
+}
+
+function hideLoadingScreen()
+{
+    var loader = document.getElementById("loader");
+    loader.style.display = 'none';
+}
+
 
 

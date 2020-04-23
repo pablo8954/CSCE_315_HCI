@@ -267,7 +267,10 @@
 // 
 .page-container
 {
-    display: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 100px;
 }
 
 .info-container
@@ -275,10 +278,10 @@
     display:flex;
     flex-direction: column;
     width: 45vw;
-    float: left;
+    // float: left;
     justify-content: center;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 50px;
 }
 
 .list-container
@@ -286,12 +289,32 @@
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
-    float: right;
-    width: 50vw;
+    // float: right;
+    width: 50%;
+    height: 100%;
     justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+    // align-items: center;
+    margin-left: 50px;
 }
+
+@media screen and (max-width: 1000px)
+{
+    .info-container
+    {
+        width: 100%;
+    }
+
+    .list-container
+    {
+        width: 100vw;
+        margin-left: 0;
+        margin-top: 50px;
+    }
+
+}
+
+
+
 
 
 //

@@ -16,15 +16,3 @@ function lightenBackground()
     darkener.hidden = true;
     darkener.classList.toggle('unclickable');
 }
-
-function showLoadingScreen()
-{
-    var loader = document.getElementById("loader");
-    loader.style.display = 'flex';
-}
-
-function hideLoadingScreen()
-{
-    var loader = document.getElementById("loader");
-    loader.style.display = 'none';
-}

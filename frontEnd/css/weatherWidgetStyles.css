@@ -4,31 +4,16 @@
   font-family: Poiret One;
   display: flex;
   margin-top: 30px;
-  height: 300px;
+  height: 500px;
   width: 600px;
   flex-wrap: wrap;
   cursor: pointer;
   border-radius: 20px;
   box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
-.widget .weatherIcon {
-  flex: 1 100%;
-  height: 60%;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: #FAFAFA;
-  font-family: weathericons;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-size: 100px;
-}
-.widget .weatherIcon i {
-  padding-top: 30px;
-}
 .widget .weatherInfo {
   flex: 0 0 70%;
-  height: 40%;
+  height: 20%;
   background: #080705;
   border-bottom-left-radius: 0;
   display: flex;
@@ -60,7 +45,7 @@
 }
 .widget .date {
   flex: 0 0 30%;
-  height: 40%;
+  height: 20%;
   background: #70C1B3;
   border-bottom-right-radius: 0;
   display: flex;
