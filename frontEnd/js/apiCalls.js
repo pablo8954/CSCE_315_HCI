@@ -23,9 +23,24 @@ function onSignIn(googleUser)
     });
     
   }
+  
   var tripbase = {};
+
+  function manualInput()
+  {
+    var city = document.getElementById("citySrcId");
+    var state = document.getElementById("stateSrcId");
+    var country = document.getElementById("countrySrcId");
+
+    // console.log(document.getElementById("citySrcId"));
+    console.log(country.options[country.selectedIndex].value);
+    console.log(country.options[country.selectedIndex].text);
+  }
+
+
   function flightNumberParse(){
-    
+    manualInput();
+    return;
     //take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
     var departure_date = document.getElementById("start-date").value;
@@ -37,7 +52,7 @@ function onSignIn(googleUser)
     //error statement & abort function
     if (diff < 1){
       alert("Hmm, your dates inputs seem off. Please input a return date which is after the departure date.");
-      return;
+      manualInput();
     }
 
     console.log(diff);
@@ -72,18 +87,12 @@ function onSignIn(googleUser)
 
       var arrival_time_local = data[0].arrival.scheduledTimeLocal;
 
-      // console.log(source_city);
-      // console.log(destination_city);
-      // console.log(source_countryCode);
-      // console.log(destination_countryCode);
-      // console.log(depart_time_local);
-      // console.log(arrival_time_local);
-
       if (source_city == undefined || destination_city == undefined || 
         source_countryCode == undefined || destination_countryCode == undefined || 
         depart_time_local == undefined || arrival_time_local == undefined)
       {
         alert("something went wrong with the flight number");
+        manualInput();
         return;
       }
 
@@ -91,9 +100,6 @@ function onSignIn(googleUser)
       tripbase["source_countryCode"] = source_countryCode
       tripbase["destination_city"] = destination_city
       tripbase["destination_countryCode"] = destination_countryCode
-
-
-
 
       var xhr = new XMLHttpRequest();
       xhr.open("POST", '/newtripdata', true);

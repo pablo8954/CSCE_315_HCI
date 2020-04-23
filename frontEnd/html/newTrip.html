@@ -97,14 +97,32 @@
             <label for="fnum" class="question-label">Source Details</label>
 
             <div class="row">
-                <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
-                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country">
+                <!-- <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
+                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country"> -->
+                <select name="country" class="countriesSrc manual-input" id="countrySrcId">
+                    <option value="">Select Country</option>
+                </select>
+                <select name="state" class="statesSrc manual-input" id="stateSrcId">
+                    <option value="">Select State</option>
+                </select>
+                <select name="city" class="citiesSrc manual-input" id="citySrcId">
+                    <option value="">Select City</option>
+                </select>
             </div>
             <label for="fnum" class="question-label">Destination Details</label>
 
             <div class="row">
-                <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
-                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                
+                <select name="country" class="countriesDes manual-input" id="countryDesId">
+                    <option value="">Select Country</option>
+                </select>
+                <select name="statetest" class="statesDes manual-input" id="stateDesId">
+                    <option value="">Select State</option>
+                </select>
+                <select name="city" class="citiesDes manual-input" id="cityDesId">
+                    <option value="">Select City</option>
+                </select>
+                <!-- <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
+                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                 -->
             </div>
 
         </div>
@@ -130,6 +148,10 @@
 		   
 	<!--Should check if return date is after departure date here-->
     <!--Should check for time zone change here (Use JavaScript for that)-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src = "/frontEnd/js/geodata.js"></script>
+    <!-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> -->
+
     <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/newTrip.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
