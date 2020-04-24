@@ -584,7 +584,17 @@ function loadFlightData()
             var xhr = new XMLHttpRequest();
             xhr.open("GET", 'outletdata', true);
             xhr.setRequestHeader("country", destination_country)
-            xhr.setRequestHeader("country_alt",destination_country_native)
+
+            //don't send if native name if not a valid bytestring
+            try{
+                xhr.setRequestHeader("country_alt",destination_country_native);
+            }
+            catch{
+                xhr.setRequestHeader("country_alt",undefined);
+                console.log("CAUGHT");
+            }
+
+
             xhr.onreadystatechange = function() { // Call a function when the state changes.
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     outletinfo = JSON.parse(xhr.response)[0]

@@ -132,6 +132,13 @@ function manualInput()
     desCity = desCity.options[desCity.selectedIndex].value;
     desCountry = desCountry.options[desCountry.selectedIndex].value;
 
+    //catch case where user fails to give city
+    if (srcCity == "" || desCity == "")
+    {
+        alert("Error: Please input a city");
+        return;
+    }
+
     var srcCountryCode;
     var desCountryCode;
 
@@ -143,16 +150,22 @@ function manualInput()
         console.log(response);
         return response.json()
     }).then(data => {
-        console.log(data);
-
         var i = 0;
+        console.log(data);
+        console.log(srcCountry);
 
-        while (srcCountry != data[i].nativeName)
+        
+        while (srcCountry != data[i].nativeName && srcCountry != data[i].name)
         {
+            console.log(i);
+            console.log(data[i].nativeName);
+            console.log(data[i].name);
             i = i + 1;
         }
+
+
         srcCountryCode = data[i].alpha3Code;
-        console.log(data[i].nativeName);
+        // console.log(data[i].nativeName);
         console.log(srcCountryCode);
 
         // grab destination country code
@@ -161,10 +174,16 @@ function manualInput()
             return response.json()
         }).then(data => {
             var j = 0;
-            while (desCountry != data[j].nativeName)
+            while (desCountry != data[j].nativeName && desCountry != data[j].name)
             {
+                console.log(j);
+                console.log(data[j].nativeName);
+                console.log(data[j].name);
                 j = j + 1;
             }
+            console.log(data[j].nativeName);
+            console.log(data[j].name);
+
             desCountryCode = data[j].alpha3Code;
             console.log(data[j].nativeName);
             console.log(desCountryCode);
