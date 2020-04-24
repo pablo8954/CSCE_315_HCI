@@ -1,4 +1,3 @@
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -24,7 +23,7 @@ async function setListOfDefaultLists()
     mongoClient.db('users').collection("lists").find({email: "johnsmith@gmail.com"}).toArray(function(err, result) 
     {
         if (err) throw err;
-
+        
         var lists = result[0].lists;
         // Go through the results and assign the lists
         for (var i = 0; i < lists.length; ++i)
@@ -37,7 +36,14 @@ async function setListOfDefaultLists()
         }
     });
 }
-
+async function getoutletdata(countryname)
+{
+    mongoClient.db('countries').collection("outletlookup").find({Country: countryname}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result)
+        return(result)
+    });
+}
 
 dbSetup();
 
@@ -58,6 +64,7 @@ app.get('/tripInfo.html', function (req, res)
     // This one's gonna need some information about the trip too
     res.sendFile(path.join(__dirname + '/frontEnd/html/tripInfo.html'));
 });
+
 
 app.get('/default-lists', function (req, res)
 {
@@ -91,8 +98,51 @@ function getDefaultLists(numDays)
 
 app.post('/newtripdata', function (req, res)
 {
-   console.log(req.body)
+var tripbase = req.body
+  if(tripbase.email != "")
+  {
+  mongoClient.db('users').collection('tripbase').find({email: JSON.stringify(tripbase.email).replace(/\"/g, ""), start_date: JSON.stringify(tripbase.start_date).replace(/\"/g, ""), end_date: JSON.stringify(tripbase.end_date).replace(/\"/g, ""), arrival_countryCode: JSON.stringify(tripbase.arrival_countryCode).replace(/\"/g, ""), arrival_city: JSON.stringify(tripbase.arrival_city).replace(/\"/g, ""), departure_city: JSON.stringify(tripbase.departure_city).replace(/\"/g, ""), departure_countryCode: JSON.stringify(tripbase.departure_countryCode).replace(/\"/g, "")}).toArray(function(err,check)
+  {
+    if(check[0] == undefined)
+    {
+        mongoClient.db('users').collection('tripbase').find({email: JSON.stringify(tripbase.email).replace(/\"/g, "")}).sort({trip_id:-1}).limit(1).toArray(function(err,result)
+        {
+          var tripidnew = 0
+          if(err) throw err;
+          if(result[0] == undefined)
+          {
+              trip_idnew = 1
+          }
+          else
+          {
+          trip_idnew = parseInt(result[0].trip_id) + 1
+          }
+          tripbase["trip_id"] = trip_idnew.toString()
+          mongoClient.db('users').collection('tripbase').insertOne(tripbase)
+        });
+    }
+  });
+}
   res.send("success")
+});
+
+app.get('/outletdata', function (req, res)
+{
+    var outletdataholder = {}
+    mongoClient.db('countries').collection("outletlookup").find({Country: JSON.stringify(req.headers.country).replace(/\"/g, "")}).toArray(function(err, result1) {
+        if (err) throw err;
+        if(result1 != null)
+        {
+            res.json(result1)
+        }
+        else
+        {
+            mongoClient.db('countries').collection("outletlookup").find({Country: JSON.stringify(req.headers.country_alt).replace(/\"/g, "")}).toArray(function(err, result2) {
+                if (err) throw err;
+                res.json(result2)
+            }); 
+        }
+    });
 });
 
 let port = process.env.PORT;

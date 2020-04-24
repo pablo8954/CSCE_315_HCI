@@ -29,7 +29,7 @@
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
-            <h2 class="old-trips-heading">Old Trips</h2>
+            <h2 class="old-trips-heading">My Trips</h2>
             <ul class="old-trips-list" >
                 <li style="display:none;" id="old-trip1" ><i class="fas fa-plane" ></i> Mumbai to Austin on 3/2/2020</li>
                 <li style="display:none;" id="old-trip2"><i class="fas fa-plane" ></i> Guatemala City to Mumbai on 2/9/2020</li>
@@ -67,15 +67,8 @@
                     <div class="slider round"></div>
                 </label>
             </div>
+            <label id="dark-mode-label">High Contrast Mode</label>
 
-            <label id="dark-mode-label">Dark Mode</label>
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox"/>
-                    <div class="slider round"></div>
-                </label>
-            </div>
-            <label id="dark-mode-label">Color Blindness Mode</label>
             
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="text-to-speech-checkbox">
@@ -83,7 +76,7 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <div class="row"
+            <div class="row">
                 <label id="dark-mode-label">Text to Speech</label> 
                 <div class="popup" onclick="popupFunction()">
                     <i class="fas fa-question-circle"></i>
@@ -118,7 +111,8 @@
 
         <div class="row" style="text-align: center"> 
             <label class="s-label">Source: </label>
-            <label class ="place-label" id="source">College Station, USA</label>
+            <label class ="place-label" id="source">College Station, USA</label> <!-- grab id in java to overwrite "College Station, USA"  EXAMPLE ID -->
+
         </div>
        
         <div class="row" style="text-align: center"> 
@@ -163,7 +157,16 @@
 
         <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
-        <label for="weatherForecast" class="big-label">Weather Forecast</label>
+
+        <!-- Temporary for Maccoy-->
+        <label for="exchangeRate" class="big-label">Power Adapter</label>
+        <label for="exchangeRate" class="small-label" id="power-adapter-label">REPLACE ME</label>
+        <label for="exchangeRate" class="small-label" id="power-voltage-label">REPLACE ME</label>
+        <label for="exchangeRate" class="small-label" id="power-frequency-label">REPLACE ME</label>
+        <!-- Temporary for Maccoy-->
+
+        <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
+
         <div class="onoffswitch">
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="weather-unit-switch" checked>
             <label class="onoffswitch-label" for="weather-unit-switch">
