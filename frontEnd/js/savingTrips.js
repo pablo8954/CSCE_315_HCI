@@ -16,11 +16,11 @@ function sendCurrentFlightDataToBackend(tripbase)
     xhr.send(JSON.stringify(tripbase));
 }
 
-function sendTripInfo(departureDate, endDate, sourceCity, sourceCountry, destinationCity, destinationCountry, listsToSave)
+function sendTripInfo(data, lists)
 {
     let tripbase = 
     {
-        departure_date: departureDate,
+        departure_date: data[0].departure.date,
         end_date: endDate,
         source_city: sourceCity,
         source_country: sourceCountry,
