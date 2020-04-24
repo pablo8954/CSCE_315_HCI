@@ -24,7 +24,7 @@ async function setListOfDefaultLists()
     mongoClient.db('users').collection("lists").find({email: "johnsmith@gmail.com"}).toArray(function(err, result) 
     {
         if (err) throw err;
-
+        
         var lists = result[0].lists;
         // Go through the results and assign the lists
         for (var i = 0; i < lists.length; ++i)
