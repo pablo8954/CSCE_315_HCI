@@ -17,7 +17,6 @@ var destination_language_code = "";
 
 phraseList.push({name: "Where is the restroom?"});
 phraseList.push({name: "Where is my hotel?"});
-phraseList.push({name: "Where is the airport?"});
 phraseList.push({name: "Where is a resturaunt?"});
 phraseList.push({name: "Hi, how are you?"});
 phraseList.push({name: "I don't speak your language."});
@@ -793,7 +792,18 @@ function updateLanguage(name_of_country) {
         data.forEach(country => {
             if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
                 lang = country.languages[0].name;
+
+
                 langCode=country.languages[0].iso639_1;
+            
+                if (langCode == "en")
+                {
+                    document.getElementById("phrases").style.display = "none";
+                    document.getElementById("generate-translation-button").style.display = "none";
+                    document.getElementById("export-translation-button").style.display = "none";
+                    console.log("HERE PHRASES");
+                }
+
                 console.log("Language Code: " + langCode);
                 found = 1;
             }
@@ -957,48 +967,6 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country)
     }
 }
 
-// function closeTranslationsEditableView ()
-// {
-//     // get the updated list from the editable view
-//     var editableView = document.getElementById('editable-list-view');
-//     var editableList = document.getElementById('editable-list');
-//     // get a list from the editable view
-//     var elements = editableList.getElementsByTagName('li');
-//     var newList = new Array();
-//     for (var i = 0; i < elements.length; ++i)
-//     {
-//         var labelVals = elements[i].getElementsByTagName('label');
-//         var newElement;
-//         if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
-//         else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
-//         newList.push(newElement);
-//     }
-//     if (currentTable == "phrases"){
-//         listOfPhrases[currentTable] = newList;
-//         populatePhraseList();
-//     }
-//     else {
-        
-//         console.log(currentTable)
-//         listOfLists[currentTable] = newList;
-        
-//         // repopulate the appropriate table
-//         repopulateListByName(currentTable);
-//         document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
-//     }
-    
-    
-//     // repopulate the appropriate table
-    
-//     // reset the heading as neede
-    
-//     // close the editable view
-//     editableView.style.display = 'none';
-    
-//     lightenBackground();
-// }
-
-
 function showTranslationsEditable() {
     
     darkenBackground();
@@ -1046,8 +1014,6 @@ function populateTranslations()
     var url_setLang = "&target="+destination_language_code;
     console.log(destination_language_code);
     
-    //populating empty array with dummy values
-
     // iterate throught phrases, translating one at a time
     
     for (var i = 0; i < listVals.length; ++i)
@@ -1067,8 +1033,7 @@ function populateTranslations()
             api_url = api_url + phrase[j] + url_space;
         }
         //run API calls
-        
-        // var data = "source=en&q=Hello%2C%20world!&target=es";
+
         var data = api_url + url_setLang;
         // console.log(data);
         
@@ -1080,7 +1045,10 @@ function populateTranslations()
             //place translated phrase in translated phrases array
             if (this.readyState === this.DONE) {
                 var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
-                
+                if(translatedPhrase.charAt(translatedPhrase.length -1) == ',') {
+                    translatedPhrase = translatedPhrase.substring(0, translatedPhrase.length - 1);
+                }
+                console.log("Translated Phrase: " + translatedPhrase);
                 translateList[i] = {name: translatedPhrase, translated: true};
                 
                 checkIfTranslationsDone();
@@ -1099,7 +1067,6 @@ function populateTranslations()
 
 function checkIfTranslationsDone()
 {
-    //FIXME: translateList.length() - length is not a function
     for (var i = 0; i < translateList.length; ++i)
         if (!translateList[i].translated)
             return
@@ -1176,7 +1143,7 @@ function exportTranslatedPhrases() {
     });
     
     var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csv);
     hiddenElement.target ='_blank';
     hiddenElement.download ='translations.csv';
     hiddenElement.click();
