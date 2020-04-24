@@ -1,3 +1,5 @@
+var email = ""
+
 function onSignIn(googleUser)
 {
   var profile = googleUser.getBasicProfile();
@@ -6,7 +8,7 @@ function onSignIn(googleUser)
   name.innerHTML = profile.getName();
   var image = document.getElementById('profile-image');
   image.src = profile.getImageUrl();
-
+  email = profile.getEmail()
   //replace buttons
   document.getElementById("google-signin-button").style.display="none";
   document.getElementById("logout-button").style.display="block";
@@ -165,12 +167,7 @@ function flightNumberParse()
 
   //take user input of dates and flight number
   var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
-
-
-  //TODO: only send info to database if info is valid
-  tripbase["flight_number"] = flight_num
-  tripbase["departure_date"] = departure_date
-  tripbase["end_date"] = end_date
+  
   var flight_api_url = "https://aerodatabox.p.rapidapi.com/flights/" + flight_num + '/' + departure_date + "?withLocation=false&withAircraftImage=false";    
   
   //window.location.href = 'tripInfo.html'; //- leave commented unless want to skip new trip page
@@ -207,11 +204,16 @@ function flightNumberParse()
         showManualInfoOptions();
         return;
       }
-      
-      tripbase["source_city"] = source_city
-      tripbase["source_countryCode"] = source_countryCode
-      tripbase["destination_city"] = destination_city
-      tripbase["destination_countryCode"] = destination_countryCode
+
+      //tripbase stuff
+      tripbase["flight_number"] = flight_num
+      tripbase["departure_city"] = source_city
+      tripbase["departure_countryCode"] = source_countryCode
+      tripbase["arrival_city"] = destination_city
+      tripbase["arrival_countryCode"] = destination_countryCode
+      tripbase["start_date"] = departure_date
+      tripbase["end_date"] = end_date
+      tripbase["email"] = email
       
       var xhr = new XMLHttpRequest();
       xhr.open("POST", '/newtripdata', true);
