@@ -274,9 +274,11 @@ function closeEditableView ()
         else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
         newList.push(newElement);
     }
-    if (currentTable == "phrases"){
+    if (currentTable == "phrases" || currentTable == "translate"){
         listOfPhrases[currentTable] = newList;
         populatePhraseList();
+        
+    document.getElementById("delete-list-button").style.display = 'block';
     }
     else {
         
@@ -671,7 +673,11 @@ function populatePhraseList() {
 }
 
 function showPhrasesEditableView(eve) {
+
     darkenBackground();
+
+    document.getElementById("delete-list-button").style.display = 'none';
+
     var listName = eve.target.id;
     currentTable = listName;
     // get the editable view to be showed
@@ -933,51 +939,54 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country)
     }
 }
 
-function closeTranslationsEditableView ()
-{
-    // get the updated list from the editable view
-    var editableView = document.getElementById('editable-list-view');
-    var editableList = document.getElementById('editable-list');
-    // get a list from the editable view
-    var elements = editableList.getElementsByTagName('li');
-    var newList = new Array();
-    for (var i = 0; i < elements.length; ++i)
-    {
-        var labelVals = elements[i].getElementsByTagName('label');
-        var newElement;
-        if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
-        else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
-        newList.push(newElement);
-    }
-    if (currentTable == "phrases"){
-        listOfPhrases[currentTable] = newList;
-        populatePhraseList();
-    }
-    else {
+// function closeTranslationsEditableView ()
+// {
+//     // get the updated list from the editable view
+//     var editableView = document.getElementById('editable-list-view');
+//     var editableList = document.getElementById('editable-list');
+//     // get a list from the editable view
+//     var elements = editableList.getElementsByTagName('li');
+//     var newList = new Array();
+//     for (var i = 0; i < elements.length; ++i)
+//     {
+//         var labelVals = elements[i].getElementsByTagName('label');
+//         var newElement;
+//         if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
+//         else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
+//         newList.push(newElement);
+//     }
+//     if (currentTable == "phrases"){
+//         listOfPhrases[currentTable] = newList;
+//         populatePhraseList();
+//     }
+//     else {
         
-        console.log(currentTable)
-        listOfLists[currentTable] = newList;
+//         console.log(currentTable)
+//         listOfLists[currentTable] = newList;
         
-        // repopulate the appropriate table
-        repopulateListByName(currentTable);
-        document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
-    }
+//         // repopulate the appropriate table
+//         repopulateListByName(currentTable);
+//         document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
+//     }
     
     
-    // repopulate the appropriate table
+//     // repopulate the appropriate table
     
-    // reset the heading as neede
+//     // reset the heading as neede
     
-    // close the editable view
-    editableView.style.display = 'none';
+//     // close the editable view
+//     editableView.style.display = 'none';
     
-    lightenBackground();
-}
+//     lightenBackground();
+// }
 
 
 function showTranslationsEditable() {
     
     darkenBackground();
+    
+    document.getElementById("delete-list-button").style.display = 'none';
+    
     var listName = "translate";
     currentTable = listName;
     // get the editable view to be showed
@@ -1056,7 +1065,7 @@ function populateTranslations()
                 
                 translateList[i] = {name: translatedPhrase, translated: true};
                 
-                checkIfTranslationsDone()
+                checkIfTranslationsDone();
             }
         });
         
@@ -1092,7 +1101,7 @@ function repopulateTranslationList(listName)
     {
         var li = createEditablePhraseItem(listVals[i]);
         
-        // add element to toiletry list
+        // add element to translation list
         document.getElementById("editable-list").appendChild(li);
     }
 }
@@ -1100,10 +1109,18 @@ function repopulateTranslationList(listName)
 
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
-    
+    listOfTranslated["translated"].length = 0;
     populateTranslations(); //translate phrases
     repopulateTranslationList("translate");
+    var commonPhrases = listOfPhrases["phrases"];
+    var translatedPhrases = listOfTranslated["translated"]; 
 
+    for (var i = 0; i < commonPhrases.length; i++) {
+        console.log("Phrase" + i + ": " + commonPhrases[i].name);
+    }
+    for (var i = 0; i < commonPhrases.length; i++) {
+        console.log("Translation" + i + ": " + translatedPhrases[i].name);
+    }
     showTranslationsEditable();
     // translateText("Hello");
     
