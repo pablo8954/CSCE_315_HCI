@@ -6,6 +6,8 @@
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/newTripStyles.css" rel="stylesheet" type="text/css">
+    <link href="/frontEnd/css/loader.css" rel="stylesheet" type="text/css">
+
     <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
 
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
@@ -15,6 +17,8 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/frontEnd/js/apiCalls.js"></script>
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+    <script> const client = stitch.Stitch.initializeDefaultAppClient('verify_user-kubqy');</script>
 </head>
 
 <body class="main-body">
@@ -96,13 +100,29 @@
 
         </div>
     </header>
-	
+    <div id="loader">   <div class="lds-ring"><div></div><div></div><div></div><div></div></div>   </div>
+
     <!--Flight number input-->
     <div class="questions-container">
         <label for="fnum" class="question-label" id="flight-number-label">What is your flight number?</label>
         <div id="flight-number-container">
             <input type="text" id="flight-number" name="fnum" placeholder="Enter Flight Number">
-            <button id="dont-know-button">Don't Know</button>
+            <button id="dont-know-button" onclick="showManualInfoOptions()">Don't Know</button>
+        </div>
+        <div id="manual-info-container">
+            <label for="fnum" class="question-label">Source Details</label>
+
+            <div class="row">
+                <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
+                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country">
+            </div>
+            <label for="fnum" class="question-label">Destination Details</label>
+
+            <div class="row">
+                <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
+                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                
+            </div>
+
         </div>
 
 	
@@ -127,5 +147,6 @@
 	<!--Should check if return date is after departure date here-->
     <!--Should check for time zone change here (Use JavaScript for that)-->
     <script src="/frontEnd/js/responsiveVoice.js"></script>
+    <script src="/frontEnd/js/newTrip.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
 </body>

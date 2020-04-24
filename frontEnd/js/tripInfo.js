@@ -7,6 +7,11 @@ var langCode;
 var phraseList= new Array();
 var listOfPhrases = {'phrases' : phraseList};
 
+var translateList = new Array();
+var listOfTranslated = {'translated': translateList};
+
+var destination_language_code = "";
+
 //       TEMPORARY CODE
 // ****************************
 
@@ -15,7 +20,7 @@ phraseList.push({name: "Where is my hotel?"});
 phraseList.push({name: "Where is the airport?"});
 phraseList.push({name: "Where is a resturaunt?"});
 phraseList.push({name: "Hi, how are you?"});
-phraseList.push({name: "I dont speak your language?"});
+phraseList.push({name: "I don't speak your language."});
 phraseList.push({name: "How much does this cost?"});
 phraseList.push({name: "What time is it?"});
 
@@ -27,7 +32,6 @@ function repopulateListByName(listName)
     document.getElementById(listName + "-list").innerHTML = "";
     
     var listVals = listOfLists[listName];
-    console.log(listVals)
     for (var i = 0; i < listVals.length; ++i)
     {
         // create element using item
@@ -207,6 +211,51 @@ function showEditableView (eve)
     
 }
 
+var newTripNumber = 0
+
+function createNewList()
+{
+    var newListName = "New List " + newTripNumber;
+    ++newTripNumber
+    var niceName = newListName.toLowerCase().replace(/\s+/g, '')
+    listOfLists[niceName] = {}
+    // create the list view
+    createListView(newListName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
+
+    // Show editable view with the new list
+    darkenBackground()
+    // set the current table id
+    currentTable = niceName;
+    // get the editable view to be showed
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    var listView = document.getElementById(niceName)
+
+    repopulateCenterListByName(niceName);
+
+
+    // Set appropriate colors and values
+    var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
+    var color = getComputedStyle(listView, null).getPropertyValue("color");
+    listView.getElementsByTagName("h2")[0].innerHTML = "New Trip"
+    editableView.getElementsByTagName("h2")[0].innerHTML = "New Trip";
+    editableView.style.backgroundColor = bgcolor;
+    editableView.style.color = color;
+
+    editableView.style.display = 'flex';
+}
+
+function deleteList()
+{
+    delete listOfLists[currentTable]
+    document.getElementById(currentTable).parentElement.style.display = 'none'
+
+    var editableView = document.getElementById('editable-list-view');
+    editableView.style.display = 'none'
+    lightenBackground()
+}
+
+
 // Closes the editable list view in the center
 function closeEditableView ()
 {
@@ -230,6 +279,7 @@ function closeEditableView ()
     }
     else {
         
+        console.log(currentTable)
         listOfLists[currentTable] = newList;
         
         // repopulate the appropriate table
@@ -248,41 +298,41 @@ function closeEditableView ()
     lightenBackground();
 }
 
-
-
-// Darken the background when opening up a card
-function darkenBackground()
-{
-    var darkener = document.getElementById("darkener");
-    darkener.style.opacity = 0.8;
-    darkener.hidden = false;
-    this.document.getElementById('darkener').classList.toggle('unclickable');
-}
-
-// lighten the background again
-function lightenBackground()
-{
-    var darkener = document.getElementById("darkener");
-    darkener.style.opacity = 0;
-    darkener.hidden = true;
-    this.document.getElementById('darkener').classList.toggle('unclickable');
-}
-
 function createListView(listName, bgcolor)
 {
     var viewDiv = document.createElement('div');
+    var viewDivForList = document.createElement('div');
     viewDiv.className = "list-view";
-    viewDiv.id = listName.toLowerCase();
-    viewDiv.addEventListener("click", showEditableView);
+
+    viewDivForList = document.createElement('div');
+    viewDivForList.addEventListener("click", showEditableView);
+
+    viewDivForList.id = listName.toLowerCase().replace(/\s+/g, '');
+
+    viewDivForList.classList.toggle('view-div-list');
+
+    // Add edit button
+    var editButton = document.createElement('i');
+    editButton.classList.add("far", "fa-edit", "list-edit-button")
+    // Add heading
     var heading = document.createElement('h2');
     heading.className = "list-heading";
     heading.innerHTML = listName;
+    // Add list
     var list = document.createElement('ul');
-    list.id = listName.toLowerCase() + "-list";
-    
-    viewDiv.appendChild(heading);
-    viewDiv.appendChild(list);
-    viewDiv.style.backgroundColor = bgcolor;
+    list.id = listName.toLowerCase().replace(/\s+/g, '') + "-list";
+    // Add hover message
+    var hoverMessage = document.createElement('p');
+    hoverMessage.classList.add("hover-message");    
+    hoverMessage.innerHTML = "<i class=\"fas fa-hand-pointer\" style=\"color:white; font-size: 32px;\"></i><br>Click to Edit";
+
+    viewDivForList.appendChild(heading);
+    viewDivForList.appendChild(list);
+    viewDivForList.appendChild(editButton);
+    viewDiv.appendChild(viewDivForList);
+    viewDiv.appendChild(hoverMessage);
+
+    viewDivForList.style.backgroundColor = bgcolor;
     document.getElementById("list-container").appendChild(viewDiv); 
 }
 
@@ -306,7 +356,6 @@ function loadData()
         if (this.readyState == 4 && this.status == 200)
         {
             var res = JSON.parse(xhttp.response);
-            console.log(res);
             var keyList = Object.keys(res);
             
             for (var i = 0; i < keyList.length; ++i)
@@ -317,9 +366,14 @@ function loadData()
             
             // Populate all the lists with the data
             repopulateAllLists();
+
+            checkIfEverythingDone();
         }
     };
+    var numDays = this.sessionStorage.getItem('day_diff');
     xhttp.open("GET", "default-lists", true);
+    // here we need to send this to the backend to get default lists for different number of days
+    xhttp.setRequestHeader("numdays", numDays);
     xhttp.send();
     
 }
@@ -343,9 +397,11 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
         document.getElementById('exchange-rate-label').innerHTML = "1 " +  
             JSON.stringify(source_currency_code).replace(/\"/g, "") + " = " + exchangeRate + " "+ 
             JSON.stringify(destination_currency_code).replace(/\"/g, "");
+        checkIfEverythingDone();
     })
     .catch(err => {
         console.log(err);
+        checkIfEverythingDone();
     });
 
 }
@@ -355,6 +411,7 @@ function tripTimeDetails(data)
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
 
+    //get number of days for travel
     if (day_diff == 1){ var day_text = "day"}
     else {var day_text = "days"}
     
@@ -381,14 +438,25 @@ function tripTimeDetails(data)
     var depart_hour_array = depart_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
-    if (depart_hour_array[0] > 12)
+    if (depart_hour_array[0] >= 12)
     {
+        console.log(depart_hour_array[0]);
         AM_PM = "pm";
-        depart_hour_array[0] = depart_hour_array[0]-12;
+        if (depart_hour_array[0] > 12)
+        {
+            depart_hour_array[0] = depart_hour_array[0] - 12;
+        }
+        
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
     else {
         AM_PM = "am";
+
+        if (depart_hour_array[0] == 0)
+        {
+            depart_hour_array[0] = depart_hour_array[0] + 12;
+        }
+
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
 
@@ -415,19 +483,28 @@ function tripTimeDetails(data)
     var arrival_hour_array = arrival_time.split(":");
     var AM_PM = "";
     //adjust time to standard form instead of military
-    if (arrival_hour_array[0] > 12)
+    if (arrival_hour_array[0] >= 12)
     {
         AM_PM = "pm";
-        arrival_hour_array[0] = arrival_hour_array[0]-12;
+        if (arrival_hour_array[0] > 12)
+        {
+            arrival_hour_array[0] = arrival_hour_array[0]-12;
+        }
+        
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
     else {
         AM_PM = "am";
+
+        if (arrival_hour_array[0] == 0)
+        {
+            arrival_hour_array[0] = arrival_hour_array[0] + 12;
+        }
+
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
 
     document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination Local)."
-
 }
 
 
@@ -456,7 +533,8 @@ function loadFlightData()
         
         var source_country = JSON.stringify(data.name).replace(/\"/g, "");
         var source_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
-        
+        checkIfEverythingDone();
+
         //grab destination country metadata
         return fetch(restCountryAPI + destination_countryCode)
         .then(response => {
@@ -464,9 +542,11 @@ function loadFlightData()
         })
         .then(data => {
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
+            trySettingWeatherData(destination_city, destination_country);
+
             var destination_currency = JSON.stringify(data.currencies[0].code).replace(/\"/g, "");
-
-
+            destination_language_code = JSON.stringify(data.languages[0].iso639_1).replace(/\"/g, "");
+            console.log(destination_language_code);
             currencyExchangeRate(source_currency,destination_currency);
 
             //populate elements for user
@@ -476,9 +556,17 @@ function loadFlightData()
              //calls functions 
             updateLanguage(destination_country); //destination
             updateTimeZone(source_country, destination_country); // source, destination
-            
+            checkIfEverythingDone();
 
+        })
+        .catch(err => {
+            console.log(err);
+            checkIfEverythingDone();
         });
+    })
+    .catch(err => {
+        console.log(err);
+        checkIfEverythingDone();
     });
 
 }
@@ -486,6 +574,7 @@ function loadFlightData()
 // Called when window is loaded -- MAIN
 window.onload = function()
 {
+    this.showLoadingScreen()
     loadData();
     populatePhraseList();
     // hide the center view
@@ -620,6 +709,7 @@ function createEditablePhraseItem(itemVal)
 
 function updateLanguage(name_of_country) {
     var request = new XMLHttpRequest();
+
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
     request.onload = function() {
@@ -648,33 +738,8 @@ function updateLanguage(name_of_country) {
     }
 }
 
-function updateTimeZone(source_name_of_sCountry, dest_name_of_country) {
-
-    //API key: 4knCwWVfukuKzDHuPEiP7iNDmHqNM3
-    //https://www.amdoren.com/time-zone-api/
-    // fetch("https://www.amdoren.com/time-zone-api/", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-    //         "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-    //        "content-type": "application/x-www-form-urlencoded"
-    //     },
-    //     "body": {
-    //         "source": "en", 
-    //         "q": text.toString(),
-    //         "target": langCode.toString()
-    //     }
-    // })
-    // .then(response => {
-    //    console.log(text + " Translated: " + response);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
-
-
-
-
+function updateTimeZone(source_name_of_sCountry, dest_name_of_country) 
+{
     var request = new XMLHttpRequest();
     request.open('GET', "https://restcountries.eu/rest/v2/");
     request.send();
@@ -829,7 +894,7 @@ function showTranslationsEditable() {
     var editableView = document.getElementById('editable-list-view');
     var editableList = document.getElementById('editable-list');
     // get the right list from tableName
-    var listData = listOfPhrases["phrases"];
+    var listData = listOfTranslated["translated"]; 
     // get the listView
     var listView = document.getElementById(listName);
     
@@ -848,43 +913,133 @@ function showTranslationsEditable() {
     // set addNewElement action
     
     editableView.style.display = 'flex';
-        
+    var closeView = document.getElementById("close-editable-button").addEventListener('click', console.log("Close Was Pressed!!!!!!!!!!!!!!"));
 }
 
-function populateTranslations() {
+
+//called when view translations is pressed - THIS IS THE FUNCTION WHICH TRANLSATES EVERYTHING
+function populateTranslations() 
+{
+    //showLoadingScreen(); 
+
     document.getElementById("translate-list").innerHTML = "";
-    
     var listVals = listOfPhrases["phrases"];
     
+    
+    var url_space = "%2C%20"
+    var url_setLang = "&target="+destination_language_code;
+    console.log(destination_language_code);
+    
+    //populating empty array with dummy values
     for (var i = 0; i < listVals.length; ++i)
     {
-        // create element using item
+        translateList.push({name: "Where is the restroom?", translated: false});
+    }
+
+    // iterate throught phrases, translating one at a time
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        //create element using item
+     
         var li = document.createElement("li");
         li.classList.toggle("list-view-item");
-        li.innerHTML = listVals[i].name;
         
+        //parse phrase and convert to url
+        var api_url = "source=en&q=";
+        console.log(listVals[i].name);
+        phrase = listVals[i].name.split(" ");
+        // console.log(phrase);
+        for (var j = 0; j < phrase.length; ++j)
+        {
+            api_url = api_url + phrase[j] + url_space;
+        }
+        //run API calls
+
+        // var data = "source=en&q=Hello%2C%20world!&target=es";
+        var data = api_url + url_setLang;
+        // console.log(data);
+    
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
         
-        // add element to toiletry list
-        document.getElementById("translate-list").appendChild(li);
+        xhr.addEventListener("readystatechange", function () 
+        {
+            //place translated phrase in translated phrases array
+            if (this.readyState === this.DONE) {
+                var translatedPhrase = JSON.parse(this.responseText).data.translations[0].translatedText;
+                
+                translateList[i] = {name: translatedPhrase, translated: true};
+
+                checkIfTranslationsDone()
+            }
+        });
+        
+        xhr.open("POST", "https://google-translate1.p.rapidapi.com/language/translate/v2", false);
+        xhr.setRequestHeader("x-rapidapi-host", "google-translate1.p.rapidapi.com");
+        xhr.setRequestHeader("x-rapidapi-key", "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb");
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        
+        xhr.send(data);
     }
 
 }
 
+function checkIfTranslationsDone()
+{
+    for (var i = 0; i < translateList.length(); ++i)
+        if (!translateList[i].translated)
+            return
+    // means all translations are ready
+    console.log(translateList)
+}
+
+
+function repopulateTranslationList(listName)
+{
+    // empty list
+    document.getElementById("editable-list").innerHTML = "";
+    
+    var listVals = listOfTranslated["translated"];
+    
+    for (var i = 0; i < listVals.length; ++i)
+    {
+        var li = createEditablePhraseItem(listVals[i]);
+        
+        // add element to toiletry list
+        document.getElementById("editable-list").appendChild(li);
+    }
+}
+
+
 function openTranslationWindow(){
     //document.getElementById('translate').style.display = "block";
-    populateTranslations();
+
+    populateTranslations(); //translate phrases
+    repopulateTranslationList("translate");
+
     showTranslationsEditable();
-    translateText("Hello");
+    // translateText("Hello");
     
 }
 
 function exportTranslatedPhrases() {
+    populateTranslations();
     var commonPhrases = listOfPhrases["phrases"];
-    var translatedPhrases = listOfPhrases["phrases"]; //needs translation
+    var translatedPhrases = listOfTranslated["translated"]; 
+
+    for (var i = 0; i < commonPhrases.length; i++) {
+        console.log("Phrase" + i + ": " + commonPhrases[i].name);
+    }
+    for (var i = 0; i < commonPhrases.length; i++) {
+        console.log("Translation" + i + ": " + translatedPhrases[i].name);
+    }
+
+
 
     //combining into one list
+
     var exportList = new Array();
-    for (var i = 0; i < commonPhrases.length; i += 2) {
+    for (var i = 0; i < commonPhrases.length; i++) {
         var row = new Array();
         row.push("\"" + commonPhrases[i].name + "\"");
         row.push("\"" + translatedPhrases[i].name + "\"");
@@ -905,28 +1060,29 @@ function exportTranslatedPhrases() {
     hiddenElement.click();
 }
 
-function translateText(text){
-    fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
-        "method": "POST",
-        "headers": {
-            "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-           "content-type": "application/x-www-form-urlencoded"
-        },
-        "body": {
-            "source": "en", 
-            "q": text.toString(),
-            "target": langCode.toString()
-        }
-    })
-    .then(response => {
-       console.log(text + " Translated: " + response);
-    })
-    .catch(err => {
-        console.log(err);
-    });
-    
-}
+//BAD - do not use
+// function translateText(text){
+//     fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
+//         "method": "POST",
+//         "headers": {
+//             "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+//             "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+//            "content-type": "application/x-www-form-urlencoded"
+//         },
+//         "body": {
+//             "source": "en", 
+//             "q": text.toString(),
+//             "target": langCode.toString()
+//         }
+//     })
+//     .then(response => {
+//        console.log(text + " Translated: " + response);
+//        //translateList.push({name: response.toString()});
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });  
+// }
 
 function saveTrip() {
     var source = document.getElementById("source").textContent;
@@ -942,5 +1098,15 @@ function saveTrip() {
     //send old trip to database here
     console.log("Need to send this to old trips database: " + oldTrip);
 }
+
+// Wait for everything to be ready and then hide the loading screen
+var everythingReadyCounter = 0;
+function checkIfEverythingDone()
+{
+    ++everythingReadyCounter;
+    if (everythingReadyCounter == 4)
+        hideLoadingScreen();
+}
+
 
 

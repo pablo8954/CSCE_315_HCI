@@ -6,6 +6,9 @@
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/tripInfoStyles.css" rel="stylesheet" type="text/css">
+    <link href="/frontEnd/css/weatherWidgetStyles.css" rel="stylesheet" type="text/css">
+    <link href="/frontEnd/css/loader.css" rel="stylesheet" type="text/css">
+
     <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
 
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
@@ -15,10 +18,14 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/frontEnd/js/apiCalls.js"></script>
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+    <script> const client = stitch.Stitch.initializeDefaultAppClient('verify_user-kubqy');</script>
 </head>
 
 <body spellcheck="false" class="main-body">
     <div id="darkener"></div>
+    <div id="loader">   <div class="lds-ring"><div></div><div></div><div></div><div></div></div>   </div>
+
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
@@ -103,17 +110,18 @@
 
         </div>
     </header>
-
 <div class="page-container">
+    <button class="button-save-info" id="button-save-info" onclick = saveTrip();><i class="far fa-save"></i>  Save Trip</button>  
+
     
     <div class="info-container">
 
-        <div class="row"> 
+        <div class="row" style="text-align: center"> 
             <label class="s-label">Source: </label>
             <label class ="place-label" id="source">College Station, USA</label>
         </div>
        
-        <div class="row"> 
+        <div class="row" style="text-align: center"> 
             <label class="s-label">Destination: </label>
             <label class ="place-label" id="destination">Middlefart, Denmark</label>
         </div>
@@ -155,42 +163,91 @@
 
         <label for="exchangeRate" class="big-label">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
-
-        <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
-            <div class="row">
-                <!--Needs to force a change in weather when clicked-->
-                <button class="button-change-info" id="button-change-info">1 Day</button>
-                <button class="button-change-info" id="button-change-info">3 Day</button>
-                <button class="button-change-info" id="button-change-info">5 Day</button>
-            </div>
-            <img src="/frontEnd/img/weather-temp.png" class="weather-image" style="margin-top:40px">
+        <label for="weatherForecast" class="big-label">Weather Forecast</label>
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="weather-unit-switch" checked>
+            <label class="onoffswitch-label" for="weather-unit-switch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
         </div>
-        <button class="button-save-info" id="button-save-info" onclick = saveTrip();><i class="far fa-save"></i>  Save Trip</button>
+
+        <article class="widget">
+            <div class="weatherInfo" id="weather-1">
+                <div class="temperature"><span id="temp-1">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-1">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-1">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-2">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-2">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-2">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-3">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-3">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-3">1st Jan</div>
+            <div class="weatherInfo">
+                <div class="temperature"><span id="temp-4">25&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-4">CLOUDY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-4">1st Jan</div>
+            <div class="weatherInfo" id="weather-5">
+            
+                <div class="temperature"><span id="temp-5">32&deg;</span></div>
+                <div class="description">    
+                <div class="weatherCondition" id="weather-cond-5">SUNNY</div>    
+                <div class="place">New York, New York</div>
+                </div>
+            </div>
+            <div class="date" id="date-5">2nd Jan</div>
+        </article>          
     </div>
+    
         
+    
+
+    <div class="list-container" id="list-container">
+        <button id="create-list-button" onclick="createNewList()">Create List &nbsp <i class="fas fa-plus-circle" style="font-size: 22px; color: white;">  </i></button>
+    </div>
+    </div>
+    
+    
     <div class="center-list-view" id="editable-list-view">
         <button id="close-editable-button"></button>
 
         <h2 contenteditable=true class="center-list-heading"></h2>
+        <button id="delete-list-button" onclick="deleteList()">Delete List</button>
+
         <div class="add-container">
             <input type="text" placeholder="Enter new item" id="add-input">
             <button id="add-button">Add</button>
         </div>
+
         <ul class="center-list" id="editable-list"></ul>
     </div>
-
-    <div class="list-container" id="list-container">
-
-    </div>
-    </div>
-
-    </div>
+    
 
     <div class="footer">
         <!-- Fill this in later -->
     </div>
     <script src="/frontEnd/js/responsiveVoice.js"></script>
+    <script src="/frontEnd/js/tripInfoViews.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
+    <script src="/frontEnd/js/weather.js"></script>
     <script src="/frontEnd/js/tripInfo.js"></script>
 
 </body>

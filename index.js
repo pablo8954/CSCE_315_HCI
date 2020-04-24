@@ -1,5 +1,8 @@
-var express = require('express'); // Get the express module
-var app = express(); // Start the app
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+app.use(bodyParser.json());
 var path = require('path');
 var mongodb = require('mongodb');
 var mongourl = 'mongodb+srv://mongoaccessaccount:PackAdvisor123@packadvisordatabase-hp7rv.gcp.mongodb.net/test?retryWrites=true&w=majority';
@@ -35,6 +38,7 @@ async function setListOfDefaultLists()
     });
 }
 
+
 dbSetup();
 
 app.use('/frontEnd', express.static(__dirname + '/frontEnd'));
@@ -57,9 +61,39 @@ app.get('/tripInfo.html', function (req, res)
 
 app.get('/default-lists', function (req, res)
 {
-    res.json(listOfLists);
+    // let 5 days be default duration of journey
+    var numDays = 5;
+    if (req.headers.numdays)
+    {
+        numDays = parseInt(req.headers.numdays);
+    }
+
+    res.json(getDefaultLists(numDays));
 });
 
+function getDefaultLists(numDays)
+{
+    if (numDays == 5)
+        return listOfLists;
+    var toReturn = JSON.parse(JSON.stringify(listOfLists));
+
+    var normalizedDays = Math.min(numDays, 10);
+
+    // Do some number of days specific stuff here for the lists
+    toReturn["Clothing"][0].name = normalizedDays + " " + toReturn["Clothing"][0].name;
+    toReturn["Clothing"][1].name = normalizedDays + " " + toReturn["Clothing"][1].name
+    toReturn["Clothing"][2].name = (normalizedDays + 1) + " " + toReturn["Clothing"][2].name
+    toReturn["Clothing"][3].name = normalizedDays + " " + toReturn["Clothing"][3].name
+    toReturn["Clothing"][4].name = Math.ceil(normalizedDays / 2) + " " + toReturn["Clothing"][4].name
+
+    return toReturn;
+}
+
+app.post('/newtripdata', function (req, res)
+{
+   console.log(req.body)
+  res.send("success")
+});
 
 let port = process.env.PORT;
 if (port == null || port == "") 

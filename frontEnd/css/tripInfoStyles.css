@@ -44,6 +44,7 @@
 
 .center-list-heading {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .center-list {
@@ -58,6 +59,23 @@
 
 .center-list:hover {
   overflow: auto;
+}
+
+#delete-list-button {
+  background-color: #ff6666;
+  color: #fffafa;
+  padding: 10px 15px;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-family: "Helvetica Neue", sans-serif;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#delete-list-button:hover {
+  filter: brightness(50%);
 }
 
 .add-container {
@@ -223,28 +241,62 @@
 }
 
 .page-container {
-  display: relative;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  height: 100%;
 }
 
 .info-container {
   display: flex;
   flex-direction: column;
   width: 45vw;
-  float: left;
-  justify-content: center;
-  align-items: center;
-  margin-top: 150px;
-}
-
-.list-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  float: right;
-  width: 50vw;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+  height: 100%;
+}
+
+.list-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  height: 100%;
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+@media screen and (max-width: 1000px) {
+  .info-container {
+    width: 100%;
+  }
+
+  .list-container {
+    width: 100vw;
+    margin-left: 0;
+    margin-top: 50px;
+  }
+}
+#create-list-button {
+  position: absolute;
+  top: -25px;
+  right: 100px;
+  border-radius: 10px;
+  font-size: 22px;
+  background-color: #727272;
+  padding: 10px 15px;
+  border: none;
+  color: #fffafa;
+  cursor: pointer;
+}
+
+#create-list-button:hover {
+  filter: brightness(50%);
 }
 
 .list-view {
@@ -258,6 +310,34 @@
   margin-right: 50px;
   font-family: "Helvetica Neue", sans-serif;
   overflow: hidden;
+  position: relative;
+}
+.list-view .list-edit-button {
+  color: #fffafa;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 22px;
+  pointer-events: none;
+}
+.list-view .hover-message {
+  display: none;
+  color: #fffafa;
+  font-size: 32px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.view-div-list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .list-view h2 {
@@ -266,10 +346,13 @@
   pointer-events: none;
 }
 
-.list-view:hover {
-  filter: brightness(50%);
+.list-view:hover .view-div-list {
+  filter: brightness(20%);
   cursor: pointer;
   overflow: auto;
+}
+.list-view:hover .hover-message {
+  display: block;
 }
 
 .list-view ul {
@@ -300,6 +383,11 @@
   margin: 10px 0;
 }
 
+#phrases {
+  background-color: grey;
+  width: 500px;
+}
+
 #medicines {
   background-color: #e18300;
   color: #fffafa;
@@ -312,18 +400,6 @@
 
 #clothes {
   background-color: #008dc8;
-  color: #fffafa;
-}
-
-#phrases{
-  background-color: grey;
-  width: 500px;
-  color: #fffafa;
-}
-
-#translate{
-  background-color: grey;
-  width: 500px;
   color: #fffafa;
 }
 
@@ -401,6 +477,10 @@
 }
 
 .button-save-info {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #00577b;
   border: none;
   color: #fffafa;
@@ -414,6 +494,7 @@
   /* Safari */
   transition-duration: 0.4s;
   border-radius: 10px;
+  margin: 0 auto;
 }
 
 .button-save-info:hover {
@@ -542,9 +623,5 @@
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
 }
-
-
-
-
 
 /*# sourceMappingURL=tripInfoStyles.css.map */

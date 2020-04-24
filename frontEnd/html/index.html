@@ -9,13 +9,19 @@
     <link rel="shortcut icon" href="/frontEnd/img/icon.PNG" type="image/x-icon">
     <link href="/frontEnd/css/globalStyles.css" rel="stylesheet" type="text/css">
     <link href="/frontEnd/css/mainStyles.css" rel="stylesheet" type="text/css">
+
     <script src="https://kit.fontawesome.com/92048f5a7b.js" crossorigin="anonymous"></script>
     
+
     <!-- Google API Stuff -->
     <meta name="google-signin-client_id" content="564402176393-lfncrort31spid88ps1p5711o394qq3i.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+    <script> const client = stitch.Stitch.initializeDefaultAppClient('verify_user-kubqy');</script>
     <script src="/frontEnd/js/apiCalls.js"></script>
+
+
 </head>
 
 <body class="main-body">
@@ -98,11 +104,13 @@
         </div>
     </header>
 
-    <div class="photos-container">
     <div class=heading-container>
         <h1 class="heading">Pack Advisor</h1>
-        <!-- <button class="center-button"></button> -->
+        <!-- <p class="subheading"></p> -->
+        <a class="center-button" href="newTrip.html">Start Packing</a>
     </div>
+    <div class="photos-container">
+
     <div class="photo-organizer">
         <div class="photo-outer"><img src="/frontend/img/places/eiffel.jpg" style="width:100%"></div>
         <div class="photo-outer"><img src="/frontend/img/places/florence.jpg" style="width:100%"></div>

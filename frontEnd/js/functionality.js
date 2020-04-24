@@ -126,20 +126,20 @@ function showSettings()
 function showOldTrips()
 {
     // Show Old Trips and hide Settings
-
+    
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
-
-
+    
+    
     //TODO: Get old trips from database here... should be in an array
     var oldTrips = new Array();
     oldTrips.push(["Houston", "Tocumen", "5/7/2019",]);
     oldTrips.push(["College Station", "New York City", "7/12/2017"]);
     
     var numTrips = oldTrips.length;
-
+    
     toggleSidebar();
-
+    
     for(var i = 0; i < numTrips; i++) {
         var viewDiv = document.createElement('li');
         var icon = document.createElement('i');
@@ -148,10 +148,10 @@ function showOldTrips()
         viewDiv.appendChild(icon);
         viewDiv.innerText = oldTrips[i][0] + " to " + oldTrips[i][1] + " on " +  oldTrips[i][2];
         document.getElementsByClassName("old-trips-list")[0].appendChild(viewDiv);
-
+        
         
     }
-
+    
     document.removeEventListener(transEndEventName, showOldTrips);
 }
 
@@ -164,13 +164,13 @@ function toggleSidebar()
 function signout(){
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
-
+    
     //set image and username to default
     var name = document.getElementById('name-label')
     name.innerHTML = "";
     var image = document.getElementById('profile-image');
     image.src = "/frontEnd/img/temp/person.png";
-
+    
     //replace buttons
     document.getElementById("google-signin-button").style.display="block";
     document.getElementById("logout-button").style.display="none";
@@ -179,13 +179,16 @@ function signout(){
 var rangeslider = document.getElementById("sliderRange"); 
 var output = document.getElementById("demo"); 
 output.innerHTML = rangeslider.value; 
-  
-rangeslider.oninput = function() { 
-  output.innerHTML = this.value; 
-  var val = this.value;
-  var numString = val.toString();
-  var zoomLevel = numString + "%";
-  document.body.style.zoom = zoomLevel;
+
+rangeslider.oninput = function() 
+{
+    this.style.background = 'linear-gradient(to right, #FFCE00 0%, #FFCE00 ' + (this.value - 50) + '%, #fff ' + (this.value - 50) + '%, white 100%)'
+    
+    output.innerHTML = this.value; 
+    var val = this.value;
+    var numString = val.toString();
+    var zoomLevel = numString + "%";
+    document.body.style.zoom = zoomLevel;
 } 
 
 function toggleTextToSpeech()
@@ -199,10 +202,21 @@ function toggleTextToSpeech()
     {
         turnOffSpeakSelectedText();
     }
-
+    
     sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
 }
 
+function showLoadingScreen()
+{
+    var loader = document.getElementById("loader");
+    loader.style.display = 'flex';
+}
+
+function hideLoadingScreen()
+{
+    var loader = document.getElementById("loader");
+    loader.style.display = 'none';
+}
 
 function popupFunction() {
     var popup = document.getElementById("myPopup");
