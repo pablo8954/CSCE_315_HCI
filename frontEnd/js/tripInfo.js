@@ -1,7 +1,8 @@
 var listOfLists = {};
 var languageChoice;
 var listColors = ["#993333", "#008dc8", "#0f9d58", "#e18300"];
-
+var sCountry;
+var dCountry;
 var langCode;
 
 var phraseList= new Array();
@@ -545,6 +546,10 @@ function loadFlightData()
     var source_countryCode = flight_data[0].departure.airport.countryCode;
     var destination_countryCode = flight_data[0].arrival.airport.countryCode;
     
+    if(source_countryCode == destination_countryCode) {
+        hideStuff();
+    }
+
     var restCountryAPI = 'https://restcountries.eu/rest/v2/alpha/';
     
     //grab source country metadata
@@ -1203,5 +1208,15 @@ function checkIfEverythingDone()
     hideLoadingScreen();
 }
 
+function hideStuff() {
+    console.log("hiding stuff");
+    document.getElementById("exchange-rate-label").style.display = 'none';
+    document.getElementById("exchange-rate").style.display = 'none';
 
+    document.getElementById("power-label").style.display = 'none';
+    document.getElementById("power-adapter-label").style.display = 'none';
+    document.getElementById("power-voltage-label").style.display = 'none';
+    document.getElementById("power-frequency-label").style.display = 'none';
+
+}
 
