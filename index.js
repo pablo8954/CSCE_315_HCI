@@ -131,7 +131,7 @@ app.get('/outletdata', function (req, res)
     var outletdataholder = {}
     mongoClient.db('countries').collection("outletlookup").find({Country: JSON.stringify(req.headers.country).replace(/\"/g, "")}).toArray(function(err, result1) {
         if (err) throw err;
-        if(result1 != null)
+        if(result1[0] != undefined)
         {
             res.json(result1)
         }

@@ -1,4 +1,3 @@
-
 // Variables to keep track of
 var transEndEventName = ('WebkitTransition' in document.documentElement.style) ? 'webkitTransitionEnd' : 'transitionend';
 
@@ -21,7 +20,7 @@ else
 {
     darkMode = false;
     document.getElementById('dark-mode-checkbox').checked = true;
-    toggleTheme();  
+    toggleTheme();
 }
 
 var textToSpeech = false;
@@ -38,34 +37,35 @@ if (textToSpeech)
     }
 }
 
-
 var colorBlindness = false;
 
 function oldTripsClicked()
 {
     var sidebar = document.getElementById("sidebar");
     // If sidebar is open, collapse it
-    if (!sidebar.classList.contains("collapsed"))
+    if (! sidebar.classList.contains("collapsed"))
     {
         toggleSidebar();
         if (document.getElementById("old-trips-container").style.display == "flex")
-        return;
         
-        document.addEventListener(transEndEventName , showOldTrips);
+            return;
+        
+
+        document.addEventListener(transEndEventName, showOldTrips);
         return;
     }
-    
-    showOldTrips();
-    
+
     // TODO: Here we will get the information about the saved trips
+    oldTrips = new Array();
+    showOldTrips(oldTrips); // do this inside the fetch result
 }
 
 function toggleTheme()
 {
-    darkMode = !darkMode;
+    darkMode = ! darkMode;
     sessionStorage.setItem('dark-mode', JSON.stringify(darkMode));
     var toCheck = sessionStorage.getItem('dark-mode');
-    console.log ('set to ' + darkMode);
+    console.log('set to ' + darkMode);
     console.log(typeof darkMode);
     // ** To change **
     // main-body
@@ -73,7 +73,7 @@ function toggleTheme()
     // main-nav
     // big-label
     // small-label
-    
+
     // Toggle all dark themed classes
     toggleDarkThemeOfClass("main-body", "dark");
     toggleDarkThemeOfClass("main-nav-link", "dark-main-nav");
@@ -85,7 +85,7 @@ function toggleTheme()
 function toggleDarkThemeOfClass(className, darkClassName)
 {
     var toChange = document.getElementsByClassName(className);
-    for (var i = 0; i < toChange.length; ++i)
+    for (var i = 0; i < toChange.length; ++ i)
     {
         toChange[i].classList.toggle(darkClassName);
     }
@@ -95,21 +95,23 @@ function settingsClicked()
 {
     var sidebar = document.getElementById("sidebar");
     // If sidebar is open, collapse it
-    if (!sidebar.classList.contains("collapsed"))
+    if (! sidebar.classList.contains("collapsed"))
     {
         toggleSidebar();
-        
+
         if (document.getElementById("settings-container").style.display == "flex")
-        return;
         
-        document.addEventListener(transEndEventName , showSettings);
+            return;
+        
+
+        document.addEventListener(transEndEventName, showSettings);
         return;
     }
-    
+
     showSettings();
-    
+
     // TODO: Here we will get the information about the person/settings
-    
+
 }
 
 function showSettings()
@@ -117,41 +119,34 @@ function showSettings()
     // Hide Old Trips and show Settings
     document.getElementById("settings-container").style.display = 'flex';
     document.getElementById("old-trips-container").style.display = 'none';
-    
+
     // Open the sidebar again
     toggleSidebar();
     document.removeEventListener(transEndEventName, showSettings);
 }
 
-function showOldTrips()
+function showOldTrips(oldTrips)
 {
     // Show Old Trips and hide Settings
-    
+
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
-    
-    
-    //TODO: Get old trips from database here... should be in an array
-    var oldTrips = new Array();
-    oldTrips.push(["Houston", "Tocumen", "5/7/2019",]);
-    oldTrips.push(["College Station", "New York City", "7/12/2017"]);
-    
+
     var numTrips = oldTrips.length;
-    
+
     toggleSidebar();
-    
-    for(var i = 0; i < numTrips; i++) {
+
+    for (var i = 0; i < numTrips; i++)
+    {
         var viewDiv = document.createElement('li');
         var icon = document.createElement('i');
         icon.classList.toggle('fas');
         icon.classList.toggle('fa-plane');
         viewDiv.appendChild(icon);
-        viewDiv.innerText = oldTrips[i][0] + " to " + oldTrips[i][1] + " on " +  oldTrips[i][2];
+        viewDiv.innerText = oldTrips[i][0] + " to " + oldTrips[i][1] + " on " + oldTrips[i][2];
         document.getElementsByClassName("old-trips-list")[0].appendChild(viewDiv);
-        
-        
     }
-    
+
     document.removeEventListener(transEndEventName, showOldTrips);
 }
 
@@ -161,39 +156,44 @@ function toggleSidebar()
 }
 
 // Google Sign out
-function signout(){
+function signout()
+{
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
-    
-    //set image and username to default
+
+    // set image and username to default
     var name = document.getElementById('name-label')
     name.innerHTML = "";
     var image = document.getElementById('profile-image');
     image.src = "/frontEnd/img/temp/person.png";
-    
-    //replace buttons
-    document.getElementById("google-signin-button").style.display="block";
-    document.getElementById("logout-button").style.display="none";
+
+    // replace buttons
+    document.getElementById("google-signin-button").style.display = "block";
+    document.getElementById("logout-button").style.display = "none";
 }
 
-var rangeslider = document.getElementById("sliderRange"); 
-var output = document.getElementById("demo"); 
-output.innerHTML = rangeslider.value; 
+var rangeslider = document.getElementById("sliderRange");
+var output = document.getElementById("demo");
+output.innerHTML = rangeslider.value;
 
-rangeslider.oninput = function() 
+rangeslider.oninput = function ()
 {
-    this.style.background = 'linear-gradient(to right, #FFCE00 0%, #FFCE00 ' + (this.value - 50) + '%, #fff ' + (this.value - 50) + '%, white 100%)'
-    
-    output.innerHTML = this.value; 
+    this.style.background = 'linear-gradient(to right, #FFCE00 0%, #FFCE00 ' + (
+        this.value - 50
+    ) + '%, #fff ' + (
+        this.value - 50
+    ) + '%, white 100%)'
+
+    output.innerHTML = this.value;
     var val = this.value;
     var numString = val.toString();
     var zoomLevel = numString + "%";
     document.body.style.zoom = zoomLevel;
-} 
+}
 
 function toggleTextToSpeech()
 {
-    textToSpeech = !textToSpeech;
+    textToSpeech = ! textToSpeech;
     if (textToSpeech)
     {
         turnOnSpeakSelectedText();
@@ -202,7 +202,7 @@ function toggleTextToSpeech()
     {
         turnOffSpeakSelectedText();
     }
-    
+
     sessionStorage.setItem('text-to-speech', JSON.stringify(textToSpeech));
 }
 
@@ -221,5 +221,5 @@ function hideLoadingScreen()
 function popupFunction() {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
-  }
+}
 

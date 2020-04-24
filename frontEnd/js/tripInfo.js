@@ -428,6 +428,9 @@ function tripTimeDetails_noTime(data)
 
 function tripTimeDetails(data)
 {
+    //TODO: adjust split to account for + and - 
+
+
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
     console.log("DAY DIFF");
@@ -460,9 +463,8 @@ function tripTimeDetails(data)
     
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var depart_time = depart_date_time[1];
-    depart_time = depart_time.split("-");
+    depart_time = depart_time.split("-"); //FIXME: account for + as well
     
-    var depart_timezone = depart_time[1];
     var depart_time = depart_time[0];
     
     var depart_hour_array = depart_time.split(":");
@@ -498,7 +500,7 @@ function tripTimeDetails(data)
     
     var arrival_date = arrival_date_time[0];
     
-    var arrival_data_array = arrival_date.split("-");
+    var arrival_data_array = arrival_date.split("-"); //FIXME: account for + as well
     
     var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
     console.log(arrival_date_phrase);
@@ -507,7 +509,13 @@ function tripTimeDetails(data)
     var arrival_time = arrival_date_time[1];
     arrival_time = arrival_time.split("-");
     
-    var arrival_timezone = arrival_time[1];
+    //TODO: compare arrival_timezone with departure_timezone
+    var depart_timezone = depart_time[1]; //TODO:
+    var arrival_timezone = arrival_time[1];//TODO: 
+
+
+
+
     var arrival_time = arrival_time[0];
     
     var arrival_hour_array = arrival_time.split(":");
@@ -1186,6 +1194,9 @@ function checkIfEverythingDone()
     ++everythingReadyCounter;
     if (everythingReadyCounter == 4)
     hideLoadingScreen();
+
+    // since everything is ready, send the trip information to backend
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
 }
 
 
