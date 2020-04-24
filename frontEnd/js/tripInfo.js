@@ -340,6 +340,23 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
 
 }
 
+
+function tripTimeDetails_noTime(data)
+{
+    var depart_date = JSON.stringify(data[0].departure.date).replace(/\"/g, "");
+    var return_date = JSON.stringify(data[0].returnDate).replace(/\"/g, "");
+
+    var depart_data_array = depart_date.split("-");
+    var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
+
+    var return_data_array = return_date.split("-");
+    var return_date_phrase = return_data_array[1]+ "/" + return_data_array[2] + "/" + return_data_array[0];
+
+    document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold();
+    document.getElementById("arrival-time").innerHTML = "You will be returning home on " + return_date_phrase.bold();
+}
+
+
 function tripTimeDetails(data)
 {
     //unpack & place date difference on page
@@ -353,6 +370,14 @@ function tripTimeDetails(data)
 
     //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
+
+    //if the input was done manually, only return the dates the user is leaving and returning
+    if (depart == -1)
+    {
+        tripTimeDetails_noTime(data);
+        return
+    }
+
     depart_date_time = depart.split(" ");
 
     var depart_date = depart_date_time[0];
@@ -438,7 +463,7 @@ function tripTimeDetails(data)
         arrival_time = arrival_hour_array[0] + ":" + arrival_hour_array[1] + " " + AM_PM;
     }
 
-    document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination Local)."
+    document.getElementById("arrival-time").innerHTML = "You will arrive on " + arrival_date_phrase.bold() + " at " + arrival_time.bold() + " (Destination's Local Time)."
 }
 
 
@@ -857,7 +882,6 @@ function populateTranslations()
     document.getElementById("translate-list").innerHTML = "";
     var listVals = listOfPhrases["phrases"];
     
-    
     var url_space = "%2C%20"
     var url_setLang = "&target="+destination_language_code;
     console.log(destination_language_code);
@@ -924,7 +948,8 @@ function populateTranslations()
 
 function checkIfTranslationsDone()
 {
-    for (var i = 0; i < translateList.length(); ++i)
+    //FIXME: translateList.length() - length is not a function
+    for (var i = 0; i < translateList.length; ++i)
         if (!translateList[i].translated)
             return
     // means all translations are ready
@@ -968,28 +993,28 @@ function exportTranslatedPhrases() {
     hiddenElement.click();
 }
 
-function translateText(text){
-    fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
-        "method": "POST",
-        "headers": {
-            "x-rapidapi-host": "google-translate1.p.rapidapi.com",
-            "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
-           "content-type": "application/x-www-form-urlencoded"
-        },
-        "body": {
-            "source": "en", 
-            "q": text.toString(),
-            "target": langCode.toString()
-        }
-    })
-    .then(response => {
-       console.log(text + " Translated: " + response);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// function translateText(text){
+//     fetch("https://google-translate1.p.rapidapi.com/language/translate/v2/", {
+//         "method": "POST",
+//         "headers": {
+//             "x-rapidapi-host": "google-translate1.p.rapidapi.com",
+//             "x-rapidapi-key": "74af4218f0msh230f6d471685153p1b4bc6jsn758dfbb4cccb",
+//            "content-type": "application/x-www-form-urlencoded"
+//         },
+//         "body": {
+//             "source": "en", 
+//             "q": text.toString(),
+//             "target": langCode.toString()
+//         }
+//     })
+//     .then(response => {
+//        console.log(text + " Translated: " + response);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
     
-}
+// }
 
 // Wait for everything to be ready and then hide the loading screen
 var everythingReadyCounter = 0;
