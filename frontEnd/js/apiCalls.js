@@ -1,4 +1,4 @@
-var email = ""
+var myemail = ""
 
 function onSignIn(googleUser)
 {
@@ -8,7 +8,7 @@ function onSignIn(googleUser)
     name.innerHTML = profile.getName();
     var image = document.getElementById('profile-image');
     image.src = profile.getImageUrl();
-    email = profile.getEmail()
+    myemail = profile.getEmail()
     // replace buttons
     document.getElementById("google-signin-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";

@@ -1089,7 +1089,7 @@ function checkIfEverythingDone()
     hideLoadingScreen();
 
     // since everything is ready, send the trip information to backend
-    sendTripInfo(JSON.parse(sessionStorage.getItem('data')), listOfLists)
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
 }
 
 

@@ -16,20 +16,21 @@ function sendCurrentFlightDataToBackend(tripbase)
     xhr.send(JSON.stringify(tripbase));
 }
 
-function sendTripInfo(data, lists)
+function sendTripInfo(data, listsToSave)
 {
     let tripbase = 
     {
+        email: myemail,
         departure_date: data[0].departure.date,
-        end_date: endDate,
-        source_city: sourceCity,
-        source_country: sourceCountry,
-        destination_city: destinationCity,
-        destination_country: destinationCountry,
+        end_date: data[0].returnDate,
+        source_city: data[0].departure.airport.municipalityName,
+        source_country: data[0].departure.airport.countryCode,
+        destination_city: data[0].arrival.airport.municipalityName,
+        destination_country: data[0].arrival.airport.countryCode,
         lists: listsToSave
     };
-
-    sendCurrentFlightDataToBackend(tripbase)
+    console.log(tripbase)
+    // sendCurrentFlightDataToBackend(tripbase)
 }
 
 function updateOldTripInfo()
