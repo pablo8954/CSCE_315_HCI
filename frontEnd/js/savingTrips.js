@@ -18,24 +18,48 @@ function sendCurrentFlightDataToBackend(tripbase)
 
 function sendTripInfo(data, listsToSave)
 {
+    if (!data)
+    {
+        console.log('works')
+        return false
+    }
+    if (myemail == "")
+        return false
     let tripbase = 
     {
         email: myemail,
-        departure_date: data[0].departure.date,
+        tripid: 1,
+        start_date: data[0].departure.date,
         end_date: data[0].returnDate,
-        source_city: data[0].departure.airport.municipalityName,
-        source_country: data[0].departure.airport.countryCode,
-        destination_city: data[0].arrival.airport.municipalityName,
-        destination_country: data[0].arrival.airport.countryCode,
+        departure_city: data[0].departure.airport.municipalityName,
+        departure_countryCode: data[0].departure.airport.countryCode,
+        arrival_city: data[0].arrival.airport.municipalityName,
+        arrival_countryCode: data[0].arrival.airport.countryCode,
         lists: listsToSave
     };
     console.log(tripbase)
-    // sendCurrentFlightDataToBackend(tripbase)
+    sendCurrentFlightDataToBackend(tripbase)
 }
 
 function updateOldTripInfo()
 {
-    // send a fetch request for old trips
-    // store old trips in a global variable
-    // call the function to update old trip information
+    console.log("UPDATE OLD TRIP");
+    // send a fetch/XHTTP request for old trips
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            var res = JSON.parse(xhttp.response);
+
+            console.log(res);
+
+        }
+    };
+
+    xhttp.open("GET", "old-trips", true);
+
+    //send this to backend to get default lists for different number of days
+    xhttp.setRequestHeader("email", myemail);
+    xhttp.send();
 }

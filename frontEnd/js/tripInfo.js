@@ -1209,8 +1209,13 @@ var everythingReadyCounter = 0;
 function checkIfEverythingDone()
 {
     ++everythingReadyCounter;
-    if (everythingReadyCounter == 4)
-    hideLoadingScreen();
+    // if (everythingReadyCounter == 4)
+    // hideLoadingScreen();
+    if (everythingReadyCounter == 5)
+    {
+        hideLoadingScreen();
+        sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
+    }
 }
 
 function hideStuff() {
