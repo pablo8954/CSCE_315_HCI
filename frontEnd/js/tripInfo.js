@@ -485,9 +485,7 @@ function tripTimeDetails(data)
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var arrival_time = arrival_date_time[1];
     arrival_time = arrival_time.split("-");
-    //TODO: compare arrival_timezone with departure_timezone
-    var depart_timezone = depart_time[1]; //TODO:
-    var arrival_timezone = arrival_time[1];//TODO: 
+
  
 //Update Time zones Block
     var dest_dayTime = arrival_date_time[1];
