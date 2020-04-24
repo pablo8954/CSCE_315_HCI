@@ -29,12 +29,12 @@ function sendTripInfo(data, listsToSave)
     {
         email: myemail,
         tripid: 1,
-        departure_date: data[0].departure.date,
+        start_date: data[0].departure.date,
         end_date: data[0].returnDate,
-        source_city: data[0].departure.airport.municipalityName,
-        source_country: data[0].departure.airport.countryCode,
-        destination_city: data[0].arrival.airport.municipalityName,
-        destination_country: data[0].arrival.airport.countryCode,
+        departure_city: data[0].departure.airport.municipalityName,
+        departure_countryCode: data[0].departure.airport.countryCode,
+        arrival_city: data[0].arrival.airport.municipalityName,
+        arrival_countryCode: data[0].arrival.airport.countryCode,
         lists: listsToSave
     };
     console.log(tripbase)

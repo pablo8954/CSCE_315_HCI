@@ -147,12 +147,12 @@ app.post('/newtripdata', function (req, res)
         },
         {
             $set: {
-                start_date: tripbase.departure_date,
+                start_date: tripbase.start_date,
                 end_date: tripbase.end_date,
-                departure_city: tripbase.source_city,
-                departure_countryCode: tripbase.source_country,
-                arrival_city: tripbase.destination_city,
-                arrival_countryCode: tripbase.destination_country,
+                departure_city: tripbase.departure_city,
+                departure_countryCode: tripbase.departure_countryCode,
+                arrival_city: tripbase.arrival_city,
+                arrival_countryCode: tripbase.arrival_countryCode,
                 lists: tripbase.lists
             }
         },
