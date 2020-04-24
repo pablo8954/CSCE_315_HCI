@@ -43,16 +43,17 @@ function sendTripInfo(data, listsToSave)
 
 function updateOldTripInfo()
 {
-    //
-
-
+    console.log("UPDATE OLD TRIP");
     // send a fetch/XHTTP request for old trips
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function ()
     {
-        if (this.readyState == 4 && this.status == status == 200)
+        if (this.readyState == 4 && this.status == 200)
         {
             var res = JSON.parse(xhttp.response);
+
+            console.log(res);
+
         }
     };
 
