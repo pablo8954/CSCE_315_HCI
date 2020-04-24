@@ -568,24 +568,15 @@ function loadFlightData()
             return response.json();
         })
         .then(data => {
-            //TODO: here's the destination country - access it within this .then(data) scope
             var destination_country = JSON.stringify(data.name).replace(/\"/g, "");
             var destination_country_native = JSON.stringify(data.nativeName).replace(/\"/g, "");
-            /* 
-            * destination_country -> pass to mongoDB 
-            * fetch json object from mongoDB
-            * var json_object
-            * var volt = json_object.voltage <- "voltage is the key to the value you want in the json"
-            * json_object.frequency
-            * 
-            * document.getElementById("name-of-id-object-you-want-to-modify").innerHTML = var/"string"/something;              
-            * 
-            */
+            var countrynames = {}
+            countrynames["destination_country"] = destination_country
+            countrynames["destination_country_native"] = destination_country_native
             var xhr = new XMLHttpRequest();
             xhr.open("GET", 'outletdata', true);
-            //Send the proper header information along with the request
-            // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhr.setRequestHeader("country", destination_country_native)
+            xhr.setRequestHeader("country", destination_country)
+            xhr.setRequestHeader("country_alt",destination_country_native)
             xhr.onreadystatechange = function() { // Call a function when the state changes.
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     outletinfo = JSON.parse(xhr.response)[0]
