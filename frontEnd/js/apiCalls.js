@@ -9,6 +9,8 @@ function onSignIn(googleUser)
     var image = document.getElementById('profile-image');
     image.src = profile.getImageUrl();
     myemail = profile.getEmail()
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
+
     // replace buttons
     document.getElementById("google-signin-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";

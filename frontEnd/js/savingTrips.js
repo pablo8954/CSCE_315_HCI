@@ -18,9 +18,17 @@ function sendCurrentFlightDataToBackend(tripbase)
 
 function sendTripInfo(data, listsToSave)
 {
+    if (!data)
+    {
+        console.log('works')
+        return false
+    }
+    if (myemail == "")
+        return false
     let tripbase = 
     {
         email: myemail,
+        tripid: 1,
         departure_date: data[0].departure.date,
         end_date: data[0].returnDate,
         source_city: data[0].departure.airport.municipalityName,
@@ -30,7 +38,7 @@ function sendTripInfo(data, listsToSave)
         lists: listsToSave
     };
     console.log(tripbase)
-    // sendCurrentFlightDataToBackend(tripbase)
+    sendCurrentFlightDataToBackend(tripbase)
 }
 
 function updateOldTripInfo()

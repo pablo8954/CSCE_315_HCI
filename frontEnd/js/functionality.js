@@ -160,6 +160,8 @@ function signout()
 {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
+    myemail = ""
+    oldTrips = []
 
     // set image and username to default
     var name = document.getElementById('name-label')
