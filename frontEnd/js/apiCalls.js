@@ -57,7 +57,7 @@ function createCustomJSON(srcCity, desCity, srcCountryCode, desCountryCode)
           "countryCode": srcCountryCode
         },
         "scheduledTimeLocal": -1,
-        "date": document.getElementById("start-date").value
+        "date": document.getElementById("start-date").value //added
       },
       
       "arrival":{
@@ -68,7 +68,7 @@ function createCustomJSON(srcCity, desCity, srcCountryCode, desCountryCode)
         "scheduledTimeLocal": -1
       },
 
-      "returnDate": document.getElementById("return-date").value
+      "returnDate": document.getElementById("return-date").value //added
     }
     
   }
