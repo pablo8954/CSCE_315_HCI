@@ -25,7 +25,7 @@
     <div id="sidebar" class="collapsed">
         <button id="close-sidebar-button" onclick="toggleSidebar()"></button>
         <div id="old-trips-container">
-            <h2 class="old-trips-heading">Old Trips</h2>
+            <h2 class="old-trips-heading">My Trips</h2>
             <ul class="old-trips-list" >
                 <!-- <li style="display:none;" id="old-trip1" ><i class="fas fa-plane" ></i> Mumbai to Austin on 3/2/2020</li> -->
 
@@ -57,15 +57,7 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">Dark Mode</label>
-
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="color-blindness-checkbox">
-                    <input type="checkbox" id="color-blindness-checkbox"/>
-                    <div class="slider round"></div>
-                </label>
-            </div>
-            <label id="dark-mode-label">Color Blindness Mode</label>
+            <label id="dark-mode-label">High Contrast Mode</label>
 
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="text-to-speech-checkbox">
@@ -87,7 +79,7 @@
 
             <li><a class="main-nav-link" href="/"> Home</a></li>
             <li  class="active"><a class="main-nav-link" href="newTrip.html"> New Trip</a></li>
-            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> Old Trips</a></li>
+            <li><a class="main-nav-link" onclick="oldTripsClicked()" id="oldTripsButton"> My Trips</a></li>
             <li><a class="main-nav-link" onclick="settingsClicked()" id="settingsButton"> Settings</a></li>
 
             </div>
@@ -108,14 +100,32 @@
             <label for="fnum" class="question-label">Source Details</label>
 
             <div class="row">
-                <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
-                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country">
+                <!-- <input type="text" id="source-city" class="manual-input" name="fnum" placeholder="Enter Source City">
+                <input type="text" id="source-country" class="manual-input" name="fnum" placeholder="Enter Source Country"> -->
+                <select name="country" class="countriesSrc manual-input" id="countrySrcId">
+                    <option value="">Select Country</option>
+                </select>
+                <select name="state" class="statesSrc manual-input" id="stateSrcId">
+                    <option value="">Select State</option>
+                </select>
+                <select name="city" class="citiesSrc manual-input" id="citySrcId">
+                    <option value="">Select City</option>
+                </select>
             </div>
             <label for="fnum" class="question-label">Destination Details</label>
 
             <div class="row">
-                <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
-                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                
+                <select name="country" class="countriesDes manual-input" id="countryDesId">
+                    <option value="">Select Country</option>
+                </select>
+                <select name="statetest" class="statesDes manual-input" id="stateDesId">
+                    <option value="">Select State</option>
+                </select>
+                <select name="city" class="citiesDes manual-input" id="cityDesId">
+                    <option value="">Select City</option>
+                </select>
+                <!-- <input type="text" id="destination-city" class="manual-input" name="fnum" placeholder="Enter Destination City">
+                <input type="text" id="destination-country" class="manual-input" name="fnum" placeholder="Enter Destination Country">                 -->
             </div>
 
         </div>
@@ -135,12 +145,18 @@
     <!-- Connect these buttons to javascript code!!! -->
     <div class="row">
         <button class="button-type-1" onclick="flightNumberParse()" id="next-button">Next</button>
+        <button class="button-type-1" style = "margin-top: 25%;" onclick="manualInput()" id="next-button-manual">Next</button>
+        <button class="button-type-1" style = "margin-top: 25%;" onclick="showFlightInputOptions()" id="back-button">Back</button>
         <!-- <button class="button-type-2" id="skip-button">Skip</button> -->
     </div>
     </div>
+
 		   
 	<!--Should check if return date is after departure date here-->
     <!--Should check for time zone change here (Use JavaScript for that)-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src = "/frontEnd/js/geodata.js"></script>
+
     <script src="/frontEnd/js/responsiveVoice.js"></script>
     <script src="/frontEnd/js/newTrip.js"></script>
     <script src="/frontEnd/js/functionality.js"></script>
