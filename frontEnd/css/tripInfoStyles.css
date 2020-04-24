@@ -388,6 +388,10 @@
   width: 500px;
 }
 
+#translate{
+  background-color: grey;
+}
+
 #medicines {
   background-color: #e18300;
   color: #fffafa;

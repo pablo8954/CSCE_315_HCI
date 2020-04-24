@@ -259,6 +259,7 @@ function deleteList()
 // Closes the editable list view in the center
 function closeEditableView ()
 {
+    console.log("Current Tanle = " + currentTable);
     // get the updated list from the editable view
     var editableView = document.getElementById('editable-list-view');
     var editableList = document.getElementById('editable-list');
@@ -269,7 +270,7 @@ function closeEditableView ()
     {
         var labelVals = elements[i].getElementsByTagName('label');
         var newElement;
-        if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
+        if (currentTable == "phrases" || currentTable == "translate") newElement = { name: labelVals[0].innerText};
         else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
         newList.push(newElement);
     }
@@ -932,6 +933,48 @@ function updateTimeZone(source_name_of_sCountry, dest_name_of_country)
     }
 }
 
+function closeTranslationsEditableView ()
+{
+    // get the updated list from the editable view
+    var editableView = document.getElementById('editable-list-view');
+    var editableList = document.getElementById('editable-list');
+    // get a list from the editable view
+    var elements = editableList.getElementsByTagName('li');
+    var newList = new Array();
+    for (var i = 0; i < elements.length; ++i)
+    {
+        var labelVals = elements[i].getElementsByTagName('label');
+        var newElement;
+        if (currentTable == "phrases") newElement = { name: labelVals[0].innerText};
+        else newElement = { name: labelVals[1].innerText, checked: (labelVals[1].style.textDecoration == 'line-through')};
+        newList.push(newElement);
+    }
+    if (currentTable == "phrases"){
+        listOfPhrases[currentTable] = newList;
+        populatePhraseList();
+    }
+    else {
+        
+        console.log(currentTable)
+        listOfLists[currentTable] = newList;
+        
+        // repopulate the appropriate table
+        repopulateListByName(currentTable);
+        document.getElementById(currentTable).getElementsByTagName("h2")[0].innerHTML = editableView.getElementsByTagName("h2")[0].innerHTML;
+    }
+    
+    
+    // repopulate the appropriate table
+    
+    // reset the heading as neede
+    
+    // close the editable view
+    editableView.style.display = 'none';
+    
+    lightenBackground();
+}
+
+
 function showTranslationsEditable() {
     
     darkenBackground();
@@ -977,10 +1020,6 @@ function populateTranslations()
     console.log(destination_language_code);
     
     //populating empty array with dummy values
-    for (var i = 0; i < listVals.length; ++i)
-    {
-        translateList.push({name: "Where is the restroom?", translated: false});
-    }
 
     // iterate throught phrases, translating one at a time
     

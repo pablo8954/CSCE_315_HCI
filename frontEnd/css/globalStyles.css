@@ -290,6 +290,7 @@ button {
 
 #dark-mode-label {
   color: #aaa;
+  align-items: center;
   text-align: center;
   margin-top: 10px;
   font-family: "Helvetica Neue", sans-serif;
