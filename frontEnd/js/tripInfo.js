@@ -46,6 +46,7 @@ function repopulateListByName(listName)
         
         // add element to toiletry list
         document.getElementById(listName + "-list").appendChild(li);
+        console.log('created var ' + i + ' for ' + listName)
     }
 }
 
@@ -213,14 +214,23 @@ function showEditableView (eve)
 
 var newTripNumber = 0
 
+function generateNewListIdName()
+{
+    var initialName = "list" + Object.keys(listOfLists).length
+    var keyList = Object.keys(listOfLists)    
+    var newNum = parseInt((keyList[keyList.length - 1]).slice(-1)) + 1
+    initialName = "list" + newNum
+
+    return initialName
+}
+
 function createNewList()
 {
-    var newListName = "New List " + newTripNumber;
-    ++newTripNumber
-    var niceName = newListName.toLowerCase().replace(/\s+/g, '')
+    var newListName = "New List"
+    var niceName = generateNewListIdName()
     listOfLists[niceName] = {}
     // create the list view
-    createListView(newListName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
+    createListView(newListName, niceName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
     
     // Show editable view with the new list
     darkenBackground()
@@ -237,8 +247,8 @@ function createNewList()
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
-    listView.getElementsByTagName("h2")[0].innerHTML = "New Trip"
-    editableView.getElementsByTagName("h2")[0].innerHTML = "New Trip";
+    listView.getElementsByTagName("h2")[0].innerHTML = "New List"
+    editableView.getElementsByTagName("h2")[0].innerHTML = "New List";
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
     
@@ -298,8 +308,9 @@ function closeEditableView ()
     lightenBackground();
 }
 
-function createListView(listName, bgcolor)
+function createListView(listName, listIDName, bgcolor)
 {
+    console.log('list view with ' + listName + ', ' + listIDName)
     var viewDiv = document.createElement('div');
     var viewDivForList = document.createElement('div');
     viewDiv.className = "list-view";
@@ -307,7 +318,7 @@ function createListView(listName, bgcolor)
     viewDivForList = document.createElement('div');
     viewDivForList.addEventListener("click", showEditableView);
     
-    viewDivForList.id = listName.toLowerCase().replace(/\s+/g, '');
+    viewDivForList.id = listIDName
     
     viewDivForList.classList.toggle('view-div-list');
     
@@ -320,7 +331,7 @@ function createListView(listName, bgcolor)
     heading.innerHTML = listName;
     // Add list
     var list = document.createElement('ul');
-    list.id = listName.toLowerCase().replace(/\s+/g, '') + "-list";
+    list.id = listIDName + "-list";
     // Add hover message
     var hoverMessage = document.createElement('p');
     hoverMessage.classList.add("hover-message");    
@@ -345,7 +356,23 @@ function loadData()
     // ***************************
     
     // check if signed in and get the data from there
-    
+    let data = JSON.parse(sessionStorage.getItem('travel_json'))
+    if (data[0].lists)
+    {
+        for (var i = 0; i < data[0].lists.length; ++i)
+        {
+            createListView(data[0].lists[i].name, "list" + i, listColors[i % listColors.length]);
+            listOfLists["list" + i] = data[0].lists[i].items
+        }
+
+        console.log(listOfLists)
+        
+        // Populate all the lists with the data
+        repopulateAllLists();    
+        checkIfEverythingDone();
+
+        return
+    }
     // otherwise get the default data
     
     // send a request for the data
@@ -356,12 +383,11 @@ function loadData()
         if (this.readyState == 4 && this.status == 200)
         {
             var res = JSON.parse(xhttp.response);
-            var keyList = Object.keys(res);
             
-            for (var i = 0; i < keyList.length; ++i)
+            for (var i = 0; i < res.length; ++i)
             {
-                createListView(keyList[i], listColors[i % listColors.length]);
-                listOfLists[keyList[i].toLowerCase()] = res[keyList[i]];
+                createListView(res[i].name, "list" + i, listColors[i % listColors.length]);
+                listOfLists["list" + i] = res[i].items
             }
             
             // Populate all the lists with the data

@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=Baloo+Bhaina+2);
 .rangeslider {
   margin: 0 auto;
   width: 70%;
@@ -233,7 +235,7 @@ button {
 }
 
 .old-trips-list li {
-  background-color: #666;
+  background-color: #00577b;
   cursor: pointer;
   width: 100%;
   margin: 0;
@@ -242,6 +244,9 @@ button {
   font-family: "Garamond";
   text-align: center;
   transition: 0.1s;
+  font-size: 24px;
+  line-height: 150%;
+  font-family: "Garamond";
 }
 
 .old-trips-list li:hover {
@@ -249,7 +254,7 @@ button {
 }
 
 .old-trips-list li:nth-child(even) {
-  background-color: #484848;
+  background-color: #00a5a5;
 }
 
 #profile-container {

@@ -1,6 +1,8 @@
 @import 'colors';
 @import 'fontStuff';
 @import 'sliderStyles';
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=Baloo+Bhaina+2);
 
 .main-body
 {
@@ -224,6 +226,10 @@ button
     font-family: $default-font-family;
     text-align: center;
     transition: 0.1s;
+    font-size: 24px;
+    line-height: 150%;
+    font-family: $default-font-family;
+    // pointer-events: none;
 }
 
 .old-trips-list li:hover

@@ -9,7 +9,7 @@ function sendCurrentFlightDataToBackend(tripbase)
     { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
         { // Request finished. Do processing here.
-
+            updateOldTripInfo()
         }
     }
 
@@ -20,40 +20,68 @@ function sendTripInfo(data, listsToSave)
 {
     if (!data)
     {
-        console.log('works')
         return false
     }
     if (myemail == "")
         return false
+
+    var myTripId;
+    console.log('tripid test: ' + data[0].tripid)
+    if (data[0].tripid != undefined)
+    {
+        myTripId = data[0].tripid
+    }
+    else
+    {
+        myTripId = JSON.parse(sessionStorage.getItem('old-trips')).length
+        var toSaveTravelJson = JSON.parse(sessionStorage.getItem('travel_json'))
+        toSaveTravelJson[0].tripid = myTripId
+        sessionStorage.setItem('travel_json', JSON.stringify(toSaveTravelJson))
+        console.log("------------------------------")
+        console.log(JSON.parse(sessionStorage.getItem('travel_json')))
+    }
+
+    // normalize list data
+    var normalizedListsToSave = []
+    let keyList = Object.keys(listsToSave)
+    for (var i = 0; i < keyList.length; ++i)
+    {
+        normalizedListsToSave.push ({name: document.getElementById(keyList[i]).getElementsByTagName("h2")[0].innerHTML, items: listsToSave[keyList[i]]})
+    }
+
+
     let tripbase = 
     {
         email: myemail,
-        tripid: 1,
+        tripid: myTripId,
         start_date: data[0].departure.date,
         end_date: data[0].returnDate,
         departure_city: data[0].departure.airport.municipalityName,
         departure_countryCode: data[0].departure.airport.countryCode,
         arrival_city: data[0].arrival.airport.municipalityName,
         arrival_countryCode: data[0].arrival.airport.countryCode,
-        lists: listsToSave
+        lists: normalizedListsToSave
     };
     console.log(tripbase)
     sendCurrentFlightDataToBackend(tripbase)
 }
 
+function saveCurrentTrip()
+{
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
+}
+
 function updateOldTripInfo()
 {
-    console.log("UPDATE OLD TRIP");
     // send a fetch/XHTTP request for old trips
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function ()
     {
         if (this.readyState == 4 && this.status == 200)
         {
-            var res = JSON.parse(xhttp.response);
-
-            console.log(res);
-
+            oldTrips = JSON.parse(xhttp.response);
+            sessionStorage.setItem('old-trips', JSON.stringify(oldTrips))
+            console.log('just set old trips')
         }
     };
 
