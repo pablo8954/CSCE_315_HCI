@@ -1096,6 +1096,7 @@ function checkIfEverythingDone()
     if (everythingReadyCounter == 5)
     {
         hideLoadingScreen();
+        sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
     }
 }
 
