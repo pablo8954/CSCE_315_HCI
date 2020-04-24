@@ -1087,6 +1087,9 @@ function checkIfEverythingDone()
     ++everythingReadyCounter;
     if (everythingReadyCounter == 4)
     hideLoadingScreen();
+
+    // since everything is ready, send the trip information to backend
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
 }
 
 
