@@ -43,7 +43,22 @@ function sendTripInfo(data, listsToSave)
 
 function updateOldTripInfo()
 {
-    // send a fetch request for old trips
-    // store old trips in a global variable
-    // call the function to update old trip information
+    //
+
+
+    // send a fetch/XHTTP request for old trips
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == status == 200)
+        {
+            var res = JSON.parse(xhttp.response);
+        }
+    };
+
+    xhttp.open("GET", "old-trips", true);
+
+    //send this to backend to get default lists for different number of days
+    xhttp.setRequestHeader("email", myemail);
+    xhttp.send();
 }

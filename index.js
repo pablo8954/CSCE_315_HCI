@@ -231,6 +231,23 @@ app.get('/outletdata', function (req, res)
     });
 });
 
+app.get('/old-trips', function (req, res)
+{
+    // let 5 days be default duration of journey
+    var useremail = JSON.stringify(req.headers.email);
+    if (useremail == "")
+    {
+        res.send("[]");
+    }
+
+    mongoClient.db("users").collection("tripbase").find({email: useremail}).toArray(function(err, result)
+    {
+        if (err) throw err;
+        console.log(result);
+    });
+});
+
+
 let port = process.env.PORT;
 if (port == null || port == "")
 {

@@ -14,6 +14,8 @@ function onSignIn(googleUser)
     // replace buttons
     document.getElementById("google-signin-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";
+
+    //log into database
     const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('userauthentication');
     client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(user => db.collection('information').updateOne(
         {
@@ -36,6 +38,10 @@ function onSignIn(googleUser)
     ).asArray()).then(docs => {
         console.log("Verifying existance of account")
         console.log("Found account", docs)
+
+        //grab old trips
+        updateOldTripInfo();
+
     }).catch(err => {
         console.error(err)
         return profile.getEmail();
