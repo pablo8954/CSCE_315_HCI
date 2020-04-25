@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=Baloo+Bhaina+2);
 .rangeslider {
   margin: 0 auto;
   width: 70%;
@@ -73,7 +75,6 @@ button {
 }
 
 .nav-logo {
-
   width: 72px;
   height: 72px;
   margin-top: 10px;
@@ -234,7 +235,7 @@ button {
 }
 
 .old-trips-list li {
-  background-color: #666;
+  background-color: #00577b;
   cursor: pointer;
   width: 100%;
   margin: 0;
@@ -243,6 +244,9 @@ button {
   font-family: "Garamond";
   text-align: center;
   transition: 0.1s;
+  font-size: 24px;
+  line-height: 150%;
+  font-family: "Garamond";
 }
 
 .old-trips-list li:hover {
@@ -250,7 +254,7 @@ button {
 }
 
 .old-trips-list li:nth-child(even) {
-  background-color: #484848;
+  background-color: #00a5a5;
 }
 
 #profile-container {
@@ -291,7 +295,6 @@ button {
 
 #dark-mode-label {
   color: #aaa;
-  align-items: center;
   text-align: center;
   margin-top: 10px;
   font-family: "Helvetica Neue", sans-serif;
@@ -375,9 +378,6 @@ input:checked + .slider:before {
   margin-top: 20px;
 }
 
-
-
-
 /* Popup container */
 .popup {
   position: relative;
@@ -401,6 +401,12 @@ input:checked + .slider:before {
   margin-left: -80px;
 }
 
+.popup:hover #myPopup {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
 /* Popup arrow */
 .popup .popuptext::after {
   content: "";
@@ -417,20 +423,25 @@ input:checked + .slider:before {
 .popup .show {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s
+  animation: fadeIn 1s;
 }
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 @keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity:1 ;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-
 
 /*# sourceMappingURL=globalStyles.css.map */

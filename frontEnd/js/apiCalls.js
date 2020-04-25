@@ -10,8 +10,6 @@ function onSignIn(googleUser)
     image.src = profile.getImageUrl();
     myemail = profile.getEmail()
 
-
-
     // replace buttons
     document.getElementById("google-signin-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";

@@ -3,6 +3,7 @@ var transEndEventName = ('WebkitTransition' in document.documentElement.style) ?
 
 // Get settings/variables
 var darkMode = false;
+
 darkMode = sessionStorage.getItem('dark-mode');
 
 if (darkMode)
@@ -56,8 +57,7 @@ function oldTripsClicked()
     }
 
     // TODO: Here we will get the information about the saved trips
-    oldTrips = new Array();
-    showOldTrips(oldTrips); // do this inside the fetch result
+    showOldTrips();
 }
 
 function toggleTheme()
@@ -125,16 +125,18 @@ function showSettings()
     document.removeEventListener(transEndEventName, showSettings);
 }
 
-function showOldTrips(oldTrips)
+function showOldTrips()
 {
     // Show Old Trips and hide Settings
-
+    var oldTrips = JSON.parse(sessionStorage.getItem('old-trips'))
+    console.log(oldTrips)
     document.getElementById("settings-container").style.display = 'none';
     document.getElementById("old-trips-container").style.display = 'flex';
 
     var numTrips = oldTrips.length;
 
     toggleSidebar();
+    document.getElementsByClassName("old-trips-list")[0].innerHTML = ''
 
     for (var i = 0; i < numTrips; i++)
     {
@@ -143,11 +145,51 @@ function showOldTrips(oldTrips)
         icon.classList.toggle('fas');
         icon.classList.toggle('fa-plane');
         viewDiv.appendChild(icon);
-        viewDiv.innerText = oldTrips[i][0] + " to " + oldTrips[i][1] + " on " + oldTrips[i][2];
+        viewDiv.innerHTML = oldTrips[i].departure_city + " to " + oldTrips[i].arrival_city + ' <br>' + 'on ' + oldTrips[i].start_date;
+        viewDiv.id = 'trip-' + (i);
+        viewDiv.addEventListener("click", clickedOldTrip);
         document.getElementsByClassName("old-trips-list")[0].appendChild(viewDiv);
+
     }
 
     document.removeEventListener(transEndEventName, showOldTrips);
+}
+
+function clickedOldTrip(event)
+{
+    var tripNumber = parseInt(event.target.id.slice(-1))
+    console.log('clicked on ' + tripNumber)
+    var tripData = JSON.parse(sessionStorage.getItem('old-trips')) [tripNumber]
+    console.log(tripData)
+    let travelJsonData = 
+    {
+        0: {
+            "departure": {
+                "airport": {
+                    "municipalityName": tripData.departure_city,
+                    "countryCode": tripData.departure_countryCode
+                },
+                "scheduledTimeLocal": -1,
+                "date": tripData.start_date
+            },
+
+            "arrival": {
+                "airport": {
+                    "municipalityName": tripData.arrival_city,
+                    "countryCode": tripData.arrival_countryCode
+                },
+                "scheduledTimeLocal": -1
+            },
+
+            "returnDate": tripData.end_date,
+            lists: tripData.lists,
+            tripid: tripData.tripid        
+        }
+    }
+
+    sessionStorage.setItem('travel_json', JSON.stringify(travelJsonData))
+    window.location.href = "tripInfo.html"
+    // location.reload()
 }
 
 function toggleSidebar()
@@ -161,7 +203,7 @@ function signout()
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
     myemail = ""
-    oldTrips = []
+    sessionStorage.setItem('old-trips', "[]")
 
     // set image and username to default
     var name = document.getElementById('name-label')
