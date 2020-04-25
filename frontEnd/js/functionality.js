@@ -56,7 +56,7 @@ function oldTripsClicked()
         return;
     }
 
-    // TODO: Here we will get the information about the saved trips
+
     showOldTrips();
 }
 
@@ -110,7 +110,7 @@ function settingsClicked()
 
     showSettings();
 
-    // TODO: Here we will get the information about the person/settings
+
 
 }
 
@@ -200,9 +200,11 @@ function toggleSidebar()
 // Google Sign out
 function signout()
 {
+    window.location.href = '/';
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut();
     myemail = ""
+
     sessionStorage.setItem('old-trips', "[]")
 
     // set image and username to default

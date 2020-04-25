@@ -449,6 +449,8 @@ function tripTimeDetails_noTime(travel_data)
     document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold();
     document.getElementById("arrival-time").innerHTML = "You will be returning home on " + return_date_phrase.bold();
 
+    document.getElementById("time-zone").style.display = 'none';
+    document.getElementById("source-time-zone").style.display = 'none';
     document.getElementById("dest-time-zone").style.display = 'none';
     document.getElementById("time-zone-change").style.display = 'none';
 }

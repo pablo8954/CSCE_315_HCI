@@ -168,9 +168,7 @@ function manualInput()
             i = i + 1;
         }
 
-
         srcCountryCode = data[i].alpha3Code;
-        // console.log(data[i].nativeName);
         console.log(srcCountryCode);
 
         // grab destination country code

@@ -157,12 +157,12 @@
         <label for="exchangeRate" class="big-label" id = "exchange-rate">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
-        <!-- Temporary for Maccoy-->
+
         <label for="exchangeRate" class="big-label" id = "power-label">Power Adapter</label>
         <label for="exchangeRate" class="small-label" id="power-adapter-label">REPLACE ME</label>
         <label for="exchangeRate" class="small-label" id="power-voltage-label">REPLACE ME</label>
         <label for="exchangeRate" class="small-label" id="power-frequency-label">REPLACE ME</label>
-        <!-- Temporary for Maccoy-->
+
 
         <label for="Weather" class ="big-label" style="margin-bottom: 5px;"> Weather Forcast</label> 
 
@@ -251,5 +251,19 @@
     <script src="/frontEnd/js/functionality.js"></script>
     <script src="/frontEnd/js/weather.js"></script>
     <script src="/frontEnd/js/tripInfo.js"></script>
+
+    <script>
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+        
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Sure?';
+            }
+        
+            // For Safari
+            return 'Sure?';
+        };
+        </script>
 
 </body>
