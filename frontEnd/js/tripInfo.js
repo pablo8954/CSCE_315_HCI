@@ -408,11 +408,11 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
 
 }
 
-
-function tripTimeDetails_noTime(data)
+//manual entry for time 
+function tripTimeDetails_noTime(travel_data)
 {
-    var depart_date = JSON.stringify(data[0].departure.date).replace(/\"/g, "");
-    var return_date = JSON.stringify(data[0].returnDate).replace(/\"/g, "");
+    var depart_date = JSON.stringify(travel_data[0].departure.date).replace(/\"/g, "");
+    var return_date = JSON.stringify(travel_data[0].returnDate).replace(/\"/g, "");
 
     var depart_data_array = depart_date.split("-");
     var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
@@ -422,12 +422,14 @@ function tripTimeDetails_noTime(data)
 
     document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold();
     document.getElementById("arrival-time").innerHTML = "You will be returning home on " + return_date_phrase.bold();
+
+    document.getElementById("dest-time-zone").style.display = 'none';
+    document.getElementById("time-zone-change").style.display = 'none';
 }
 
 
 function tripTimeDetails(data)
 {
-    //TODO: adjust split to account for + and - 
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
     console.log("DAY DIFF");
@@ -439,11 +441,13 @@ function tripTimeDetails(data)
     //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
     //if the input was done manually, only return the dates the user is leaving and returning
+    
     if (depart == -1)
     {
         tripTimeDetails_noTime(data);
         return
     }
+
     depart_date_time = depart.split(" ");
     var depart_date = depart_date_time[0];
     var depart_data_array = depart_date.split("-");
@@ -451,7 +455,12 @@ function tripTimeDetails(data)
     console.log(depart_date_phrase);
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var depart_time = depart_date_time[1];
-    depart_time = depart_time.split("-"); //FIXME: account for + as well
+    
+    
+    depart_time = depart_time.split("-"); 
+
+
+
     var depart_time = depart_time[0];
     var depart_hour_array = depart_time.split(":");
     var AM_PM = "";
@@ -480,14 +489,14 @@ function tripTimeDetails(data)
     arrival_date_time = arrival.split(" ");
     var arrival_date = arrival_date_time[0];
 
-    var arrival_data_array = arrival_date.split("-"); //FIXME: account for + as well
+    var arrival_data_array = arrival_date.split("-"); 
     var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var arrival_time = arrival_date_time[1];
     arrival_time = arrival_time.split("-");
 
  
-//Update Time zones Block
+    //Update Time zones Block
     var dest_dayTime = arrival_date_time[1];
     var source_dayTime = depart_date_time[1];
 
@@ -541,7 +550,12 @@ function loadFlightData()
     
     var source_countryCode = flight_data[0].departure.airport.countryCode;
     var destination_countryCode = flight_data[0].arrival.airport.countryCode;
-    
+
+    if (source_countryCode == destination_countryCode)
+    {
+        hideStuff();
+    }
+
     var restCountryAPI = 'https://restcountries.eu/rest/v2/alpha/';
     
     //grab source country metadata
@@ -956,9 +970,9 @@ function updateTimeZone(stimezone, dtimezone) {
     document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
     document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
 
-        // calculating lost/gained time
-            
-            //getting source time zone into float
+    // calculating lost/gained time
+        
+    //getting source time zone into float
     var source_hours;
         
     stimezone = stimezone.substring(3);
@@ -1223,6 +1237,8 @@ function checkIfEverythingDone()
     // if (everythingReadyCounter == 4)
     // hideLoadingScreen();
 }
+
+
 
 
 

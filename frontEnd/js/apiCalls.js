@@ -113,6 +113,7 @@ function addDatesToFlightData(data)
 // take input from user drop down boxes
 function manualInput()
 {
+
     var departure_date = document.getElementById("start-date").value;
     var end_date = document.getElementById("return-date").value;
     if (verifyDates(departure_date, end_date) == false)
@@ -121,7 +122,7 @@ function manualInput()
     }
 
     var srcCity = document.getElementById("citySrcId");
-    var srcCountry = document.getElementById("countrySrcId")
+    var srcCountry = document.getElementById("countrySrcId");
 
     var desCity = document.getElementById("cityDesId");
     var desCountry = document.getElementById("countryDesId");
@@ -206,6 +207,9 @@ function manualInput()
         return
     });
 
+
+
+
 }
 
 function flightNumberParse()
@@ -253,43 +257,12 @@ function flightNumberParse()
             return;
         }
 
-        // tripbase stuff
-        // tripbase["flight_number"] = flight_num
-        // tripbase["departure_city"] = source_city
-        // tripbase["departure_countryCode"] = source_countryCode
-        // tripbase["arrival_city"] = destination_city
-        // tripbase["arrival_countryCode"] = destination_countryCode
-        // tripbase["start_date"] = departure_date
-        // tripbase["end_date"] = end_date
-        // tripbase["email"] = email
-
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", '/newtripdata', true);
-        // // Send the proper header information along with the request
-        // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        // xhr.onreadystatechange = function ()
-        // { // Call a function when the state changes.
-        //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        //     { // Request finished. Do processing here.
-        //     }
-        // }
-
-        // console.log(JSON.stringify(tripbase))
-        // xhr.send(JSON.stringify(tripbase));
-        // // xhr.send(new Int8Array());
-        // // xhr.send(document);
-        // console.log(source_city);
-        // console.log(destination_city);
-        // console.log(source_countryCode);
-        // console.log(destination_countryCode);
-
         // store json for analysis in tripInfo.js
         sessionStorage.setItem('travel_json', JSON.stringify(addDatesToFlightData(data)));
         window.location.href = 'tripInfo.html';
     }).catch(err => {
         console.log(err);
 
-        // TODO: ask if placing this would be fine with team - NEED TO MAKE SURE THAT BAD DATA IS NOT SENT TO DATABASE
         alert("Something went wrong with the flight number. Please input your trip details manually.");
         showManualInfoOptions();
     });

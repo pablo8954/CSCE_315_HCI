@@ -16,3 +16,13 @@ function lightenBackground()
     darkener.hidden = true;
     darkener.classList.toggle('unclickable');
 }
+
+function hideStuff() {
+    console.log("hiding stuff");
+    document.getElementById("exchange-rate-label").style.display = 'none';
+    document.getElementById("exchange-rate").style.display = 'none';
+    document.getElementById("power-label").style.display = 'none';
+    document.getElementById("power-adapter-label").style.display = 'none';
+    document.getElementById("power-voltage-label").style.display = 'none';
+    document.getElementById("power-frequency-label").style.display = 'none';
+}

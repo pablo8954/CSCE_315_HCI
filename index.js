@@ -21,7 +21,7 @@ async function dbSetup()
 async function setListOfDefaultLists()
 {
     mongoClient.db('users').collection("lists").find(
-        {email: "johnsmith@gmail.com"}
+        {email: "smithjohn@gmail.com"}
     ).toArray(function (err, result)
     {
         if (err)
@@ -105,11 +105,11 @@ function getDefaultLists(numDays)
     var normalizedDays = Math.min(numDays, 10);
 
     // Do some number of days specific stuff here for the lists
-    toReturn["Clothing"][0].name = normalizedDays + " " + toReturn["Clothing"][0].name;
-    toReturn["Clothing"][1].name = normalizedDays + " " + toReturn["Clothing"][1].name
-    toReturn["Clothing"][2].name = (normalizedDays + 1) + " " + toReturn["Clothing"][2].name
-    toReturn["Clothing"][3].name = normalizedDays + " " + toReturn["Clothing"][3].name
-    toReturn["Clothing"][4].name = Math.ceil(normalizedDays / 2) + " " + toReturn["Clothing"][4].name
+    // toReturn["Clothing"][0].name = normalizedDays + " " + toReturn["Clothing"][0].name;
+    // toReturn["Clothing"][1].name = normalizedDays + " " + toReturn["Clothing"][1].name
+    // toReturn["Clothing"][2].name = (normalizedDays + 1) + " " + toReturn["Clothing"][2].name
+    // toReturn["Clothing"][3].name = normalizedDays + " " + toReturn["Clothing"][3].name
+    // toReturn["Clothing"][4].name = Math.ceil(normalizedDays / 2) + " " + toReturn["Clothing"][4].name
 
     return toReturn;
 }
