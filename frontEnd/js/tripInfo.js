@@ -823,7 +823,7 @@ function updateLanguage(name_of_country) {
             
                 if (langCode == "en")
                 {
-                    document.getElementById("phrases").style.display = "none";
+                    document.getElementById("phrases-view").style.display = "none";
                     document.getElementById("generate-translation-button").style.display = "none";
                     document.getElementById("export-translation-button").style.display = "none";
                     console.log("HERE PHRASES");

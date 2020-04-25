@@ -1,11 +1,13 @@
 #loader {
   display: none;
   position: fixed;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+  background: #222;
   z-index: 100;
 }
 
@@ -50,6 +52,38 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+.svg-calLoader {
+  width: 230px;
+  height: 230px;
+  transform-origin: 115px 115px;
+  animation: 1.4s linear infinite loader-spin;
+}
+
+.cal-loader__plane {
+  fill: #FFA500;
+}
+
+.cal-loader__path {
+  stroke: #FFFFFF;
+  animation: 1.4s ease-in-out infinite loader-path;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-path {
+  0% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+  }
+  50% {
+    stroke-dasharray: 0, 450, 10, 30, 10, 30, 10, 30, 10;
+  }
+  100% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
   }
 }
 

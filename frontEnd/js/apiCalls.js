@@ -265,9 +265,10 @@ function flightNumberParse()
             return;
         }
 
-
+        
         // store json for analysis in tripInfo.js
         sessionStorage.setItem('travel_json', JSON.stringify(addDatesToFlightData(data)));
+        showLoadingScreen()
         window.location.href = 'tripInfo.html';
     }).catch(err => {
         console.log(err);

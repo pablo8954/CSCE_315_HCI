@@ -1,15 +1,23 @@
 @import 'colors';
 
 
+$c-front : #FFFFFF;
+$c-back : #1D1F20;
+$c-back-light : #383838;
+$c-hilight : #FFA500;
+$s-footer-height : 3rem;
+
 #loader
 {
     display: none;
     position: fixed;
+    align-items: center;
+    justify-content: center;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 100vw;
-    background: rgba(0,0,0, 0.8);
+    height: 100%;
+    width: 100%;
+    background: $blackish-gray;
     z-index: 100 // above everything
 }
 
@@ -21,9 +29,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  
-  .lds-ring div {
+}
+
+.lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
@@ -34,22 +42,49 @@
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: $loader-color transparent transparent transparent;
-  }
-  .lds-ring div:nth-child(1) {
+}
+.lds-ring div:nth-child(1) {
     animation-delay: -0.45s;
-  }
-  .lds-ring div:nth-child(2) {
+}
+.lds-ring div:nth-child(2) {
     animation-delay: -0.3s;
-  }
-  .lds-ring div:nth-child(3) {
+}
+.lds-ring div:nth-child(3) {
     animation-delay: -0.15s;
-  }
-  @keyframes lds-ring {
+}
+@keyframes lds-ring {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  
+}
+
+.svg-calLoader 
+{
+    width: 230px; height: 230px;
+    transform-origin: 115px 115px;
+
+    animation: 1.4s linear infinite loader-spin;
+}
+
+.cal-loader__plane { fill: $c-hilight; }
+.cal-loader__path { stroke: $c-front; animation: 1.4s ease-in-out infinite loader-path; }
+
+@keyframes loader-spin {
+    to{
+        transform: rotate(360deg);
+    }
+}
+@keyframes loader-path {
+    0%{
+        stroke-dasharray:  0, 580, 0, 0, 0, 0, 0, 0, 0;
+    }
+    50%{
+        stroke-dasharray: 0, 450, 10, 30, 10, 30, 10, 30, 10;
+    }
+    100%{
+        stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+    }
+}
