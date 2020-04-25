@@ -98,7 +98,6 @@ function createCustomJSON(srcCity, desCity, srcCountryCode, desCountryCode)
     sessionStorage.setItem('travel_json', JSON.stringify(travelObj));
     console.log(travelObj);
     console.log(JSON.stringify(travelObj));
-    alert("CHECK");
     return travelObj;
 
 }
@@ -132,6 +131,13 @@ function manualInput()
 
     desCity = desCity.options[desCity.selectedIndex].value;
     desCountry = desCountry.options[desCountry.selectedIndex].value;
+
+    //catch case where user fails to give city
+    if (srcCountry == "" || desCountry == "")
+    {
+        alert("Error: Please input a country");
+        return;
+    }
 
     //catch case where user fails to give city
     if (srcCity == "" || desCity == "")
@@ -197,7 +203,7 @@ function manualInput()
 
         }).catch(err => {
             console.log(err);
-            alert("Uh oh, something went wrong. Please try again2");
+            alert("Uh oh, something went wrong. Please try again");
             return
         });
 
