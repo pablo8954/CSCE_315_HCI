@@ -3,9 +3,7 @@ var transEndEventName = ('WebkitTransition' in document.documentElement.style) ?
 
 // Get settings/variables
 var darkMode = false;
-
 darkMode = sessionStorage.getItem('dark-mode');
-
 if (darkMode)
 {
     darkMode = (darkMode == "true");
@@ -216,9 +214,22 @@ function signout()
     document.getElementById("logout-button").style.display = "none";
 }
 
+var textSize = sessionStorage.getItem('text-size')
+if (textSize)
+    textSize = parseInt(textSize)    
+else
+    textSize = 100 // already set by default
+
 var rangeslider = document.getElementById("sliderRange");
+rangeslider.value = textSize
+document.body.style.zoom = textSize + '%';
 var output = document.getElementById("demo");
 output.innerHTML = rangeslider.value;
+rangeslider.style.background = 'linear-gradient(to right, #FFCE00 0%, #FFCE00 ' + (
+    rangeslider.value - 50
+) + '%, #fff ' + (
+    rangeslider.value - 50
+) + '%, white 100%)'
 
 rangeslider.oninput = function ()
 {
@@ -233,6 +244,7 @@ rangeslider.oninput = function ()
     var numString = val.toString();
     var zoomLevel = numString + "%";
     document.body.style.zoom = zoomLevel;
+    sessionStorage.setItem('text-size', numString)
 }
 
 function toggleTextToSpeech()

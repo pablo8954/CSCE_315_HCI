@@ -18,6 +18,7 @@ function sendCurrentFlightDataToBackend(tripbase)
 
 function sendTripInfo(data, listsToSave)
 {
+    showLoadingScreen()
     if (!data)
     {
         return false
@@ -82,6 +83,7 @@ function updateOldTripInfo()
             oldTrips = JSON.parse(xhttp.response);
             sessionStorage.setItem('old-trips', JSON.stringify(oldTrips))
             console.log('just set old trips')
+            hideLoadingScreen()
         }
     };
 

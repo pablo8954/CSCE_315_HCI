@@ -1053,6 +1053,7 @@ function updateTimeZone(stimezone, dtimezone) {
 
 function showTranslationsEditable() {
     
+    hideLoadingScreen()
     darkenBackground();
     
     document.getElementById("delete-list-button").style.display = 'none';
@@ -1176,7 +1177,9 @@ function repopulateTranslationList(listName)
 }
 
 
-function openTranslationWindow(){
+function openTranslationWindow()
+{
+    showLoadingScreen()
     //document.getElementById('translate').style.display = "block";
     listOfTranslated["translated"].length = 0;
     populateTranslations(); //translate phrases

@@ -59,7 +59,12 @@
 			  <input type="range" min="50" max="150" value="100"
 							  class="myslider" id="sliderRange">  
 			</div> 
-			<label id="dark-mode-label">Text Size: <span id="demo"></span>%</label>
+			<label id="dark-mode-label">Text Size: <span id="demo"></span>%               
+                <div class="popup" >
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Slide to Zoom In/Out.</span>
+                    </div>
+            </label> 
 			
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
@@ -67,17 +72,22 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">High Contrast Mode</label>
+            <label id="dark-mode-label">High Contrast Mode                 
+                <div class="popup" >
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Toggle to view in High Contrast.</span>
+                    </div>
+            </label> 
 
-            
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="text-to-speech-checkbox">
                     <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
+            
             <label id="dark-mode-label">Text to Speech                 
-                <div class="popup" onclick="popupFunction()">
+                <div class="popup" >
                     <i class="fas fa-question-circle"></i>
                     <span class="popuptext" id="myPopup"> Highlight text to hear.</span>
                     </div>
@@ -103,7 +113,6 @@
         </div>
     </header>
 <div class="page-container">
-    <button class="button-save-info" id="button-save-info" onclick = saveTrip();><i class="far fa-save"></i>  Save Trip</button>  
 
     
     <div class="info-container">
@@ -134,13 +143,19 @@
         <label for="language" class="big-label" id="flight-number-label">Language Spoken </label>
         <!--Needs to change upon selection of destination country-->
         <label for="pLang" class ="small-label" id = "p-language-output">Primary Language: </label>
-		
-		<div class="list-view" id="phrases">
-			<h2 class="list-heading">Common Phrases</h2>
-			<ul id="phrases-list">
-			   
-			</ul>
-		</div>
+        
+        <div class="list-view" id="phrases-view">
+            <div class="view-div-list" id="phrases">
+                <h2 class="list-heading">Common Phrases</h2>
+                <ul id="phrases-list">
+                
+                </ul>
+            </div>
+            <p class="hover-message">
+                <i class="fas fa-hand-pointer" style="color: white; font-size: 32px;" aria-hidden="true"></i> <br>
+                Click to Edit
+            </p>
+        </div>
 		<br>
 		<div class="row"> 
             <button class="button-change-info" onclick=openTranslationWindow(); id="generate-translation-button">View Translations</button>
@@ -217,11 +232,12 @@
             </div>
             <div class="date" id="date-5">2nd Jan</div>
         </article>
-        <button style="text-align: center;" onclick="saveCurrentTrip()">Save Trip</button>         
     </div>
 
     <div class="list-container" id="list-container">
         <button id="create-list-button" onclick="createNewList()">Create List &nbsp <i class="fas fa-plus-circle" style="font-size: 22px; color: white;">  </i></button>
+        <button id="button-save-trip" onclick = onclick="saveCurrentTrip()"">Save Trip &nbsp <i class="far fa-save"></i></button>  
+
     </div>
     </div>
     

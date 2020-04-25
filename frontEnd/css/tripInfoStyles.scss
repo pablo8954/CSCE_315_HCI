@@ -323,6 +323,12 @@
 
 @media screen and (max-width: 1000px)
 {
+    .page-container
+    {
+        flex-direction: column-reverse;
+        // background-color: red;
+    }
+
     .info-container
     {
         width: 100%;
@@ -349,7 +355,7 @@
 {
     position: absolute;
     top: -25px;
-    right: 100px;
+    right: 280px;
     border-radius: 10px;
     font-size: 22px;
     background-color: #727272;
@@ -358,6 +364,25 @@
     color: $snow;
     cursor: pointer;
 
+}
+
+#button-save-trip
+{
+    position: absolute;
+    top: -25px;
+    right: 100px;
+    border-radius: 10px;
+    font-size: 22px;
+    background-color: $dark-sea-blue;
+    padding: 10px 15px;
+    border: none;
+    color: $snow;
+    cursor: pointer;
+}
+
+#button-save-trip:hover
+{
+    filter: brightness(50%)
 }
 
 #create-list-button:hover
@@ -475,7 +500,12 @@
 #phrases
 {
 	background-color: grey;
-	width: 500px;
+	width: 100%;
+}
+
+#phrases-view
+{
+    width: 500px;
 }
 
 #medicines
