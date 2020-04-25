@@ -76,8 +76,12 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">Text to Speech</label>
-
+            <label id="dark-mode-label">Text to Speech                 
+                <div class="popup" onclick="popupFunction()">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Highlight text to hear.</span>
+                    </div>
+            </label> 
         </div>
     </div>
     <header class="nav-header">
@@ -85,7 +89,7 @@
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
             <p class="nav-logo-label">Packadvisor</p>
         </div>
-        <ul class="main-nav">
+        <ul class="main-nav" >
             <div class="row">
 
             <li><a class="main-nav-link" href="/"> Home</a></li>
@@ -98,8 +102,9 @@
 
         </div>
     </header>
-
 <div class="page-container">
+    <button class="button-save-info" id="button-save-info" onclick = saveTrip();><i class="far fa-save"></i>  Save Trip</button>  
+
     
     <div class="info-container">
 
@@ -149,11 +154,11 @@
 		</div>
 
 
-        <label for="exchangeRate" class="big-label">Exchange Rate</label>
+        <label for="exchangeRate" class="big-label" id = "exchange-rate">Exchange Rate</label>
         <label for="exchangeRate" class="small-label" id="exchange-rate-label">1 USD = 6.91 Danish Krone</label>
 
         <!-- Temporary for Maccoy-->
-        <label for="exchangeRate" class="big-label">Power Adapter</label>
+        <label for="exchangeRate" class="big-label" id = "power-label">Power Adapter</label>
         <label for="exchangeRate" class="small-label" id="power-adapter-label">REPLACE ME</label>
         <label for="exchangeRate" class="small-label" id="power-voltage-label">REPLACE ME</label>
         <label for="exchangeRate" class="small-label" id="power-frequency-label">REPLACE ME</label>
@@ -234,6 +239,7 @@
 
         <ul class="center-list" id="editable-list"></ul>
     </div>
+    
 
     <div class="footer">
         <!-- Fill this in later -->

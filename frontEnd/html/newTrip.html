@@ -67,11 +67,18 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">Text to Speech</label>
+            
+            <label id="dark-mode-label">Text to Speech                 
+                <div class="popup" onclick="popupFunction()">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Highlight text to hear.</span>
+                    </div>
+            </label> 
+
             
         </div>
     </div>
-    <header class="nav-header">
+    <header class="nav-header" position="fixed">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
             <p class="nav-logo-label">Packadvisor</p>

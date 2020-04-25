@@ -30,13 +30,8 @@
         <div id="old-trips-container">
             <h2 class="old-trips-heading">My Trips</h2>
             <ul class="old-trips-list" >
-                <li style="display:none;" id="old-trip1" ><i class="fas fa-plane" ></i> Mumbai to Austin on 3/2/2020</li>
-                <li style="display:none;" id="old-trip2"><i class="fas fa-plane" ></i> Guatemala City to Mumbai on 2/9/2020</li>
-                <li style="display:none;" id="old-trip3"><i class="fas fa-plane"></i> London to Guatemala City on 1/7/2020</li>
-                <li style="display:none;" id="old-trip4"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
-                <li style="display:none;" id="old-trip5"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
-                <li style="display:none;" id="old-trip6"><i class="fas fa-plane"></i> Austin to London on 11/9/2019</li>
-            </ul>
+                <!-- <li style="display:none;" id="old-trip1" ><i class="fas fa-plane" ></i> Mumbai to Austin on 3/2/2020</li> -->
+
         </div>
         <div id="settings-container">
             <div id="profile-container">
@@ -72,11 +67,16 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">Text to Speech</label>
+            <label id="dark-mode-label">Text to Speech                 
+                <div class="popup" onclick="popupFunction()">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Highlight text to hear.</span>
+                    </div>
+            </label> 
 
         </div>
     </div>
-    <header class="nav-header">
+    <header class="nav-header" position="fixed">
         <div class="logo-container">    
             <img src="/frontEnd/img/icon.PNG" class="nav-logo">
             <p class="nav-logo-label">Packadvisor</p>
