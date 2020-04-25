@@ -19,13 +19,14 @@ function sendCurrentFlightDataToBackend(tripbase)
 
 function sendTripInfo(data, listsToSave)
 {
-    showLoadingScreen()
     if (!data)
     {
         return false
     }
     if (myemail == "")
         return false
+
+    showLoadingScreen()
 
     var myTripId;
     console.log('tripid test: ' + data[0].tripid)
@@ -70,6 +71,11 @@ function sendTripInfo(data, listsToSave)
 
 function saveCurrentTrip()
 {
+    if (myemail == "")
+    {
+        alert("You must first login to save your trip!")
+        return
+    }
     beingSaved = true;
     sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists);
 }
