@@ -1268,7 +1268,7 @@ var everythingReadyCounter = 0;
 function checkIfEverythingDone()
 {
     ++everythingReadyCounter;
-    if (everythingReadyCounter == 5)
+    if (everythingReadyCounter == 4)
     {
         hideLoadingScreen();
         sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
