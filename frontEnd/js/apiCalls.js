@@ -48,14 +48,11 @@ function onSignIn(googleUser)
 
 }
 
-// var tripbase = {};
-
+// verify dates are valid
 function verifyDates(departure_date, end_date)
-{ // verify dates are valid
-    var diff = Math.floor((Date.parse(end_date) - Date.parse(departure_date)) / 86400000) + 1;
+{ 
     // add 1 to account for day of departure
-    // sessionStorage.setItem('day_diff', JSON.stringify(diff));
-    // alert(diff);
+    var diff = Math.floor((Date.parse(end_date) - Date.parse(departure_date)) / 86400000) + 1;
 
     //check that dates given are proper calender dates & not a garbage input
     if (isNaN(diff) == true)
@@ -238,7 +235,6 @@ function flightNumberParse()
     console.log(departure_date);
     var flight_api_url = "https://aerodatabox.p.rapidapi.com/flights/" + flight_num + '/' + departure_date + "?withLocation=false&withAircraftImage=false";
 
-    // window.location.href = 'tripInfo.html'; //- leave commented unless want to skip new trip page
 
     fetch(flight_api_url,
     {
@@ -250,6 +246,7 @@ function flightNumberParse()
     }).then(response => {
         return response.json(); // convert to json
     }).then(data => {
+
         console.log(data);
         var source_city = data[0].departure.airport.municipalityName;
         var destination_city = data[0].arrival.airport.municipalityName;
@@ -271,7 +268,6 @@ function flightNumberParse()
 
         // store json for analysis in tripInfo.js
         sessionStorage.setItem('travel_json', JSON.stringify(addDatesToFlightData(data)));
-        alert("Pause");
         window.location.href = 'tripInfo.html';
     }).catch(err => {
         console.log(err);
