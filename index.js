@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var mongourl = 'mongodb+srv://mongoaccessaccount:PackAdvisor123@packadvisordatabase-hp7rv.gcp.mongodb.net/test?retryWrites=true&w=majority';
 const mongoClient = mongodb.MongoClient(mongourl);
 
-var listOfLists = {};
+var listOfLists = [];
 
 // Called once to setup the mongo client
 async function dbSetup()
@@ -25,8 +25,6 @@ async function setListOfDefaultLists()
     ).toArray(function (err, result)
     {
         if (err)
-        
-
             throw err;
         
 
@@ -34,15 +32,19 @@ async function setListOfDefaultLists()
         // Go through the results and assign the lists
         for (var i = 0; i < lists.length; ++ i)
         {
-            listOfLists[lists[i].name] = lists[i].items;
-            for (var j = 0; j < listOfLists[lists[i].name].length; ++ j)
+            var items = lists[i].items;
+            var itemList = [];
+            for (var j = 0; j < items.length; ++ j)
             {
-                listOfLists[lists[i].name][j] = {
-                    name: lists[i].items[j],
+                itemList.push ({
+                    name: items[j],
                     checked: false
-                };
+                });
+
             }
+            listOfLists.push({name: lists[i].name, items: itemList})
         }
+
     });
 }
 async function getoutletdata(countryname)
@@ -95,21 +97,18 @@ app.get('/default-lists', function (req, res)
 function getDefaultLists(numDays)
 {
     if (numDays == 5)
-    
-
         return listOfLists;
     
 
     var toReturn = JSON.parse(JSON.stringify(listOfLists));
 
     var normalizedDays = Math.min(numDays, 10);
-
     // Do some number of days specific stuff here for the lists
-    toReturn["Clothing"][0].name = normalizedDays + " " + toReturn["Clothing"][0].name;
-    toReturn["Clothing"][1].name = normalizedDays + " " + toReturn["Clothing"][1].name
-    toReturn["Clothing"][2].name = (normalizedDays + 1) + " " + toReturn["Clothing"][2].name
-    toReturn["Clothing"][3].name = normalizedDays + " " + toReturn["Clothing"][3].name
-    toReturn["Clothing"][4].name = Math.ceil(normalizedDays / 2) + " " + toReturn["Clothing"][4].name
+    toReturn[1].items[0].name = normalizedDays + " " + toReturn[1].items[0].name;
+    toReturn[1].items[1].name = normalizedDays + " " + toReturn[1].items[1].name
+    toReturn[1].items[2].name = (normalizedDays + 1) + " " + toReturn[1].items[2].name
+    toReturn[1].items[3].name = normalizedDays + " " + toReturn[1].items[3].name
+    toReturn[1].items[4].name = Math.ceil(normalizedDays / 2) + " " + toReturn[1].items[4].name
 
     return toReturn;
 }
@@ -132,14 +131,6 @@ app.post('/newtripdata', function (req, res)
     if (tripbase.email == "")
         res.send("No email :(")
     
-        // email: myemail,
-        // departure_date: data[0].departure.date,
-        // end_date: data[0].returnDate,
-        // source_city: data[0].departure.airport.municipalityName,
-        // source_country: data[0].departure.airport.countryCode,
-        // destination_city: data[0].arrival.airport.municipalityName,
-        // destination_country: data[0].arrival.airport.countryCode,
-        // lists: listsToSave
     mongoClient.db('users').collection('tripbase').updateOne(
         {
             email: tripbase.email,

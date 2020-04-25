@@ -18,7 +18,6 @@ var destination_language_code = "";
 
 phraseList.push({name: "Where is the restroom?"});
 phraseList.push({name: "Where is my hotel?"});
-phraseList.push({name: "Where is the airport?"});
 phraseList.push({name: "Where is a resturaunt?"});
 phraseList.push({name: "Hi, how are you?"});
 phraseList.push({name: "I don't speak your language."});
@@ -47,6 +46,7 @@ function repopulateListByName(listName)
         
         // add element to toiletry list
         document.getElementById(listName + "-list").appendChild(li);
+        console.log('created var ' + i + ' for ' + listName)
     }
 }
 
@@ -214,14 +214,23 @@ function showEditableView (eve)
 
 var newTripNumber = 0
 
+function generateNewListIdName()
+{
+    var initialName = "list" + Object.keys(listOfLists).length
+    var keyList = Object.keys(listOfLists)    
+    var newNum = parseInt((keyList[keyList.length - 1]).slice(-1)) + 1
+    initialName = "list" + newNum
+
+    return initialName
+}
+
 function createNewList()
 {
-    var newListName = "New List " + newTripNumber;
-    ++newTripNumber
-    var niceName = newListName.toLowerCase().replace(/\s+/g, '')
+    var newListName = "New List"
+    var niceName = generateNewListIdName()
     listOfLists[niceName] = {}
     // create the list view
-    createListView(newListName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
+    createListView(newListName, niceName, listColors[(Object.keys(listOfLists).length - 1) % listColors.length]) 
     
     // Show editable view with the new list
     darkenBackground()
@@ -238,8 +247,8 @@ function createNewList()
     // Set appropriate colors and values
     var bgcolor = getComputedStyle(listView, null).getPropertyValue("background-color");
     var color = getComputedStyle(listView, null).getPropertyValue("color");
-    listView.getElementsByTagName("h2")[0].innerHTML = "New Trip"
-    editableView.getElementsByTagName("h2")[0].innerHTML = "New Trip";
+    listView.getElementsByTagName("h2")[0].innerHTML = "New List"
+    editableView.getElementsByTagName("h2")[0].innerHTML = "New List";
     editableView.style.backgroundColor = bgcolor;
     editableView.style.color = color;
     
@@ -302,8 +311,9 @@ function closeEditableView ()
     lightenBackground();
 }
 
-function createListView(listName, bgcolor)
+function createListView(listName, listIDName, bgcolor)
 {
+    console.log('list view with ' + listName + ', ' + listIDName)
     var viewDiv = document.createElement('div');
     var viewDivForList = document.createElement('div');
     viewDiv.className = "list-view";
@@ -311,7 +321,7 @@ function createListView(listName, bgcolor)
     viewDivForList = document.createElement('div');
     viewDivForList.addEventListener("click", showEditableView);
     
-    viewDivForList.id = listName.toLowerCase().replace(/\s+/g, '');
+    viewDivForList.id = listIDName
     
     viewDivForList.classList.toggle('view-div-list');
     
@@ -324,7 +334,7 @@ function createListView(listName, bgcolor)
     heading.innerHTML = listName;
     // Add list
     var list = document.createElement('ul');
-    list.id = listName.toLowerCase().replace(/\s+/g, '') + "-list";
+    list.id = listIDName + "-list";
     // Add hover message
     var hoverMessage = document.createElement('p');
     hoverMessage.classList.add("hover-message");    
@@ -349,7 +359,23 @@ function loadData()
     // ***************************
     
     // check if signed in and get the data from there
-    
+    let data = JSON.parse(sessionStorage.getItem('travel_json'))
+    if (data[0].lists)
+    {
+        for (var i = 0; i < data[0].lists.length; ++i)
+        {
+            createListView(data[0].lists[i].name, "list" + i, listColors[i % listColors.length]);
+            listOfLists["list" + i] = data[0].lists[i].items
+        }
+
+        console.log(listOfLists)
+        
+        // Populate all the lists with the data
+        repopulateAllLists();    
+        checkIfEverythingDone();
+
+        return
+    }
     // otherwise get the default data
     
     // send a request for the data
@@ -360,12 +386,11 @@ function loadData()
         if (this.readyState == 4 && this.status == 200)
         {
             var res = JSON.parse(xhttp.response);
-            var keyList = Object.keys(res);
             
-            for (var i = 0; i < keyList.length; ++i)
+            for (var i = 0; i < res.length; ++i)
             {
-                createListView(keyList[i], listColors[i % listColors.length]);
-                listOfLists[keyList[i].toLowerCase()] = res[keyList[i]];
+                createListView(res[i].name, "list" + i, listColors[i % listColors.length]);
+                listOfLists["list" + i] = res[i].items
             }
             
             // Populate all the lists with the data
@@ -410,11 +435,11 @@ function currencyExchangeRate(source_currency_code, destination_currency_code)
 
 }
 
-
-function tripTimeDetails_noTime(data)
+//manual entry for time 
+function tripTimeDetails_noTime(travel_data)
 {
-    var depart_date = JSON.stringify(data[0].departure.date).replace(/\"/g, "");
-    var return_date = JSON.stringify(data[0].returnDate).replace(/\"/g, "");
+    var depart_date = JSON.stringify(travel_data[0].departure.date).replace(/\"/g, "");
+    var return_date = JSON.stringify(travel_data[0].returnDate).replace(/\"/g, "");
 
     var depart_data_array = depart_date.split("-");
     var depart_date_phrase = depart_data_array[1]+ "/" + depart_data_array[2] + "/" + depart_data_array[0];
@@ -425,16 +450,13 @@ function tripTimeDetails_noTime(data)
     document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold();
     document.getElementById("arrival-time").innerHTML = "You will be returning home on " + return_date_phrase.bold();
 
-    //hide stuff here
     document.getElementById("dest-time-zone").style.display = 'none';
     document.getElementById("time-zone-change").style.display = 'none';
-    
 }
 
 
 function tripTimeDetails(data)
 {
-    //TODO: adjust split to account for + and - 
     //unpack & place date difference on page
     var day_diff = this.sessionStorage.getItem('day_diff');
     console.log("DAY DIFF");
@@ -446,11 +468,13 @@ function tripTimeDetails(data)
     //get departure date 
     var depart = JSON.stringify(data[0].departure.scheduledTimeLocal).replace(/\"/g, "");
     //if the input was done manually, only return the dates the user is leaving and returning
+    
     if (depart == -1)
     {
         tripTimeDetails_noTime(data);
         return
     }
+
     depart_date_time = depart.split(" ");
     var depart_date = depart_date_time[0];
     var depart_data_array = depart_date.split("-");
@@ -458,7 +482,12 @@ function tripTimeDetails(data)
     console.log(depart_date_phrase);
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var depart_time = depart_date_time[1];
-    depart_time = depart_time.split("-"); //FIXME: account for + as well
+    
+    
+    depart_time = depart_time.split("-"); 
+
+
+
     var depart_time = depart_time[0];
     var depart_hour_array = depart_time.split(":");
     var AM_PM = "";
@@ -487,16 +516,14 @@ function tripTimeDetails(data)
     arrival_date_time = arrival.split(" ");
     var arrival_date = arrival_date_time[0];
 
-    var arrival_data_array = arrival_date.split("-"); //FIXME: account for + as well
+    var arrival_data_array = arrival_date.split("-"); 
     var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var arrival_time = arrival_date_time[1];
     arrival_time = arrival_time.split("-");
-    //TODO: compare arrival_timezone with departure_timezone
-    var depart_timezone = depart_time[1]; //TODO:
-    var arrival_timezone = arrival_time[1];//TODO: 
+
  
-//Update Time zones Block
+    //Update Time zones Block
     var dest_dayTime = arrival_date_time[1];
     var source_dayTime = depart_date_time[1];
 
@@ -550,8 +577,9 @@ function loadFlightData()
     
     var source_countryCode = flight_data[0].departure.airport.countryCode;
     var destination_countryCode = flight_data[0].arrival.airport.countryCode;
-    
-    if(source_countryCode == destination_countryCode) {
+
+    if (source_countryCode == destination_countryCode)
+    {
         hideStuff();
     }
 
@@ -582,7 +610,17 @@ function loadFlightData()
             var xhr = new XMLHttpRequest();
             xhr.open("GET", 'outletdata', true);
             xhr.setRequestHeader("country", destination_country)
-            xhr.setRequestHeader("country_alt",destination_country_native)
+
+            //don't send if native name if not a valid bytestring
+            try{
+                xhr.setRequestHeader("country_alt",destination_country_native);
+            }
+            catch{
+                xhr.setRequestHeader("country_alt",undefined);
+                console.log("CAUGHT");
+            }
+
+
             xhr.onreadystatechange = function() { // Call a function when the state changes.
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     outletinfo = JSON.parse(xhr.response)[0]
@@ -778,7 +816,18 @@ function updateLanguage(name_of_country) {
         data.forEach(country => {
             if(request.status >=200 && request.status < 400 && country.name == name_of_country) {
                 lang = country.languages[0].name;
+
+
                 langCode=country.languages[0].iso639_1;
+            
+                if (langCode == "en")
+                {
+                    document.getElementById("phrases").style.display = "none";
+                    document.getElementById("generate-translation-button").style.display = "none";
+                    document.getElementById("export-translation-button").style.display = "none";
+                    console.log("HERE PHRASES");
+                }
+
                 console.log("Language Code: " + langCode);
                 found = 1;
             }
@@ -948,9 +997,9 @@ function updateTimeZone(stimezone, dtimezone) {
     document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
     document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
 
-        // calculating lost/gained time
-            
-            //getting source time zone into float
+    // calculating lost/gained time
+        
+    //getting source time zone into float
     var source_hours;
         
     stimezone = stimezone.substring(3);
@@ -969,8 +1018,8 @@ function updateTimeZone(stimezone, dtimezone) {
         source_hours = source_hours + source_minutes;
         if(sOperator == "-") source_hours = source_hours * -1;
     }
-        
-        //getting dest time zone into float
+    
+    //getting dest time zone into float
     dtimezone = dtimezone.substring(3);
     var dest_hours;
     if(dtimezone == "") {
@@ -1050,8 +1099,6 @@ function populateTranslations()
     var url_setLang = "&target="+destination_language_code;
     console.log(destination_language_code);
     
-    //populating empty array with dummy values
-
     // iterate throught phrases, translating one at a time
     
     for (var i = 0; i < listVals.length; ++i)
@@ -1071,8 +1118,7 @@ function populateTranslations()
             api_url = api_url + phrase[j] + url_space;
         }
         //run API calls
-        
-        // var data = "source=en&q=Hello%2C%20world!&target=es";
+
         var data = api_url + url_setLang;
         // console.log(data);
         
@@ -1106,7 +1152,6 @@ function populateTranslations()
 
 function checkIfTranslationsDone()
 {
-    //FIXME: translateList.length() - length is not a function
     for (var i = 0; i < translateList.length; ++i)
         if (!translateList[i].translated)
             return
@@ -1183,7 +1228,7 @@ function exportTranslatedPhrases() {
     });
     
     var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csv);
     hiddenElement.target ='_blank';
     hiddenElement.download ='translations.csv';
     hiddenElement.click();
@@ -1209,13 +1254,15 @@ var everythingReadyCounter = 0;
 function checkIfEverythingDone()
 {
     ++everythingReadyCounter;
-    // if (everythingReadyCounter == 4)
-    // hideLoadingScreen();
     if (everythingReadyCounter == 5)
     {
         hideLoadingScreen();
         sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
     }
+
+    //TODO: check if this is out of date
+    // if (everythingReadyCounter == 4)
+    // hideLoadingScreen();
 }
 
 function hideStuff() {
@@ -1229,4 +1276,6 @@ function hideStuff() {
     document.getElementById("power-frequency-label").style.display = 'none';
 
 }
+
+
 
