@@ -11,13 +11,6 @@ function sendCurrentFlightDataToBackend(tripbase)
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
         { // Request finished. Do processing here.
             updateOldTripInfo()
-            if (beingSaved == true)
-            {
-                alert("Save Successful");
-                beingSaved = false;
-            }
-            
-            
         }
     }
 
@@ -93,6 +86,15 @@ function updateOldTripInfo()
             sessionStorage.setItem('old-trips', JSON.stringify(oldTrips))
             console.log('just set old trips')
             hideLoadingScreen()
+            setTimeout(function()
+            {
+                if (beingSaved == true)
+                {
+                    alert("Save Successful");
+                    beingSaved = false;
+                }
+            }, 100)
+            
         }
     };
 

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Poiret+One);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @import url(https://fonts.googleapis.com/css?family=Baloo+Bhaina+2);
 .rangeslider {
   margin: 0 auto;
@@ -442,6 +443,21 @@ input:checked + .slider:before {
   to {
     opacity: 1;
   }
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #222;
+  height: 15vh;
+}
+.footer p {
+  font-size: 22px;
+  font-family: Open Sans;
+  color: white;
+  text-align: center;
+  width: 100%;
 }
 
 /*# sourceMappingURL=globalStyles.css.map */
