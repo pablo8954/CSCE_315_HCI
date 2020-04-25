@@ -266,15 +266,15 @@ function toggleTextToSpeech()
 
 function showLoadingScreen()
 {
-    var loader = document.getElementById("loader");
-    loader.style.display = 'flex';
+    document.getElementById("loader").classList.remove('loader-hidden')
+    document.getElementById("loader").classList.add('loader-show')
+    console.log(document.getElementById("loader").classList)
 }
 
 function hideLoadingScreen()
 {
-    var loader = document.getElementById("loader");
-    loader.style.display = 'none';
-}
+    document.getElementById("loader").classList.add('loader-hidden')
+    document.getElementById("loader").classList.remove('loader-show')}
 
 function popupFunction() {
     var popup = document.getElementById("myPopup");

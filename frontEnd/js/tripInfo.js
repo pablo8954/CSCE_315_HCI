@@ -1179,9 +1179,8 @@ function repopulateTranslationList(listName)
 }
 
 
-function openTranslationWindow()
+function doTranslationWindowStuff()
 {
-    showLoadingScreen()
     //document.getElementById('translate').style.display = "block";
     listOfTranslated["translated"].length = 0;
     populateTranslations(); //translate phrases
@@ -1197,10 +1196,16 @@ function openTranslationWindow()
     }
     showTranslationsEditable();
     // translateText("Hello");
-    
 }
 
-function exportTranslatedPhrases() {
+function openTranslationWindow()
+{
+    showLoadingScreen()
+    setTimeout(function(){ doTranslationWindowStuff() }, 100);
+}
+
+function doExportTranslatedPhrases()
+{
     populateTranslations();
     var commonPhrases = listOfPhrases["phrases"];
     var translatedPhrases = listOfTranslated["translated"]; 
@@ -1211,8 +1216,6 @@ function exportTranslatedPhrases() {
     for (var i = 0; i < commonPhrases.length; i++) {
         console.log("Translation" + i + ": " + translatedPhrases[i].name);
     }
-
-
 
     //combining into one list
 
@@ -1231,11 +1234,18 @@ function exportTranslatedPhrases() {
         csv += "\n";
     });
     
+    hideLoadingScreen()
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csv);
     hiddenElement.target ='_blank';
     hiddenElement.download ='translations.csv';
     hiddenElement.click();
+}
+
+function exportTranslatedPhrases() 
+{
+    showLoadingScreen()
+    setTimeout(function(){ doExportTranslatedPhrases() }, 100);
 }
 
 function saveTrip() {

@@ -1,5 +1,4 @@
 #loader {
-  display: none;
   position: fixed;
   align-items: center;
   justify-content: center;
@@ -9,6 +8,14 @@
   width: 100%;
   background: #222;
   z-index: 100;
+}
+
+.loader-hidden {
+  display: none;
+}
+
+.loader-show {
+  display: flex;
 }
 
 .lds-ring {
