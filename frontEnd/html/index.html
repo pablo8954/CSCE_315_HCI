@@ -51,7 +51,12 @@
 			  <input type="range" min="50" max="150" value="100"
 							  class="myslider" id="sliderRange">  
 			</div> 
-			<label id="dark-mode-label">Text Size: <span id="demo"></span>%</label>
+            <label id="dark-mode-label">Text Size: <span id="demo"></span>%               
+                <div class="popup" >
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Slide to Zoom In/Out.</span>
+                    </div>
+            </label> 
 			
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="dark-mode-checkbox">
@@ -59,16 +64,22 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-            <label id="dark-mode-label">High Contrast Mode</label>
-        
+            <label id="dark-mode-label">High Contrast Mode                 
+                <div class="popup" >
+                    <i class="fas fa-question-circle"></i>
+                    <span class="popuptext" id="myPopup"> Toggle to view in High Contrast.</span>
+                    </div>
+            </label> 
+
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="text-to-speech-checkbox">
                     <input type="checkbox" id="text-to-speech-checkbox" onchange="toggleTextToSpeech()"/>
                     <div class="slider round"></div>
                 </label>
             </div>
+            
             <label id="dark-mode-label">Text to Speech                 
-                <div class="popup" onclick="popupFunction()">
+                <div class="popup" >
                     <i class="fas fa-question-circle"></i>
                     <span class="popuptext" id="myPopup"> Highlight text to hear.</span>
                     </div>
