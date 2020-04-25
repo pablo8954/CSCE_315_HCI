@@ -1,3 +1,4 @@
+var beingSaved = false
 
 function sendCurrentFlightDataToBackend(tripbase)
 {
@@ -10,6 +11,13 @@ function sendCurrentFlightDataToBackend(tripbase)
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
         { // Request finished. Do processing here.
             updateOldTripInfo()
+            if (beingSaved == true)
+            {
+                alert("Save Successful");
+                beingSaved = false;
+            }
+            
+            
         }
     }
 
@@ -69,7 +77,8 @@ function sendTripInfo(data, listsToSave)
 
 function saveCurrentTrip()
 {
-    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists)
+    beingSaved = true;
+    sendTripInfo(JSON.parse(sessionStorage.getItem('travel_json')), listOfLists);
 }
 
 function updateOldTripInfo()
