@@ -826,7 +826,7 @@ function updateLanguage(name_of_country) {
                     document.getElementById("phrases-view").style.display = "none";
                     document.getElementById("generate-translation-button").style.display = "none";
                     document.getElementById("export-translation-button").style.display = "none";
-                    console.log("HERE PHRASES");
+    
                 }
 
                 console.log("Language Code: " + langCode);
