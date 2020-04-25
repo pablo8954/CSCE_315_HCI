@@ -56,11 +56,19 @@ function verifyDates(departure_date, end_date)
     // add 1 to account for day of departure
     // sessionStorage.setItem('day_diff', JSON.stringify(diff));
     // alert(diff);
-    console.log(diff)
+
+    //check that dates given are proper calender dates & not a garbage input
+    if (isNaN(diff) == true)
+    {
+        alert("Dates are invalid. Please try again");
+        return false;
+    }
+
+    //ensure departure date comes before return date
     if (diff < 1)
     {
-        alert("Dates are invalid. Please ensure the departure date comes before the return date")
-        return false
+        alert("Dates are invalid. Please ensure the departure date comes before the return date");
+        return false;
     }
 
     sessionStorage.setItem('day_diff', JSON.stringify(diff));
@@ -214,6 +222,7 @@ function manualInput()
 
 }
 
+
 function flightNumberParse()
 {
     var departure_date = document.getElementById("start-date").value;
@@ -226,7 +235,7 @@ function flightNumberParse()
 
     // take user input of dates and flight number
     var flight_num = document.getElementById("flight-number").value.replace(/\s/g, "");
-
+    console.log(departure_date);
     var flight_api_url = "https://aerodatabox.p.rapidapi.com/flights/" + flight_num + '/' + departure_date + "?withLocation=false&withAircraftImage=false";
 
     // window.location.href = 'tripInfo.html'; //- leave commented unless want to skip new trip page
@@ -254,13 +263,15 @@ function flightNumberParse()
 
         if (source_city == undefined || destination_city == undefined || source_countryCode == undefined || destination_countryCode == undefined || depart_time_local == undefined || arrival_time_local == undefined)
         {
-            alert("Something went wrong with the flight number. Please input your trip details manually.");
+            alert("Something went wrong with the flight number. Please input your trip details manually or ensure the departure date given matches the one on your booking");
             showManualInfoOptions();
             return;
         }
 
+
         // store json for analysis in tripInfo.js
         sessionStorage.setItem('travel_json', JSON.stringify(addDatesToFlightData(data)));
+        alert("Pause");
         window.location.href = 'tripInfo.html';
     }).catch(err => {
         console.log(err);
