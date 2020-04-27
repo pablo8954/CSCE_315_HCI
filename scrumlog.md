@@ -144,7 +144,7 @@
     - Maccoy Merrell
 - Time: 5:00 pm
 - Date: 4/23
-- Duration: 14 min
+- Duration: 9 min
 - Status: 
     - Pablo Say - completed all tasks, currently helping out Drew on implementing bug fixes in API code and finish all tasks
     - Anuj Parakh - working with Maccoy to implement two minor last items on the backlog
