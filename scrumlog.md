@@ -136,7 +136,7 @@
     - Drew Bezner - added minor UI changes for ease of use, currently working on debugging some translation functionality bugs
     - Maccoy Merrell - currently working on implementing some additonal back end functionality
 
-# Scrum Meeting 4/24
+# Scrum Meeting 4/23
 - Attended: 
     - Pablo Say
     - Anuj Parakh
