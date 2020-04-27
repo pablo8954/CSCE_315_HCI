@@ -9,7 +9,6 @@ $s-footer-height : 3rem;
 
 #loader
 {
-    display: none;
     position: fixed;
     align-items: center;
     justify-content: center;
@@ -19,6 +18,16 @@ $s-footer-height : 3rem;
     width: 100%;
     background: $blackish-gray;
     z-index: 100 // above everything
+}
+
+.loader-hidden
+{
+    display: none;
+}
+
+.loader-show
+{
+    display: flex;
 }
 
 .lds-ring {
