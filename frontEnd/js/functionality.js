@@ -185,6 +185,8 @@ function clickedOldTrip(event)
         }
     }
 
+    verifyDates(tripData.start_date, tripData.end_date)
+
     sessionStorage.setItem('travel_json', JSON.stringify(travelJsonData))
     window.location.href = "tripInfo.html"
     // location.reload()
