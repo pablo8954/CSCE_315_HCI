@@ -120,3 +120,33 @@
     - Anuj Parakh - started basic stuff on backlog (add loading screen, debug item)
     - Drew Bezner - to start some stuff on backlog today 
     - Maccoy Merrell - to start some stuff on backlog today 
+
+# Scrum Meeting 4/23
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 9:35 am
+- Date: 4/23
+- Duration: 12 min
+- Status: 
+    - Pablo Say - completed minor tasks on backlog, currently working on implementing manual input of trips to website
+    - Anuj Parakh - completed some of the html tasks on backlog, currently working on some of the more work intensive tasks such as additional list functionality
+    - Drew Bezner - added minor UI changes for ease of use, currently working on debugging some translation functionality bugs
+    - Maccoy Merrell - currently working on implementing some additonal back end functionality
+
+# Scrum Meeting 4/23
+- Attended: 
+    - Pablo Say
+    - Anuj Parakh
+    - Drew Bezner
+    - Maccoy Merrell
+- Time: 5:00 pm
+- Date: 4/23
+- Duration: 9 min
+- Status: 
+    - Pablo Say - completed all tasks, currently helping out Drew on implementing bug fixes in API code and finish all tasks
+    - Anuj Parakh - working with Maccoy to implement two minor last items on the backlog
+    - Drew Bezner - working with Pablo to finish up tasks, debug, and stress test website for bugs
+    - Maccoy Merrell - working with Anuj to implement two minor last items on backlog
