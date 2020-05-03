@@ -40,6 +40,12 @@ var colorBlindness = false;
 
 function oldTripsClicked()
 {
+    if (myemail == "")
+    {
+        alert("You need to sign in to view your old trips")
+        return
+    }
+
     var sidebar = document.getElementById("sidebar");
     // If sidebar is open, collapse it
     if (! sidebar.classList.contains("collapsed"))
