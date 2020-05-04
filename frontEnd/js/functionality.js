@@ -40,6 +40,12 @@ var colorBlindness = false;
 
 function oldTripsClicked()
 {
+    if (myemail == "")
+    {
+        alert("You need to sign in to view your old trips")
+        return
+    }
+
     var sidebar = document.getElementById("sidebar");
     // If sidebar is open, collapse it
     if (! sidebar.classList.contains("collapsed"))
@@ -184,6 +190,8 @@ function clickedOldTrip(event)
             tripid: tripData.tripid        
         }
     }
+
+    verifyDates(tripData.start_date, tripData.end_date)
 
     sessionStorage.setItem('travel_json', JSON.stringify(travelJsonData))
     window.location.href = "tripInfo.html"
