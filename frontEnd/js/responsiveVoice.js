@@ -625,7 +625,7 @@ if (isPrerendered() && !prerenderUsed) {
             var txt = GetRandomMsg('');
             if (txt != null && txt != "") {
                 console.log("Launching search message");
-                responsiveVoice.speak("According to Voicebrite, " + txt, 'US English Female');
+                responsiveVoice.speak("According to Voicebrite, " + txt, 'UK English Female');
             }
         }
 
@@ -676,7 +676,7 @@ window.addEventListener('load', function () {
             function () {
                 if (config.speakLinks) {
                     //responsiveVoice.cancel();
-                    responsiveVoice.speak(el.textContent, 'US English Female');
+                    responsiveVoice.speak(el.textContent, 'UK English Female');
                     trackEvent('agentFeature', 'spokenLink');
                 }
             }, function () {
@@ -739,7 +739,7 @@ window.addEventListener('load', function () {
         setTimeout(function () {
             if (config.text_welcomeMessage != null && config.text_welcomeMessage != "") {
                 console.log("Launching welcome message");
-                responsiveVoice.speak(GetRandomMsg(config.text_welcomeMessage), 'US English Female');
+                responsiveVoice.speak(GetRandomMsg(config.text_welcomeMessage), 'UK English Female');
                 trackEvent('agentFeature', 'welcomeMessage');
             }
         }, 1500);

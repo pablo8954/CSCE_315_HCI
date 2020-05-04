@@ -165,6 +165,15 @@ button {
   left: -25%;
 }
 
+@media only screen and (max-device-width: 480px) {
+  #sidebar {
+    width: 50%;
+  }
+
+  #sidebar.collapsed {
+    left: -50%;
+  }
+}
 #close-sidebar-button {
   position: absolute;
   top: 0;
