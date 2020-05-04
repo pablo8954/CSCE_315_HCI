@@ -486,8 +486,7 @@ function tripTimeDetails(data)
     
     
     depart_time = depart_time.split("-"); 
-
-
+    depart_time = depart_time[0].split("+"); 
 
     var depart_time = depart_time[0];
     var depart_hour_array = depart_time.split(":");
@@ -511,7 +510,9 @@ function tripTimeDetails(data)
         }
         depart_time = depart_hour_array[0] + ":" + depart_hour_array[1] + " " + AM_PM;
     }
+
     document.getElementById("departure-time").innerHTML = "You are leaving on " + depart_date_phrase.bold() + " at " + depart_time.bold() + "."
+    
     //get arrival time
     var arrival = JSON.stringify(data[0].arrival.scheduledTimeLocal).replace(/\"/g, "");
     arrival_date_time = arrival.split(" ");
@@ -521,8 +522,11 @@ function tripTimeDetails(data)
     var arrival_date_phrase = arrival_data_array[1]+ "/" + arrival_data_array[2] + "/" + arrival_data_array[0];
     //get departure time - time stored as 24:00-5:00 (military time-UTC)
     var arrival_time = arrival_date_time[1];
+  
+    console.log(arrival_time);
     arrival_time = arrival_time.split("-");
-
+    arrival_time = arrival_time[0].split("+");
+    console.log(arrival_time);
  
     //Update Time zones Block
     var dest_dayTime = arrival_date_time[1];
@@ -535,11 +539,6 @@ function tripTimeDetails(data)
     console.log("Source Time Zone " + source_time);
 
     updateTimeZone(source_time,dest_time);
-
-
-
-
-
 
     var arrival_time = arrival_time[0];
     var arrival_hour_array = arrival_time.split(":");
@@ -844,153 +843,6 @@ function updateLanguage(name_of_country) {
         }
     }
 }
-
-// function updateTimeZone(source_name_of_sCountry, dest_name_of_country) 
-// {
-//     var request = new XMLHttpRequest();
-//     request.open('GET', "https://restcountries.eu/rest/v2/");
-//     request.send();
-//     request.onload = function() {
-//         var data = JSON.parse(this.response);
-//         var sfound = 0;
-//         var stimezone;
-//         var dfound = 0;
-//         var dtimezone;
-//         data.forEach(country => {
-//             if(source_name_of_sCountry == dest_name_of_country){
-//                 if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry){
-//                     if(country.timezones.length == 1) {
-//                         stimezone = country.timezones[0];
-//                         sfound = 1;
-//                         dtimezone = country.timezones[0];
-//                         dtimezone = country.timezones[0];
-//                     }
-//                     //
-//                     //Need to look for city too.. perhaps in next sprint?
-//                     //
-//                     else {
-//                         sfound = 2;
-//                         console.log("Error, multiple time zones detected(source country)... choosing first one");
-//                         stimezone = country.timezones[0];
-//                         dfound = 2;
-//                         console.log("Error, multiple time zones detected(dest country)... choosing first one");
-//                         dtimezone = country.timezones[0];
-//                     }
-//                 }
-//             }
-//             else if(request.status >=200 && request.status < 400 && country.name == source_name_of_sCountry) {
-//                 if(country.timezones.length == 1) {
-//                     stimezone = country.timezones[0];
-//                     sfound = 1;
-//                 }
-//                 //
-//                 //Need to look for city too.. perhaps in next sprint?
-//                 //
-//                 else {
-//                     sfound = 2;
-//                     console.log("Error, multiple time zones detected(source country)... choosing first one");
-//                     stimezone = country.timezones[0];
-//                     console.log("Source : " + stimezone);
-//                 }
-//             }
-//             else if(request.status >=200 && request.status < 400 && country.name == dest_name_of_country) {
-//                 if(country.timezones.length == 1) {
-//                     dtimezone = country.timezones[0];
-//                     dfound = 1;
-//                 }
-//                 //
-//                 //Need to look for city too.. perhaps in next sprint?
-//                 //
-//                 else {
-//                     dfound = 2;
-//                     console.log("Error, multiple time zones detected(dest country)... choosing first one");
-//                     dtimezone = country.timezones[0];
-//                     console.log("Dest : " + dtimezone);
-//                 }
-//             }
-//         });
-        
-//         if(sfound == 1) {
-//             console.log('Source Time zone = ' + stimezone);
-//             document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
-//         }
-//         else if (sfound == 2) {
-//             document.getElementById("source-time-zone").innerHTML = "Source Time Zone: " + stimezone;
-//         }
-//         else {
-//             document.getElementById("source-time-zone").innerHTML = "Could not find time zone for " + source_name_of_sCountry;
-//         }
-        
-//         if(dfound == 1) {
-//             document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
-//         }
-//         else if (dfound == 2) {
-//             document.getElementById("dest-time-zone").innerHTML = "Destination Time Zone: " + dtimezone;
-//         }
-//         else {
-//             console.log(dfound);
-//             document.getElementById("dest-time-zone").innerHTML = "Could not find time zone for " + dest_name_of_sCountry;
-//         }
-        
-        
-        
-//         // calculating lost/gained time
-//         if(dfound != 0 && sfound != 0) { 
-            
-//             //getting source time zone into float
-//             var source_hours;
-            
-//             stimezone = stimezone.substring(3);
-//             if(stimezone == "") {
-//                 source_hours = 0;
-//             }
-//             else {
-//                 //convert to format 
-//                 //-0800
-//                 var sOperator = stimezone.charAt(0);
-//                 var shours = stimezone.charAt(1) + stimezone.charAt(2);
-//                 var sminutes = stimezone.charAt(4) + stimezone.charAt(5);
-//                 source_hours = parseInt(shours);
-//                 var source_minutes = parseInt(sminutes);
-//                 source_minutes = source_minutes / 60;
-//                 source_hours = source_hours + source_minutes;
-//                 if(sOperator == "-") source_hours = source_hours * -1;
-//             }
-            
-//             //getting dest time zone into float
-//             dtimezone = dtimezone.substring(3);
-//             var dest_hours;
-//             if(dtimezone == "") {
-//                 dest_hours = 0;
-//             }
-//             else {
-//                 var dOperator = dtimezone.charAt(0);
-//                 var dhours = dtimezone.charAt(1) + dtimezone.charAt(2);
-//                 var dminutes = dtimezone.charAt(4) + dtimezone.charAt(5);
-//                 dest_hours = parseInt(dhours);
-//                 var dest_minutes = parseInt(dminutes);
-//                 dest_minutes = dest_minutes / 60;
-//                 dest_hours = dest_hours + dest_minutes;
-//                 if(dOperator == "-") dest_hours = dest_hours * -1;
-//             }
-            
-//             //calculating change in time zone
-//             var time_change = dest_hours - source_hours;
-//             console.log(time_change);
-//             if(time_change < 0) {
-//                 time_change = time_change * - 1;
-//                 document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Lose " + time_change.toString() + " hours";
-//             }
-//             else if (time_change > 0){
-//                 document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will Gain " + time_change.toString() + " hours";
-//             }
-//             else {
-//                 document.getElementById("time-zone-change").innerHTML = "Time Zone Change: You will not change time zones";
-//             }
-//         }
-//     }
-// }
-
 
 function updateTimeZone(stimezone, dtimezone) {
         
