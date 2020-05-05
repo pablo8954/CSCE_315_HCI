@@ -241,7 +241,7 @@ function flightNumberParse()
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "aerodatabox.p.rapidapi.com",
-            "x-rapidapi-key": "a5aeadcc4fmshc5ec51281dba8a2p1ae4a3jsnb29493dd2409"
+            "x-rapidapi-key": "8229948295msh127921e64ea3538p16cdfejsn8b87507d947c"
         }
     }).then(response => {
         return response.json(); // convert to json
