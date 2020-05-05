@@ -266,7 +266,7 @@ rangeslider.oninput = function ()
 
 if (isMobile)
 {
-    document.body.style.zoom = "150%"
+    document.body.style.zoom = "170%"
 }
 
 function toggleTextToSpeech()

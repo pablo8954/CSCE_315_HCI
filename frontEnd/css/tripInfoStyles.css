@@ -37,6 +37,12 @@
   overflow: hidden;
 }
 
+@media only screen and (max-device-width: 480px) {
+  .center-list-view {
+    width: 80%;
+    height: 65%;
+  }
+}
 .center-list-view h2 {
   font-size: 36px;
   text-align: center;
@@ -251,7 +257,7 @@
 .info-container {
   display: flex;
   flex-direction: column;
-  width: 45vw;
+  width: 45%;
   justify-content: center;
   align-items: center;
   margin-top: 50px;

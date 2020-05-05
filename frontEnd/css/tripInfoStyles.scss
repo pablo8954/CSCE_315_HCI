@@ -46,6 +46,16 @@
     overflow: hidden;
 }
 
+@media only screen and (max-device-width: 480px) 
+{
+    .center-list-view
+    {
+        width: 80%;
+        height: 65%;
+    }
+
+}
+
 .center-list-view h2
 {
     font-size: $list-heading-font-size;
@@ -299,7 +309,7 @@
 { 
     display:flex;
     flex-direction: column;
-    width: 45vw;
+    width: 45%;
     // float: left;
     justify-content: center;
     align-items: center;

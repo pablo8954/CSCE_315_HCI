@@ -35,6 +35,11 @@
   padding: 5px;
 }
 
+@media only screen and (max-device-width: 480px) {
+  #flight-number-container {
+    width: 75%;
+  }
+}
 #manual-info-container {
   display: flex;
   flex-direction: column;
