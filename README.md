@@ -1,4 +1,9 @@
-## https://pack-advisor.herokuapp.com/
+WEBSITE DOWN. The flights api in use has since been taken offline from RapidAPIs, breaking some fundamental functionality of this website project.
+Unfortunately, the website will be staying down for now. 
+
+Such a shame to discover when doing some maintenence on older projects. Thanks for the hard work team!
+
+http://packadvisor.herokuapp.com/
 
 # Installing Node and Modules
 
