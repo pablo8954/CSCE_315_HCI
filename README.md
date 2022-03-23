@@ -1,4 +1,4 @@
-WEBSITE DOWN. The flights api in use has since been taken offline from RapidAPIs, breaking some fundamental functionality of this website project.
+WEBSITE DOWN. The flights api in use has since been taken offline from RapidAPI, breaking some fundamental functionality of this website project. Some weird bugs present too that might be due to some other APIs going down that I'm unsure of.
 Unfortunately, the website will be staying down for now. 
 
 Such a shame to discover when doing some maintenence on older projects. Thanks for the hard work team!
